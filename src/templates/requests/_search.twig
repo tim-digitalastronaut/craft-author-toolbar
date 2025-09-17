@@ -14,10 +14,10 @@
 {% set filteredEntriesQuery = clone(allEntriesQuery) %}
 
 {% if queryParam is not null %}
-    {% set filteredEntriesQuery = allEntriesQuery.search(queryParam) %}
+    {% set filteredEntriesQuery = allEntriesQuery.search("title:" ~ queryParam) %}
 {% endif %}
 
-{% set results = filteredEntriesQuery.all|group('section.name') %}
+{% set results = filteredEntriesQuery.all|group("section.name") %}
 
 {# ======================= #}
 {# TEMPLATE                #}

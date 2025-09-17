@@ -23,7 +23,7 @@ use digitalastronaut\craftauthortoolbar\web\assets\AuthorToolbarAssets;
  * author-toolbar plugin
  *
  * @method static AuthorToolbar getInstance()
- * @author bram-mortier <bram.mortier92@gmail.com>
+ * @author bram-mortier <bram@digitalastronaut.be>
  * @license https://craftcms.github.io/license/ Craft License
  */
 class AuthorToolbar extends Plugin {
