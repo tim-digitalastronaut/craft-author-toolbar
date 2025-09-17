@@ -1,0 +1,55 @@
+{# ======================= #}
+{# TEMPLATE                #}
+{# ======================= #}
+<section class="cat-toolbar-seo-menu-images" toolbar-show="seoMenuActiveTab === 'images'">
+    <div class="cat-toolbar-seo-menu-images-top">
+        <h2 class="cat-typo-body-md cat-semi-bold">{{ "Page images"|t }} <span toolbar-text="`(${images.length})`"></span></h2>
+
+        <p class="cat-typo-body-sm">{{ "Get a list of all images on the page and their info/potential issues such as large file sizes or missing alt tags"|t }}</p>
+    </div>
+
+    <template toolbar-if="images.length">
+        <ul class="cat-toolbar-seo-menu-images-list">
+            <template toolbar-for="image, index in images" toolbar-bind:key="index">
+                <li class="cat-toolbar-seo-menu-images-list-item">
+                    <button
+                        toolbar-on:click="showElementOnPage(image.element)"
+                        class="cat-toolbar-seo-menu-images-list-item-button"
+                    >
+                        <img toolbar-bind:src="image.src" toolbar-bind:alt="image.alt">
+
+                        <p 
+                            class="cat-typo-body-sm cat-semi-bold" 
+                            toolbar-bind:class="image.fileType"
+                            toolbar-text="image.fileType">
+                        </p>
+
+                        <div class="cat-toolbar-seo-menu-images-list-item-button-main">
+                            <p class="cat-typo-body-md" toolbar-text="image.path"></p>
+
+                            <p 
+                                toolbar-text="image.alt || 'Alt tag is missing'"
+                                toolbar-bind:class="image.alt || 'error'"
+                                class="cat-typo-body-sm">
+                            </p>
+                        </div>
+
+                        <div class="cat-toolbar-seo-menu-images-list-item-button-extra">
+                            <p 
+                                class="cat-typo-body-sm cat-semi-bold" 
+                                toolbar-bind:class="image.fileSizeClass"
+                                toolbar-text="image.fileSize">
+                            </p>
+                        </div>
+                    </button>
+                </li>
+            </template>
+        </ul>
+    </template>
+
+    <template toolbar-if="!images.length">
+        <div class="cat-toolbar-seo-menu-images-empty">
+            <h3 class="cat-typo-body-md cat-semi-bold">{{ "No images found"|t }}</h3>
+        </div>
+    </template>
+</section>

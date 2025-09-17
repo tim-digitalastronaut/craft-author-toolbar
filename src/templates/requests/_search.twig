@@ -1,0 +1,99 @@
+{# ======================= #}
+{# QUERY PARAMS            #}
+{# ======================= #}
+{% set queryParam = craft.app.request.getQueryParam("query") %}
+
+{# ======================= #}
+{# QUERY LOGIC             #}
+{# ======================= #}
+{% set allEntriesQuery = craft
+    .entries
+    .status(null)
+    .drafts(null) %}
+
+{% set filteredEntriesQuery = clone(allEntriesQuery) %}
+
+{% if queryParam is not null %}
+    {% set filteredEntriesQuery = allEntriesQuery.search(queryParam) %}
+{% endif %}
+
+{% set results = filteredEntriesQuery.all|group('section.name') %}
+
+{# ======================= #}
+{# TEMPLATE                #}
+{# ======================= #}
+{% if results|length %}
+    <div id="cat-search-results" class="cat-toolbar-search-results">
+        <ul class="cat-toolbar-search-results-groups-list">
+            {% for sectionHandle, entries in results %}
+                {% if sectionHandle %}
+                    <li class="cat-toolbar-search-results-groups-list-item">
+                        <div class="cat-toolbar-search-results-groups-list-item-top">
+                            <h2 class="cat-typo-body-md cat-semi-bold">{{ sectionHandle }} ({{ entries|length }})</h2>
+                        </div>
+
+                        <ul class="cat-toolbar-search-results-list">
+                            {% for result in entries %}
+                                {% set url = result.url|default("") %}
+                                {% set title = result.title|default("Inhoud zonder titel") %}
+                                {% set status = result.status|default("") %}
+                                {% set thumbField = result.fieldLayout.thumbField %}
+                                {% set thumbnail = null %}
+
+                                {% set thumbField = result.fieldLayout.thumbField %}
+
+                                {% if 
+                                    thumbField and 
+                                    thumbField.className == "craft\\fieldlayoutelements\\CustomField" and 
+                                    thumbField.field and 
+                                    thumbField.field.className == "craft\\fields\\Assets" 
+                                %}
+                                    {% set thumbnail = result[thumbField.field.handle].one %}
+                                {% endif %}
+                                
+                                <li class="cat-toolbar-search-results-list-item">
+                                    <a href="{{ url }}" class="cat-toolbar-search-results-list-item-link">
+                                        <article class="cat-toolbar-search-results-card">
+                                            <div class="cat-toolbar-search-results-card-main">
+                                                {% if thumbnail %}
+                                                    <img src="{{ thumbnail.getUrl({ width: 200 }) }}">
+                                                {% endif %}
+
+                                                <div class="cat-toolbar-search-results-card-main-info">
+                                                    <p class="cat-typo-body-md">{{ title }}</p>
+
+                                                    <div class="cat-toolbar-search-results-card-link">
+                                                        <span class="cat-typo-body-sm">{{ "Pagina bekijken"|t }}</span>
+
+                                                        {{ svg("@brammortier/craftauthortoolbar/web/icons/circle-arrow-right.svg") }}
+                                                    </div>
+                                                </div>
+                                            </div>                                                
+
+                                            <div class="cat-page-status {{ status }}">
+                                                <div class="cat-page-status-icon"></div>
+
+                                                <p class="cat-typo-body-sm cat-uppercase">{{ status }}</p>
+                                            </div>
+                                        </article>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% else %}
+    <div id="cat-search-results" class="cat-toolbar-search-results">
+        <div class="cat-toolbar-search-results-empty">
+            <h2 class="cat-typo-body-md cat-semi-bold">{{ "Geen resultaten"|t }}</h2>
+
+            <div class="cat-toolbar-search-results-empty-main">
+                <p class="cat-typo-body-sm">{{ "Geen inhoud gevonden voor"|t }}</p>
+                <p class="cat-typo-body-md cat-semi-bold">{{ "Zoekterm:" }} {{ queryParam }}</p>
+            </div>
+        </div>
+    </div>
+{% endif %}

@@ -1,0 +1,30 @@
+{# ======================= #}
+{# TEMPLATE                #}
+{# ======================= #}
+<section class="cat-toolbar-seo-menu-headings" toolbar-show="seoMenuActiveTab === 'headings'">
+    <div class="cat-toolbar-seo-menu-headings-top">
+        <h2 class="cat-typo-body-md cat-semi-bold">{{ "Page headings"|t }}</h2>
+
+        <p class="cat-typo-body-sm">{{ "This is the structure of headings on this page. Make sure the headings follow the correct hierarchy"|t }}</p>
+    </div>
+
+    <ul class="cat-toolbar-seo-menu-headings-list">
+        <template toolbar-for="heading, index in headings" toolbar-bind:key="index">
+            <li class="cat-toolbar-seo-menu-headings-list-item">
+                <button 
+                    toolbar-on:click="showElementOnPage(heading.element)"
+                    toolbar-bind:class="{ 'missing': heading.missing }"
+                    class="cat-toolbar-seo-menu-headings-list-item-link"
+                >
+                    <template toolbar-for="level in Array.from({ length: heading.level })">
+                        <span></span>
+                    </template>
+
+                    <p class="cat-typo-body-sm cat-semi-bold" toolbar-text="heading.tag"></p>
+
+                    <p class="cat-typo-body-sm" toolbar-text="heading.text"></p>
+                </button>
+            </li>
+        </template>
+    </ul>
+</section>

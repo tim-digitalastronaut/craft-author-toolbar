@@ -1,0 +1,52 @@
+{# ======================= #}
+{# TEMPLATE                #}
+{# ======================= #}
+<a href="{{ cpEditUrl }}" target="_blank" class="cat-button cat-typo-body-md">
+    {{ svg("@brammortier/craftauthortoolbar/web/icons/pen.svg") }}
+
+    <span>{{ "Edit page"|t }}</span>
+</a>
+
+<div 
+    class="cat-toolbar-create-entry-menu"
+    toolbar-on:click.outside="createPageMenuOpen = false"
+    toolbar-on:keydown.esc.window="createPageMenuOpen = false"
+    toolbar-bind:class="{ 'open': createPageMenuOpen }"
+>
+    <button 
+        class="cat-toolbar-create-entry-menu-toggle cat-button"
+        toolbar-on:click="createPageMenuOpen = !createPageMenuOpen" 
+        toolbar-on:keydown.tab="createPageMenuOpen = true"
+    >
+        {{ svg("@brammortier/craftauthortoolbar/web/icons/plus.svg") }}
+
+        <span class="cat-typo-body-md">{{ "Create new page"|t }}</span>
+    </button>
+
+    <div class="cat-toolbar-create-entry-menu-content">
+        <h2 class="cat-typo-body-md cat-semi-bold">{{ "Choose a page type"|t }}</h2>
+
+        <ul class="cat-toolbar-create-entry-menu-entries-list">
+            {% for section in craft.app.entries.allSections %}
+                {% set name = section.name|default("") %}
+                {% set color = section.entryTypes[0].color.value|default("") %}
+                {% set createUrl = cpUrl('entries/' ~ section.handle ~ '/new')|default("") %}
+
+                {% if section.type != "single" %}
+                    <li 
+                        class="cat-toolbar-create-entry-menu-entries-list-item"
+                        style="--entry-type-light: var(--{{ color}}-100); --entry-type-dark: var(--{{ color }}-500)"
+                    >
+                        <a href="{{ createUrl }}" class="cat-toolbar-create-entry-menu-entries-list-item-link">
+                            <div class="cat-toolbar-create-entry-menu-entries-list-item-icon">
+                                {{ svg("@brammortier/craftauthortoolbar/web/icons/plus.svg") }}
+                            </div>
+
+                            <span class="cat-typo-body-md">{{ "New"|t }} {{ name|lower }} {{ "entry"|t }}</span>
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>

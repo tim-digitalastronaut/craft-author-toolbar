@@ -1,0 +1,58 @@
+{# ======================= #}
+{# PROPERTIES              #}
+{# ======================= #}
+{% set startMenuOptions = [
+    { icon: "dashboard", label: "Dashboard"|t, href: cpUrl('dashboard') },
+    { icon: "entries", label: "Entries"|t, href: cpUrl('entries') },
+    { icon: "assets", label: "Assets"|t, href: cpUrl('assets') },
+    { icon: "profile", label: "Acount settings"|t, href: cpUrl('myaccount') },
+    { icon: "logout", label: "Logout"|t, href: cpUrl('logout') },
+] %}
+
+{# ======================= #}
+{# TEMPLATE                #}
+{# ======================= #}
+<div 
+    class="cat-toolbar-start-menu"
+    toolbar-on:click.outside="startMenuOpen = false"
+    toolbar-on:keydown.esc.window="startMenuOpen = false"
+    toolbar-bind:class="{ 'open': startMenuOpen }"
+>
+    <button 
+        class="cat-toolbar-start-menu-toggle"
+        toolbar-on:click="startMenuOpen = !startMenuOpen" 
+        toolbar-on:keydown.tab="startMenuOpen = true"
+    >
+        <div class="cat-toolbar-start-menu-profile-picture">
+            {% if currentUser.photo %}
+                <img 
+                    src="{{ currentUser.fullName }}" 
+                    alt="Profile picture of {{ currentUser.fullName }}"
+                >
+            {% else %}
+                {{ svg("@brammortier/craftauthortoolbar/web/icons/craftcms-icon.svg") }}
+            {% endif %}
+        </div>
+
+        <div class="cat-toolbar-start-menu-user-info">
+            <p class="cat-typo-body-md cat-semi-bold">{{ currentUser.fullName }}</p>
+            <p class="cat-typo-body-sm">{{ currentUser.email }}</p>
+        </div>
+
+        {{ svg("@brammortier/craftauthortoolbar/web/icons/chevron-down.svg") }}
+    </button>
+
+    <div class="cat-toolbar-start-menu-content">
+        <ul class="cat-toolbar-start-menu-options-list">
+            {% for option in startMenuOptions %}
+                <li class="cat-toolbar-start-menu-options-list-item">
+                    <a href="{{ option.href }}" class="cat-toolbar-start-menu-options-list-item-link">
+                        {{ svg("@brammortier/craftauthortoolbar/web/icons/#{option.icon}.svg") }}
+
+                        <p class="cat-typo-body-md">{{ option.label }}</p>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

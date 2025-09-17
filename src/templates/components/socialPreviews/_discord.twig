@@ -1,0 +1,26 @@
+{# ======================= #}
+{# TEMPLATE                #}
+{# ======================= #}
+<div toolbar-show="seoPreview === 'discord'" class="cat-toolbar-seo-menu-previews-results-discord">
+    <div class="cat-toolbar-seo-menu-previews-results-discord-text-bubble">
+        <div class="cat-toolbar-seo-menu-previews-results-discord-main">
+            <p class="cat-typo-body-sm cat-uppercase cat-semi-bold">{{ language }}</p>
+
+            <h3 class="cat-typo-body-md cat-semi-bold">{{ og.title }}</h3>
+
+            <p class="cat-typo-body-sm">{{ og.description|truncate(160) }}</p>
+        </div>
+
+        <div class="cat-toolbar-seo-menu-previews-results-discord-thumbnail">
+            {% if og.image %}
+                <img src="{{ og.image }}" alt="discord social preview image">
+            {% else %}
+                <div class="cat-toolbar-seo-menu-previews-results-placeholder-image">
+                    {{ svg("@brammortier/craftauthortoolbar/web/icons/image.svg") }}
+
+                    <p class="cat-typo-body-md">{{ "No social image provided"|t }}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

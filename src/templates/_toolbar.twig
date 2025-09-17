@@ -1,0 +1,114 @@
+{# ======================= #}
+{# PROPERTIES              #}
+{# ======================= #}
+{% set pageUrl = craft.app.request.absoluteUrl %}
+
+{% if entry %}
+    {% set pageTitle = entry.title|default("") %}
+    {% set cpEditUrl = entry.cpEditUrl|default("") %}
+    {% set pageStatus = entry.status|default("") %}
+    {% set updatedAt = 
+        "last edited "|t ~
+        entry.dateUpdated|date("d F Y") ~ 
+        " om "|t ~ 
+        entry.dateUpdated|date("h:s")|default("") %}
+{% endif %}
+
+{# ======================= #}
+{# TEMPLATE                #}
+{# ======================= #}
+{% if currentUser and entry %}
+    <div 
+        id="cat-toolbar"
+        toolbar-data="toolbar" 
+        toolbar-on:keydown.meta.k.window="focusSearch" 
+        class="cat-toolbar"
+    >
+        <div class="cat-toolbar-main">
+            <div class="cat-toolbar-start cat-toolbar-chunk">
+                {% include "author-toolbar/chunks/_startMenu" %}
+            </div>
+
+            <div class="cat-toolbar-action-buttons cat-toolbar-chunk">
+                {% include "author-toolbar/chunks/_actionButtons" %}
+            </div>
+
+            <div 
+                class="cat-toolbar-search cat-toolbar-chunk" 
+                toolbar-bind:class="{ 'open': searchResultsOpen }"
+                toolbar-on:click.outside="searchResultsOpen = false"
+            >
+                <div class="cat-toolbar-search-bar">
+                    {{ svg("@brammortier/craftauthortoolbar/web/icons/search.svg") }}
+
+                    <input 
+                        id="cat-search"
+                        type="text" 
+                        placeholder="{{ "Search entries"|t }}"
+                        toolbar-model="searchQuery",
+                        toolbar-on:focus="searchResultsOpen = true"
+                        toolbar-on:input="renderSearchResults"
+                    >
+
+                    <div class="cat-toolbar-search-bar-hotkey">
+                        {{ svg("@brammortier/craftauthortoolbar/web/icons/command.svg") }}
+
+                        <div class="cat-typo-body-sm uppercase">K</div>
+                    </div>
+                </div>
+
+                <div id="cat-search-results" class="cat-toolbar-search-results"></div>
+            </div>
+
+            <div class="cat-toolbar-seo-checklist cat-toolbar-chunk">
+                {% include "author-toolbar/chunks/_seo" %}
+            </div>
+
+            <div class="cat-toolbar-help cat-toolbar-chunk">
+                {% include "author-toolbar/chunks/_help" %}
+            </div>
+        </div>
+
+        <div class="cat-toolbar-bottom">
+            <div class="cat-toolbar-location-info">
+                {{ svg("@brammortier/craftauthortoolbar/web/icons/globe.svg") }}
+
+                <p class="cat-typo-body-sm">
+                    <span class="cat-semi-bold">{{ pageTitle }}</span>
+                    <span>{{ pageUrl }}</span>
+                </p>
+
+                <button toolbar-on:click="copyToPageURLToClipboard" class="cat-copy-to-clipboard">
+                    {{ svg("@brammortier/craftauthortoolbar/web/icons/copy.svg") }}
+                </button>
+
+                <div class="cat-page-status {{ pageStatus }}">
+                    <div class="cat-page-status-icon"></div>
+
+                    <p class="cat-typo-body-sm cat-uppercase">{{ pageStatus }}</p>
+                </div>
+            </div>
+
+            <div class="cat-toolbar-bottom-extra">
+                <p class="cat-typo-body-sm">{{ updatedAt }}</p>
+            </div>
+        </div>
+
+        {# <ul class="cat-toolbar-warnings-list">
+            <li class="cat-toolbar-warnings-list-item">
+                {{ svg("@brammortier/craftauthortoolbar/web/icons/triangle-exclamation.svg") }}
+
+                <p class="cat-typo-body-md">{{ "Je bent inhoud aan het bewerken op de testomgeving" }}</p>
+            </li>
+        </ul> #}
+    </div>
+
+    <script>
+        window.craftAuthorToolbar = {
+            siteId: {{ currentSite.id }},
+            siteHandle: `{{ currentSite.handle }}`,
+            siteName: `{{ currentSite.handle }}`,
+            csrfTokenValue: `{{ craft.app.request.getCsrfToken() }}`
+        }
+    </script>
+{% endif %}

@@ -1,0 +1,48 @@
+{
+	"name": "bram-mortier/craft-author-toolbar",
+	"description": "A frontend toolbar that enhances the authoring experience",
+	"type": "craft-plugin",
+	"license": "proprietary",
+	"support": {
+		"email": "bram@digitalastronaut.be",
+		"issues": "https://github.com/brammortier/craft-author-toolbar/issues?state=open",
+		"source": "https://github.com/brammortier/craft-author-toolbar",
+		"docs": "https://github.com/brammortier/craft-author-toolbar",
+		"rss": "https://github.com/brammortier/craft-author-toolbar/releases.atom"
+	},
+	"require": {
+		"php": ">=8.2",
+		"craftcms/cms": "^5.8.0"
+	},
+	"require-dev": {
+		"craftcms/ecs": "dev-main",
+		"craftcms/phpstan": "dev-main"
+	},
+	"autoload": {
+		"psr-4": {
+			"brammortier\\craftauthortoolbar\\": "src/"
+		}
+	},
+	"extra": {
+		"handle": "author-toolbar",
+		"name": "author-toolbar",
+		"developer": "bram-mortier",
+		"documentationUrl": "https://github.com/brammortier/craft-author-toolbar",
+		"class": "brammortier\\craftauthortoolbar\\AuthorToolbar"
+	},
+	"scripts": {
+		"check-cs": "ecs check --ansi",
+		"fix-cs": "ecs check --ansi --fix",
+		"phpstan": "phpstan --memory-limit=1G"
+	},
+	"config": {
+		"sort-packages": true,
+		"platform": {
+			"php": "8.2"
+		},
+		"allow-plugins": {
+			"yiisoft/yii2-composer": true,
+			"craftcms/plugin-installer": true
+		}
+	}
+}

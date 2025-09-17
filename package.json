@@ -1,0 +1,22 @@
+{
+	"name": "craft-author-toolbar",
+	"version": "1.0.0",
+	"description": "A frontend toolbar that enhances the authoring experience",
+	"main": "index.js",
+	"scripts": {
+		"dev": "mix watch",
+		"build": "mix --production"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "module",
+	"devDependencies": {
+		"laravel-mix": "^6.0.49",
+		"resolve-url-loader": "^5.0.0",
+		"sass-loader": "^12.6.0"
+	},
+	"dependencies": {
+		"alpinejs": "^3.14.9"
+	}
+}

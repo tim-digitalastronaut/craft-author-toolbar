@@ -1,0 +1,127 @@
+{# ======================= #}
+{# PROPERTIES              #}
+{# ======================= #}
+{% extends "_layouts/cp.twig" %}
+
+{% import '_includes/forms.twig' as forms %}
+
+{% set fullPageForm = true %}
+{% set title = "Settings"|t %}
+
+{% set crumbs = [
+  {
+    label: 'Author toolbar'|t,
+    url: url('author-toolbar/settings'),
+  },
+  {
+    label: 'Settings'|t,
+    url: url('author-toolbar/settings'),
+  },
+] %}
+
+{% set tabs = {
+  general: {
+    label: 'General'|t,
+    url: '#general',
+  },
+  help: {
+    label: 'Help'|t,
+    url: '#help',
+  },
+} %}
+
+{# ======================= #}
+{# TEMPLATE                #}
+{# ======================= #}
+{% block content %}
+    {{ actionInput('plugins/save-plugin-settings') }}
+    {{ hiddenInput('pluginHandle', 'author-toolbar') }}
+
+    <div id="general">
+        {{ forms.lightswitchField({
+            label: 'Enable the toolbar'|t,
+            instructions: 'Show the toolbar on the frontend for logged in users'|t,
+            id: 'toolbarEnabled',
+            offLabel: 'Hide',
+            onLabel: 'Show',
+            name: 'settings[toolbarEnabled]',
+            on: settings.toolbarEnabled,
+        }) }}
+    </div>
+
+    <div id="help" class="hidden">
+        <div class="flex-fields">
+            <div class="field width-50">
+                {{ forms.textField({
+                    label: 'Company'|t,
+                    instructions: 'Specify the company that built the website'|t,
+                    id: 'company',
+                    name: 'settings[company]',
+                    value: settings.company,
+                    placeholder: 'Company name'|t
+                }) }}
+            </div>
+
+            <div class="field width-50">
+                {{ forms.elementSelectField({
+                    label: 'Company logo'|t,
+                    instructions: 'Provide a logo that will be displayed to the authors'|t,
+					elementType: 'craft\\elements\\Asset',
+                    id: 'companyLogo',
+                    name: 'settings[companyLogo]',
+                    value: settings.companyLogo,
+					elements: settings.companyLogo ? [craft.assets.id(settings.companyLogo).one()] : [],
+    				limit: 1,
+					criteria: {
+						kind: 'image'
+					}
+                }) }}
+            </div>
+
+            <div class="field width-50">
+                {{ forms.textField({
+                    label: 'Email'|t,
+                    instructions: 'Choose an email the authors of this website can get help with'|t,
+                    id: 'email',
+                    name: 'settings[email]',
+                    value: settings.email,
+                    placeholder: 'support@example.com'|t
+                }) }}
+            </div>
+
+            <div class="field width-50">
+                {{ forms.textField({
+                    label: 'Phone Number'|t,
+                    instructions: 'Choose an phone number the authors can call for help'|t,
+                    id: 'phoneNumber',
+                    name: 'settings[phoneNumber]',
+                    value: settings.phoneNumber,
+                    placeholder: '+32 (0)123 45 67 89'
+                }) }}
+            </div>
+
+			<div class="field width-100">
+				{{ forms.textField({
+					label: 'Issue ticket URL',
+					instructions: 'URL where authors can submit bug reports/feature requests',
+					id: 'issueTicketUrl',
+					name: 'settings[issueTicketUrl]',
+					value: settings.issueTicketUrl,
+					placeholder: 'https://report-issues-here.com'
+				}) }}
+			</div>
+
+			<div class="field width-100">
+				{{ forms.textareaField({
+					label: 'Additional info',
+					instructions: 'Enter additional information to help the authors',
+					id: 'info',
+					name: 'settings[info]',
+					value: settings.info,
+					placeholder: 'Information',
+					rows: 4
+				}) }}
+			</div>
+        </div>
+    </div>
+{% endblock %}
