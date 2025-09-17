@@ -1,14 +1,14 @@
 {
-	"name": "bram-mortier/craft-author-toolbar",
+	"name": "digitalastronaut/craft-author-toolbar",
 	"description": "A frontend toolbar that enhances the authoring experience",
 	"type": "craft-plugin",
 	"license": "proprietary",
 	"support": {
 		"email": "bram@digitalastronaut.be",
-		"issues": "https://github.com/brammortier/craft-author-toolbar/issues?state=open",
-		"source": "https://github.com/brammortier/craft-author-toolbar",
-		"docs": "https://github.com/brammortier/craft-author-toolbar",
-		"rss": "https://github.com/brammortier/craft-author-toolbar/releases.atom"
+		"issues": "https://github.com/tim-digitalastronaut/craft-author-toolbar/issues?state=open",
+		"source": "https://github.com/tim-digitalastronaut/craft-author-toolbar",
+		"docs": "https://github.com/tim-digitalastronaut/craft-author-toolbar",
+		"rss": "https://github.com/tim-digitalastronaut/craft-author-toolbar/releases.atom"
 	},
 	"require": {
 		"php": ">=8.2",
@@ -20,15 +20,15 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"brammortier\\craftauthortoolbar\\": "src/"
+			"digitalastronaut\\craftauthortoolbar\\": "src/"
 		}
 	},
 	"extra": {
 		"handle": "author-toolbar",
 		"name": "author-toolbar",
 		"developer": "bram-mortier",
-		"documentationUrl": "https://github.com/brammortier/craft-author-toolbar",
-		"class": "brammortier\\craftauthortoolbar\\AuthorToolbar"
+		"documentationUrl": "https://github.com/tim-digitalastronaut/craft-author-toolbar",
+		"class": "digitalastronaut\\craftauthortoolbar\\AuthorToolbar"
 	},
 	"scripts": {
 		"check-cs": "ecs check --ansi",

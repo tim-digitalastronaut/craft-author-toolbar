@@ -21,11 +21,11 @@
         toolbar-on:click="helpMenuOpen = !helpMenuOpen" 
         class="cat-toolbar-help-menu-toggle"
     >
-        {{ svg("@brammortier/craftauthortoolbar/web/icons/circle-questionmark.svg") }}
+        {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/circle-questionmark.svg") }}
 
         <span class="cat-typo-body-md">{{ "Help"|t }}</span>
 
-        {{ svg("@brammortier/craftauthortoolbar/web/icons/chevron-down.svg") }}
+        {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/chevron-down.svg") }}
     </button>
 
     <div class="cat-toolbar-help-menu-content">
@@ -41,7 +41,7 @@
             {% if settings.company %}
                 <li class="cat-toolbar-help-menu-contact-info-item">
                     <div>
-                        <span>{{ svg("@brammortier/craftauthortoolbar/web/icons/company.svg") }}</span>
+                        <span>{{ svg("@digitalastronaut/craftauthortoolbar/web/icons/company.svg") }}</span>
                         <p class="cat-typo-body-md cat-semi-bold">{{ "Company"|t }}</p>
                     </div>
 
@@ -53,7 +53,7 @@
             {% if settings.email %}
                 <li class="cat-toolbar-help-menu-contact-info-item">
                     <div>
-                        <span>{{ svg("@brammortier/craftauthortoolbar/web/icons/mail.svg") }}</span>
+                        <span>{{ svg("@digitalastronaut/craftauthortoolbar/web/icons/mail.svg") }}</span>
                         <p class="cat-typo-body-md cat-semi-bold">{{ "Email"|t }}</p>
                     </div>
 
@@ -65,7 +65,7 @@
             {% if settings.phoneNumber %}
                 <li class="cat-toolbar-help-menu-contact-info-item">
                     <div>
-                        <span>{{ svg("@brammortier/craftauthortoolbar/web/icons/phone.svg") }}</span>
+                        <span>{{ svg("@digitalastronaut/craftauthortoolbar/web/icons/phone.svg") }}</span>
                         <p class="cat-typo-body-md cat-semi-bold">{{ "Phone number"|t }}</p>
                     </div>
 
@@ -79,7 +79,7 @@
                 <h2 class="cat-typo-body-md cat-semi-bold">{{ "Bug reports"|t }}</h2>
 
                 <a href="{{ settings.issueTicketUrl }}" target="_blank" class="cat-button cat-typo-body-md">
-                    {{ svg("@brammortier/craftauthortoolbar/web/icons/bug.svg") }}
+                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/bug.svg") }}
 
                     <span>{{ "Create a bug report or feature request"|t }}</span>
                 </a>

@@ -30,7 +30,7 @@
                     alt="Profile picture of {{ currentUser.fullName }}"
                 >
             {% else %}
-                {{ svg("@brammortier/craftauthortoolbar/web/icons/craftcms-icon.svg") }}
+                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/craftcms-icon.svg") }}
             {% endif %}
         </div>
 
@@ -39,7 +39,7 @@
             <p class="cat-typo-body-sm">{{ currentUser.email }}</p>
         </div>
 
-        {{ svg("@brammortier/craftauthortoolbar/web/icons/chevron-down.svg") }}
+        {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/chevron-down.svg") }}
     </button>
 
     <div class="cat-toolbar-start-menu-content">
@@ -47,7 +47,7 @@
             {% for option in startMenuOptions %}
                 <li class="cat-toolbar-start-menu-options-list-item">
                     <a href="{{ option.href }}" class="cat-toolbar-start-menu-options-list-item-link">
-                        {{ svg("@brammortier/craftauthortoolbar/web/icons/#{option.icon}.svg") }}
+                        {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/#{option.icon}.svg") }}
 
                         <p class="cat-typo-body-md">{{ option.label }}</p>
                     </a>

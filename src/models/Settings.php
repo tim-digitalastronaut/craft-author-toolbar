@@ -1,6 +1,6 @@
 <?php
 
-namespace brammortier\craftauthortoolbar\models;
+namespace digitalastronaut\craftauthortoolbar\models;
 
 use Craft;
 use craft\base\Model;

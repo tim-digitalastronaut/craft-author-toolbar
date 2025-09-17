@@ -1,6 +1,6 @@
 <?php
 
-namespace brammortier\craftauthortoolbar;
+namespace digitalastronaut\craftauthortoolbar;
 
 use Craft;
 use craft\web\View;
@@ -16,15 +16,14 @@ use craft\events\RegisterTemplateRootsEvent;
 use craft\events\TemplateEvent;
 use craft\events\RegisterUrlRulesEvent;
 
-use brammortier\craftauthortoolbar\models\Settings;
-use brammortier\craftauthortoolbar\web\assets\AuthorToolbarAssets;
+use digitalastronaut\craftauthortoolbar\models\Settings;
+use digitalastronaut\craftauthortoolbar\web\assets\AuthorToolbarAssets;
 
 /**
  * author-toolbar plugin
  *
  * @method static AuthorToolbar getInstance()
  * @author bram-mortier <bram.mortier92@gmail.com>
- * @copyright bram-mortier
  * @license https://craftcms.github.io/license/ Craft License
  */
 class AuthorToolbar extends Plugin {

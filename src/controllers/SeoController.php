@@ -1,6 +1,6 @@
 <?php
 
-namespace brammortier\craftauthortoolbar\controllers;
+namespace digitalastronaut\craftauthortoolbar\controllers;
 
 use Craft;
 use craft\web\Controller;

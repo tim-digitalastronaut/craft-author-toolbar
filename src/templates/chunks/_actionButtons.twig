@@ -2,7 +2,7 @@
 {# TEMPLATE                #}
 {# ======================= #}
 <a href="{{ cpEditUrl }}" target="_blank" class="cat-button cat-typo-body-md">
-    {{ svg("@brammortier/craftauthortoolbar/web/icons/pen.svg") }}
+    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/pen.svg") }}
 
     <span>{{ "Edit page"|t }}</span>
 </a>
@@ -18,7 +18,7 @@
         toolbar-on:click="createPageMenuOpen = !createPageMenuOpen" 
         toolbar-on:keydown.tab="createPageMenuOpen = true"
     >
-        {{ svg("@brammortier/craftauthortoolbar/web/icons/plus.svg") }}
+        {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/plus.svg") }}
 
         <span class="cat-typo-body-md">{{ "Create new page"|t }}</span>
     </button>
@@ -39,7 +39,7 @@
                     >
                         <a href="{{ createUrl }}" class="cat-toolbar-create-entry-menu-entries-list-item-link">
                             <div class="cat-toolbar-create-entry-menu-entries-list-item-icon">
-                                {{ svg("@brammortier/craftauthortoolbar/web/icons/plus.svg") }}
+                                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/plus.svg") }}
                             </div>
 
                             <span class="cat-typo-body-md">{{ "New"|t }} {{ name|lower }} {{ "entry"|t }}</span>

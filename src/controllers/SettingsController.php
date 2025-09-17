@@ -1,12 +1,12 @@
 <?php
 
-namespace brammortier\craftauthortoolbar\controllers;
+namespace digitalastronaut\craftauthortoolbar\controllers;
 
 use Craft;
 use craft\web\Controller;
 use yii\web\Response;
 
-use brammortier\craftauthortoolbar\AuthorToolbar;
+use digitalastronaut\craftauthortoolbar\AuthorToolbar;
 
 class SettingsController extends Controller {
     public function actionIndex(): Response {
