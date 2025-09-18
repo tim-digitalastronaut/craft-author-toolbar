@@ -24,7 +24,7 @@
 		}
 	},
 	"extra": {
-		"handle": "authorToolbar",
+		"handle": "author-toolbar",
 		"name": "Author toolbar",
 		"developer": "digitalastronaut",
 		"documentationUrl": "https://github.com/tim-digitalastronaut/craft-author-toolbar",
