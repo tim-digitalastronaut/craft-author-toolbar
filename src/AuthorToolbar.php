@@ -20,7 +20,7 @@ use digitalastronaut\craftauthortoolbar\models\Settings;
 use digitalastronaut\craftauthortoolbar\web\assets\AuthorToolbarAssets;
 
 /**
- * author-toolbar plugin
+ * Author toolbar plugin
  *
  * @method static AuthorToolbar getInstance()
  * @author bram-mortier <bram@digitalastronaut.be>

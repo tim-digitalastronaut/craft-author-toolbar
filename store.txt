@@ -1,0 +1,16 @@
+The author toolbar plugin provides a frontend toolbar that enhances the overall authoring experience for content heavy Craft CMS projects. It integrates seamlessly with all Craft projects as it doesn't depend on any other Craft plugins being installed for capturing the nessecary data.
+
+The toolbar features are aimed at authors with little to sometimes no prior CMS/webdev experience. It's main goal is to connect the content on the fronend to the control panel in a more user friendly fashion.
+
+Feature List:
+1. A startmenu that makes switching from the frontend to the control panel sections faster.
+2. An edit page button that jumps to the control panel edit page for that entry.
+3. A create page button to allow authors to create pages quickly.
+4. A global search accross all pages for easy navigation.
+5. A comprehensive SEO menu with:
+    I. A basic checklist.
+    II. Social share previews.
+    III. Images overview.
+    IV. Headings structure.
+6. A contact / help menu where users can find the developers contact info.
+

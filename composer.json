@@ -24,9 +24,9 @@
 		}
 	},
 	"extra": {
-		"handle": "author-toolbar",
-		"name": "author-toolbar",
-		"developer": "bram-mortier",
+		"handle": "authorToolbar",
+		"name": "Author toolbar",
+		"developer": "digitalastronaut",
 		"documentationUrl": "https://github.com/tim-digitalastronaut/craft-author-toolbar",
 		"class": "digitalastronaut\\craftauthortoolbar\\AuthorToolbar"
 	},
