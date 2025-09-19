@@ -1,5 +1,5 @@
-# Release Notes for author toolbar
+# Release Notes for Author toolbar
 
-## 1.0.0
+## v1.0.0-beta - 2025.09.19
 
 -   Initial release
