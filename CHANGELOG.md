@@ -1,5 +1,9 @@
 # Release Notes for Author toolbar
 
+## v1.0.5-beta - 2025.09.19
+
+-   Fixed release issue
+
 ## v1.0.4-beta - 2025.09.19
 
 -   Fixed release issue
