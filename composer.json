@@ -10,7 +10,7 @@
 		"docs": "https://github.com/tim-digitalastronaut/craft-author-toolbar",
 		"rss": "https://github.com/tim-digitalastronaut/craft-author-toolbar/releases.atom"
 	},
-	"version": "v1.0.1-beta",
+	"version": "v1.0.2-beta",
 	"require": {
 		"php": ">=8.2",
 		"craftcms/cms": "^5.8.0"
