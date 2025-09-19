@@ -26,8 +26,8 @@
         <div class="cat-toolbar-start-menu-profile-picture">
             {% if currentUser.photo %}
                 <img 
-                    src="{{ currentUser.fullName }}" 
-                    alt="Profile picture of {{ currentUser.fullName }}"
+                    src="{{ currentUser.photo.url }}" 
+                    alt="Profile picture of {{ currentUser.fullName|default("User") }}"
                 >
             {% else %}
                 {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/craftcms-icon.svg") }}
@@ -35,7 +35,7 @@
         </div>
 
         <div class="cat-toolbar-start-menu-user-info">
-            <p class="cat-typo-body-md cat-semi-bold">{{ currentUser.fullName }}</p>
+            <p class="cat-typo-body-md cat-semi-bold">{{ currentUser.fullName|default("User") }}</p>
             <p class="cat-typo-body-sm">{{ currentUser.email }}</p>
         </div>
 

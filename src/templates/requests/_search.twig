@@ -9,7 +9,8 @@
 {% set allEntriesQuery = craft
     .entries
     .status(null)
-    .drafts(null) %}
+    .drafts(null)
+    .uri(':notempty:') %}
 
 {% set filteredEntriesQuery = clone(allEntriesQuery) %}
 
