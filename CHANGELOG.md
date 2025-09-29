@@ -1,5 +1,9 @@
 # Release Notes for Author toolbar
 
+## v1.0.8-beta - 2025.09.29
+
+-   Fixed service unavailable error
+
 ## v1.0.7-beta - 2025.09.29
 
 -   Fixed a styling bug
