@@ -23,11 +23,11 @@ use digitalastronaut\craftauthortoolbar\web\assets\AuthorToolbarAssets;
  * Author toolbar plugin
  *
  * @method static AuthorToolbar getInstance()
- * @author bram-mortier <bram@digitalastronaut.be>
+ * @author digitalastronaut <bram@digitalastronaut.be>
  * @license https://craftcms.github.io/license/ Craft License
  */
 class AuthorToolbar extends Plugin {
-    public string $schemaVersion = '1.0.0';
+    public string $schemaVersion = '1.0.6-beta';
     public bool $hasCpSettings = true;
 
     public function init(): void {

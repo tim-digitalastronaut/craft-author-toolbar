@@ -1,5 +1,11 @@
 # Release Notes for Author toolbar
 
+## v1.0.6-beta - 2025.09.29
+
+-   Added a more robust styling reset to better prevent styling conflicts
+-   Added more specific element based styles to prevent user styling conflicts
+-   Fixed a styling bug
+
 ## v1.0.5-beta - 2025.09.19
 
 -   Fixed release issue
