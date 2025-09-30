@@ -17,8 +17,12 @@
     <div class="cat-toolbar-seo-menu-previews-results-facebook-main">
         <p class="cat-typo-body-sm cat-uppercase">{{ og.url|replace({'https://': '', 'http://': ''})|split('/')[0] }}</p>
 
-        <h3 class="cat-typo-body-md cat-semi-bold">{{ og.title }}</h3>
+        {% if og.title %}
+            <h3 class="cat-typo-body-md cat-semi-bold">{{ og.title }}</h3>
+        {% endif %}
 
-        <p class="cat-typo-body-sm">{{ og.description|truncate(160) }}</p>
+        {% if og.description %}
+            <p class="cat-typo-body-sm">{{ og.description|truncate(160) }}</p>
+        {% endif %}
     </div>
 </div>

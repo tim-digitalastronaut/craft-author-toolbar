@@ -29,50 +29,54 @@
     </button>
 
     <div class="cat-toolbar-help-menu-content">
-        <div class="cat-toolbar-help-menu-intro">
-            {% if companyLogo %}
-                <img src="{{ companyLogo.url }}" alt="">
-            {% endif %}            
+        {% if settings.info or companyLogo %}
+            <div class="cat-toolbar-help-menu-intro">
+                {% if companyLogo %}
+                    <img src="{{ companyLogo.url }}" alt="">
+                {% endif %}            
 
-            <p class="cat-typo-body-md">{{ settings.info }}</p>
-        </div>
+                <p class="cat-typo-body-md">{{ settings.info }}</p>
+            </div>
+        {% endif %}
 
-        <ul class="cat-toolbar-help-menu-contact-info">
-            {% if settings.company %}
-                <li class="cat-toolbar-help-menu-contact-info-item">
-                    <div>
-                        <span>{{ svg("@digitalastronaut/craftauthortoolbar/web/icons/company.svg") }}</span>
-                        <p class="cat-typo-body-md cat-semi-bold">{{ "Company"|t }}</p>
-                    </div>
+        {% if settings.company or settings.email or settings.phoneNumber %}
+            <ul class="cat-toolbar-help-menu-contact-info">
+                {% if settings.company %}
+                    <li class="cat-toolbar-help-menu-contact-info-item">
+                        <div>
+                            <span>{{ svg("@digitalastronaut/craftauthortoolbar/web/icons/company.svg") }}</span>
+                            <p class="cat-typo-body-md cat-semi-bold">{{ "Company"|t }}</p>
+                        </div>
 
-                    <p class="cat-typo-body-md">{{ settings.company }}</p>
-                </li>
-            {% endif %}
-            
+                        <p class="cat-typo-body-md">{{ settings.company }}</p>
+                    </li>
+                {% endif %}
+                
+                {% if settings.email %}
+                    <li class="cat-toolbar-help-menu-contact-info-item">
+                        <div>
+                            <span>{{ svg("@digitalastronaut/craftauthortoolbar/web/icons/mail.svg") }}</span>
+                            <p class="cat-typo-body-md cat-semi-bold">{{ "Email"|t }}</p>
+                        </div>
 
-            {% if settings.email %}
-                <li class="cat-toolbar-help-menu-contact-info-item">
-                    <div>
-                        <span>{{ svg("@digitalastronaut/craftauthortoolbar/web/icons/mail.svg") }}</span>
-                        <p class="cat-typo-body-md cat-semi-bold">{{ "Email"|t }}</p>
-                    </div>
+                        <a href="mailto:{{ settings.email }}" class="cat-typo-body-md">{{ settings.email }}</a>
+                    </li>
+                {% endif %}
+                
 
-                    <a href="mailto:{{ settings.email }}" class="cat-typo-body-md">{{ settings.email }}</a>
-                </li>
-            {% endif %}
-            
+                {% if settings.phoneNumber %}
+                    <li class="cat-toolbar-help-menu-contact-info-item">
+                        <div>
+                            <span>{{ svg("@digitalastronaut/craftauthortoolbar/web/icons/phone.svg") }}</span>
+                            <p class="cat-typo-body-md cat-semi-bold">{{ "Phone number"|t }}</p>
+                        </div>
 
-            {% if settings.phoneNumber %}
-                <li class="cat-toolbar-help-menu-contact-info-item">
-                    <div>
-                        <span>{{ svg("@digitalastronaut/craftauthortoolbar/web/icons/phone.svg") }}</span>
-                        <p class="cat-typo-body-md cat-semi-bold">{{ "Phone number"|t }}</p>
-                    </div>
-
-                    <a href="tel:{{ settings.phoneNumber }}" class="cat-typo-body-md">{{ settings.phoneNumber }}</a>
-                </li>
-            {% endif %}
-        </ul>
+                        <a href="tel:{{ settings.phoneNumber }}" class="cat-typo-body-md">{{ settings.phoneNumber }}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        {% endif %}
+        
 
         {% if settings.issueTicketUrl %}
             <div class="cat-toolbar-help-menu-bug-reports">

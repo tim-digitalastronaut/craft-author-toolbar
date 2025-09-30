@@ -1,5 +1,11 @@
 # Release Notes for Author toolbar
 
+## v1.0.9-beta - 2025.09.30
+
+-   Fixed empty help menu when no info is provided
+-   Fixed empty add entries menu when no sections exist
+-   Fixed styling issues with the seo previews
+
 ## v1.0.8-beta - 2025.09.29
 
 -   Fixed service unavailable error

@@ -27,7 +27,7 @@ use digitalastronaut\craftauthortoolbar\web\assets\AuthorToolbarAssets;
  * @license https://craftcms.github.io/license/ Craft License
  */
 class AuthorToolbar extends Plugin {
-    public string $schemaVersion = 'v1.0.8-beta';
+    public string $schemaVersion = 'v1.0.9-beta';
     public bool $hasCpSettings = true;
 
     public function init(): void {

@@ -15,13 +15,19 @@
                     </div>
                 {% endif %}
 
-                <img src="{{ favicon }}" alt="whatsapp social preview image favicon">
+                {% if favicon %}
+                    <img src="{{ favicon }}" alt="whatsapp social preview image favicon">
+                {% endif %}
             </div>
 
             <div class="cat-toolbar-seo-menu-previews-results-whatsapp-main">
-                <h3 class="cat-typo-body-md cat-semi-bold">{{ og.title }}</h3>
+                {% if og.title %}
+                    <h3 class="cat-typo-body-md cat-semi-bold">{{ og.title }}</h3>
+                {% endif %}
 
-                <p class="cat-typo-body-sm">{{ og.description|truncate(160) }}</p>
+                {% if og.description %}
+                    <p class="cat-typo-body-sm">{{ og.description|truncate(160) }}</p>
+                {% endif %}
             </div>
         </div>
 

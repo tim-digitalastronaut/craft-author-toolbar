@@ -1,4 +1,10 @@
 {# ======================= #}
+{# PROPERTIES              #}
+{# ======================= #}
+{% set allSections = craft.app.entries.allSections|default([]) %}
+{% set nonSingleSections = allSections|filter(section => section.type != 'single') %}
+
+{# ======================= #}
 {# TEMPLATE                #}
 {# ======================= #}
 <a href="{{ cpEditUrl }}" target="_blank" class="cat-button cat-typo-body-md">
@@ -26,27 +32,33 @@
     <div class="cat-toolbar-create-entry-menu-content">
         <h2 class="cat-typo-body-md cat-semi-bold">{{ "Choose a page type"|t }}</h2>
 
-        <ul class="cat-toolbar-create-entry-menu-entries-list">
-            {% for section in craft.app.entries.allSections %}
-                {% set name = section.name|default("") %}
-                {% set color = section.entryTypes[0].color.value|default("") %}
-                {% set createUrl = cpUrl('entries/' ~ section.handle ~ '/new')|default("") %}
+        {% if nonSingleSections|length %}
+            <ul class="cat-toolbar-create-entry-menu-entries-list">
+                {% for section in nonSingleSections %}
+                    {% set name = section.name|default("") %}
+                    {% set color = section.entryTypes[0].color.value|default("") %}
+                    {% set createUrl = cpUrl('entries/' ~ section.handle ~ '/new')|default("") %}
 
-                {% if section.type != "single" %}
-                    <li 
-                        class="cat-toolbar-create-entry-menu-entries-list-item"
-                        style="--entry-type-light: var(--{{ color}}-100); --entry-type-dark: var(--{{ color }}-500)"
-                    >
-                        <a href="{{ createUrl }}" class="cat-toolbar-create-entry-menu-entries-list-item-link">
-                            <div class="cat-toolbar-create-entry-menu-entries-list-item-icon">
-                                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/plus.svg") }}
-                            </div>
+                    {% if section.type != "single" %}
+                        <li 
+                            class="cat-toolbar-create-entry-menu-entries-list-item"
+                            style="--entry-type-light: var(--{{ color}}-100); --entry-type-dark: var(--{{ color }}-500)"
+                        >
+                            <a href="{{ createUrl }}" class="cat-toolbar-create-entry-menu-entries-list-item-link">
+                                <div class="cat-toolbar-create-entry-menu-entries-list-item-icon">
+                                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/plus.svg") }}
+                                </div>
 
-                            <span class="cat-typo-body-md">{{ "New"|t }} {{ name|lower }} {{ "entry"|t }}</span>
-                        </a>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
+                                <span class="cat-typo-body-md">{{ "New"|t }} {{ name|lower }} {{ "entry"|t }}</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="cat-toolbar-create-entry-menu-empty">
+                <h3 class="cat-typo-body-md cat-semi-bold">{{ "No sections found"|t }}</h3>
+            </div>
+        {% endif %}
     </div>
 </div>

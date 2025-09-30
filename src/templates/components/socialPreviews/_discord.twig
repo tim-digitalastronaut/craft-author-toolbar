@@ -8,7 +8,9 @@
 
             <h3 class="cat-typo-body-md cat-semi-bold">{{ og.title }}</h3>
 
-            <p class="cat-typo-body-sm">{{ og.description|truncate(160) }}</p>
+            {% if og.description %}
+                <p class="cat-typo-body-sm">{{ og.description|truncate(160) }}</p>
+            {% endif %}
         </div>
 
         <div class="cat-toolbar-seo-menu-previews-results-discord-thumbnail">
