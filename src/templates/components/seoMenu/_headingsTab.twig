@@ -3,7 +3,7 @@
 {# ======================= #}
 <section class="cat-toolbar-seo-menu-headings" toolbar-show="seoMenuActiveTab === 'headings'">
     <div class="cat-toolbar-seo-menu-headings-top">
-        <h2 class="cat-typo-body-md cat-semi-bold">{{ "Page headings"|t }}</h2>
+        <h2 class="cat-typo-body-md cat-semi-bold">{{ "Page headings"|t }} <span toolbar-text="`(${headings.filter(heading => !heading.missing).length})`"></span></h2>
 
         <p class="cat-typo-body-sm">{{ "This is the structure of headings on this page. Make sure the headings follow the correct hierarchy"|t }}</p>
     </div>

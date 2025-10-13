@@ -1,0 +1,250 @@
+import { seoChecklist } from "./seoChecklist.js";
+import { getSeoMeta } from "./seoPreviews.js";
+
+import {
+	buildQueryString,
+	templateRequest,
+	formatFileSize,
+	getUrlPath,
+	mimeToExtension,
+	getFileSizeClass,
+	jsonToHtml,
+} from "./utils.js";
+
+export function toolbar() {
+	return {
+		startMenuOpen: false,
+		createPageMenuOpen: false,
+		seoMenuOpen: false,
+		seoMenuActiveTab: "checklist",
+		seoPreview: "facebook",
+		seoChecklistResults: [],
+		passedSeoChecks: 0,
+		headings: [],
+		images: [],
+		structuredData: [],
+		activeStructuredDataType: [],
+		overallSeoStatus: "",
+		searchResultsOpen: false,
+		searchQuery: "",
+		helpMenuOpen: false,
+
+		init() {
+			this.getHeadingsOverview();
+			this.getSeoPreviews();
+			this.getImagesOverview();
+			this.getSeoChecklist();
+			this.getStructuredData();
+			this.renderSearchResults();
+
+			const menus = ["startMenuOpen", "createPageMenuOpen", "seoMenuOpen", "searchResultsOpen", "helpMenuOpen"];
+
+			menus.forEach((menu) => {
+				this.$watch(menu, (value) => {
+					if (value) menus.filter((menu) => menu !== menu).forEach((menu) => (this[menu] = false));
+				});
+			});
+		},
+
+		getSeoChecklist() {
+			this.seoChecklistResults = seoChecklist
+				.map((checkFunction) => checkFunction())
+				.sort((a, b) => {
+					const statusOrder = { failed: 0, warning: 1, passed: 2 };
+					return statusOrder[a.status] - statusOrder[b.status];
+				});
+
+			this.passedSeoChecks = this.seoChecklistResults.filter((check) => check.status == "passed").length;
+
+			this.overallSeoStatus = "passed";
+
+			if (this.seoChecklistResults.some((check) => check.status === "warning")) this.overallSeoStatus = "warning";
+			if (this.seoChecklistResults.some((check) => check.status === "failed")) this.overallSeoStatus = "failed";
+		},
+
+		async getSeoPreviews() {
+			const seoMeta = getSeoMeta();
+
+			const { content } = await templateRequest("/author-toolbar/seo/previews", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"X-CSRF-Token": window.craftAuthorToolbar.csrfTokenValue,
+					"X-Craft-Site": window.craftAuthorToolbar.siteId,
+				},
+				body: JSON.stringify(seoMeta),
+			});
+
+			document.querySelector("#cat-seo-previews").outerHTML = content;
+		},
+
+		async getImagesOverview() {
+			const images = [...document.querySelectorAll("img:not(#cat-toolbar img)")];
+			const imagesData = [];
+
+			for (const [index, image] of images.entries()) {
+				let fileSizeClass = null;
+				let fileSize = null;
+				let fileType = null;
+
+				try {
+					const response = await fetch(image.src, { method: "HEAD" });
+					const contentLength = response.headers.get("content-length");
+					const contentType = response.headers.get("content-type");
+
+					if (contentType) fileType = mimeToExtension(contentType);
+					if (contentLength) {
+						fileSize = formatFileSize(parseInt(contentLength));
+						fileSizeClass = getFileSizeClass(parseInt(contentLength));
+					}
+				} catch (error) {
+					console.warn(`Could not fetch size for ${image.src}`, error.message);
+				}
+
+				imagesData.push({
+					src: image.src,
+					path: getUrlPath(image.src),
+					fileSize: fileSize,
+					fileSizeClass: fileSizeClass,
+					fileType: fileType,
+					width: image.naturalWidth,
+					height: image.naturalHeight,
+					alt: image.alt,
+					element: image,
+					loading: image.getAttribute("loading") || "eager",
+				});
+			}
+
+			this.images = imagesData;
+			console.log(this.images);
+		},
+
+		getHeadingsOverview() {
+			const elements = document.body.querySelectorAll(`
+				h1:not(#cat-toolbar *), 
+				h2:not(#cat-toolbar *), 
+				h3:not(#cat-toolbar *), 
+				h4:not(#cat-toolbar *), 
+				h5:not(#cat-toolbar *), 
+				h6:not(#cat-toolbar *)
+			`);
+
+			const rawHeadings = Array.from(elements).map((heading) => {
+				const level = parseInt(heading.tagName.substring(1), 10);
+				return {
+					element: heading,
+					tag: heading.tagName.toLowerCase(),
+					text: heading.textContent.trim(),
+					level: level,
+					missing: false,
+				};
+			});
+
+			const filledHeadings = [];
+			let lastLevel = 0;
+
+			if (rawHeadings.length === 0) {
+				filledHeadings.push({
+					element: null,
+					tag: "h1",
+					text: "Missing heading 1",
+					level: 1,
+					missing: true,
+				});
+			}
+
+			rawHeadings.forEach((heading, index) => {
+				if (index === 0 && heading.level > 1) {
+					for (let level = 1; level < heading.level; level++) {
+						filledHeadings.push({
+							element: null,
+							tag: `h${level}`,
+							text: `Missing heading ${level}`,
+							level: level,
+							missing: true,
+						});
+					}
+				}
+
+				if (lastLevel > 0 && heading.level > lastLevel + 1) {
+					for (let level = lastLevel + 1; level < heading.level; level++) {
+						filledHeadings.push({
+							element: null,
+							tag: `h${level}`,
+							text: `Missing heading ${level}`,
+							level: level,
+							missing: true,
+						});
+					}
+				}
+
+				filledHeadings.push(heading);
+				lastLevel = heading.level;
+			});
+
+			this.headings = filledHeadings.map((heading) => ({
+				...heading,
+				level: heading.level - 1,
+			}));
+		},
+
+		getStructuredData() {
+			const jsonLinkedDataScripts = document.querySelectorAll('script[type="application/ld+json"]');
+			const parsedJsonLinkedDataScripts = Array.from(jsonLinkedDataScripts)
+				.map((linkedDataScript) => {
+					try {
+						return JSON.parse(linkedDataScript.textContent);
+					} catch (error) {
+						return null;
+					}
+				})
+				.filter(Boolean)
+				.reduce((acc, item) => {
+					const type = item["@type"] || "Unknown";
+					if (!acc[type]) acc[type] = [];
+					acc[type].push(item);
+					return acc;
+				}, {});
+
+			this.structuredData = parsedJsonLinkedDataScripts;
+		},
+
+		jsonToHtml(data) {
+			return jsonToHtml(data);
+		},
+
+		async renderSearchResults() {
+			const queryString = buildQueryString([{ key: "query", value: this.searchQuery }]);
+
+			const { content } = await templateRequest(`/author-toolbar/search?${queryString}`, {
+				headers: {
+					"X-Craft-Site": window.craftAuthorToolbar.siteId,
+				},
+			});
+
+			document.querySelector("#cat-search-results").outerHTML = content;
+		},
+
+		async copyToPageURLToClipboard() {
+			await navigator.clipboard.writeText(window.location.href);
+			alert(`${window.location.href} copied to clipboard`);
+		},
+
+		focusSearch() {
+			document.querySelector("#cat-search").focus();
+		},
+
+		showElementOnPage(element) {
+			if (!element) return;
+
+			element.classList.add("show-on-page");
+			setTimeout(() => element.classList.remove("show-on-page"), 1000);
+
+			element.scrollIntoView({
+				behavior: "smooth",
+				block: "center",
+				inline: "center",
+			});
+		},
+	};
+}

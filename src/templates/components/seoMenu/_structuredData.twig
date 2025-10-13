@@ -1,0 +1,54 @@
+{# ======================= #}
+{# TEMPLATE                #}
+{# ======================= #}
+<section 
+    toolbar-init="activeStructuredDataType = structuredData ? Object.entries.length : null" 
+    toolbar-show="seoMenuActiveTab === 'structuredData'"
+    class="cat-toolbar-seo-menu-structured-data" 
+>
+    <div class="cat-toolbar-seo-menu-structured-data-top">
+        <div>
+            <h2 class="cat-typo-body-md cat-semi-bold">{{ "Structured data"|t }}</h2>
+
+            <p class="cat-typo-body-sm">
+                {{ "This is an overview of all the structured data on this page. Structured data is used by Google to provide enhanced search results"|t }}
+            </p>
+        </div>
+
+        <ul class="cat-toolbar-seo-menu-structured-data-types-list">
+            <template toolbar-for="type, index in structuredData">
+                <li class="cat-toolbar-seo-menu-structured-data-types-list-item">
+                    <button 
+                        class="cat-toolbar-seo-menu-tab-button cat-typo-body-sm" 
+                        toolbar-bind:class="{ 'active': activeStructuredDataType === type[0]['@type'] }"
+                        toolbar-on:click="activeStructuredDataType = type[0]['@type']"
+                        toolbar-text="`${type[0]['@type'].replace(/([A-Z])/g, ' $1')} (${type.length})`"
+                    ></button>
+                </li>
+            </template>
+        </ul>
+    </div>
+
+    <ul class="cat-toolbar-seo-menu-structured-data-groups">
+        <template toolbar-for="type, index in structuredData" toolbar-bind:key="index">
+            <li toolbar-show="activeStructuredDataType === type[0]['@type']" class="cat-toolbar-seo-menu-structured-data-groups-item">
+                <ul class="cat-toolbar-seo-menu-structured-data-groups-content">
+                    <template toolbar-for="item in type">
+                        <li toolbar-data="{ open: false }" class="cat-toolbar-seo-menu-structured-data-groups-content-item">
+                            <button toolbar-on:click="open = !open">
+                                <p class="cat-typo-body-md" toolbar-text="Object.values(item)[2]"></p>
+                                <p class="cat-typo-body-sm">View properties</p>
+                            </button>
+
+                            <div 
+                                class="json-table-wrapper" 
+                                toolbar-show="open" 
+                                toolbar-html="jsonToHtml(item)">
+                            </div>
+                        </li>
+                    </template>
+                </ul>
+            </li>
+        </template>
+    </ul>
+</section>

@@ -6,19 +6,21 @@
 {# ======================= #}
 {# QUERY LOGIC             #}
 {# ======================= #}
-{% set allEntriesQuery = craft
-    .entries
-    .status(null)
-    .drafts(null)
-    .uri(':notempty:') %}
+{% set allProductsQuery = craft.products.status(null).uri(':notempty:') %}
+{% set filteredProductsQuery = clone(allProductsQuery) %}
 
+{% set allEntriesQuery = craft.entries.status(null).uri(':notempty:') %}
 {% set filteredEntriesQuery = clone(allEntriesQuery) %}
 
 {% if queryParam is not null %}
-    {% set filteredEntriesQuery = allEntriesQuery.search("title:" ~ queryParam) %}
+    {% set filteredProductsQuery = allProductsQuery.search('title:' ~ queryParam) %}
+    {% set filteredEntriesQuery = allEntriesQuery.search('title:' ~ queryParam) %}
 {% endif %}
 
-{% set results = filteredEntriesQuery.all|group("section.name") %}
+{% set groupedProducts = filteredProductsQuery.all|group("type.name") %}
+{% set groupedEntries = filteredEntriesQuery.all|group("section.name") %}
+
+{% set results = groupedProducts|merge(groupedEntries)|default([]) %}
 
 {# ======================= #}
 {# TEMPLATE                #}
@@ -26,11 +28,31 @@
 {% if results|length %}
     <div id="cat-search-results" class="cat-toolbar-search-results">
         <ul class="cat-toolbar-search-results-groups-list">
-            {% for sectionHandle, entries in results %}
-                {% if sectionHandle %}
+            {% for group, entries in results %}
+                {% set isProduct = null %}
+                {% set entryType = entries[0].type.handle|default("") %}
+                {% set sectionType = entries[0].section.type|default("") %}
+
+                {% if entries[0].className == 'craft\\commerce\\elements\\Product' %}
+                    {% set isProduct = true %}
+                {% endif %}
+
+                {% if group %}
                     <li class="cat-toolbar-search-results-groups-list-item">
                         <div class="cat-toolbar-search-results-groups-list-item-top">
-                            <h2 class="cat-typo-body-md cat-semi-bold">{{ sectionHandle }} ({{ entries|length }})</h2>
+                            <h2 class="cat-typo-body-md cat-semi-bold">
+                                {{ group }} 
+
+                                {% if not sectionType == "single" %}
+                                     ({{ entries|length }})
+                                {% endif %}
+                            </h2>
+
+                            {% if isProduct %}
+                                <a class="cat-typo-body-md" href="{{ cpUrl('commerce/products/' ~ entryType) }}">{{ "View all"|t }}</a>
+                            {% elseif not sectionType == "single" %}
+                                <a class="cat-typo-body-md" href="{{ cpUrl('entries/' ~ entryType) }}">{{ "View all"|t }}</a>
+                            {% endif %}
                         </div>
 
                         <ul class="cat-toolbar-search-results-list">
@@ -51,7 +73,15 @@
                                 %}
                                     {% set thumbnail = result[thumbField.field.handle].one %}
                                 {% endif %}
-                                
+
+                                {% if isProduct %}
+                                    {% set amountOfVariants = result.variants|length %}
+
+                                    {% set prices = result.variants|map(variant => variant.price) %}
+                                    {% set minPrice = min(prices) %}
+                                    {% set maxPrice = max(prices) %}
+                                {% endif %}
+
                                 <li class="cat-toolbar-search-results-list-item">
                                     <a href="{{ url }}" class="cat-toolbar-search-results-list-item-link">
                                         <article class="cat-toolbar-search-results-card">
@@ -61,10 +91,21 @@
                                                 {% endif %}
 
                                                 <div class="cat-toolbar-search-results-card-main-info">
-                                                    <p class="cat-typo-body-md">{{ title }}</p>
+                                                    <p class="cat-typo-body-md">
+                                                        {{ title }}
+                                                        {% if isProduct %}
+                                                            {% if minPrice == maxPrice %}
+                                                                - {{ minPrice|commerceCurrency }}
+                                                            {% else %}
+                                                                - {{ minPrice|commerceCurrency }} - {{ maxPrice|commerceCurrency }}
+                                                            {% endif %}
+                                                            
+                                                            ({{ amountOfVariants }} {{ "variants"|t }})
+                                                        {% endif %}
+                                                    </p>
 
                                                     <div class="cat-toolbar-search-results-card-link">
-                                                        <span class="cat-typo-body-sm">{{ "Pagina bekijken"|t }}</span>
+                                                        <span class="cat-typo-body-sm">{{ isProduct ? "View product"|t : "View page"|t }}</span>
 
                                                         {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/circle-arrow-right.svg") }}
                                                     </div>

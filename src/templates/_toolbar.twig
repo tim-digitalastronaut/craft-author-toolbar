@@ -2,13 +2,18 @@
 {# PROPERTIES              #}
 {# ======================= #}
 {% set pageUrl = craft.app.request.absoluteUrl %}
+{% set isProduct = null %}
 
 {% if entry %}
+    {% if entry.className == 'craft\\commerce\\elements\\Product' %}
+        {% set isProduct = true %}
+    {% endif %}
+
     {% set pageTitle = entry.title|default("") %}
     {% set cpEditUrl = entry.cpEditUrl|default("") %}
     {% set pageStatus = entry.status|default("") %}
     {% set updatedAt = 
-        "last edited "|t ~
+        "Last edited "|t ~
         entry.dateUpdated|date("d F Y") ~ 
         " om "|t ~ 
         entry.dateUpdated|date("h:s")|default("") %}
@@ -67,6 +72,10 @@
             <div class="cat-toolbar-help cat-toolbar-chunk">
                 {% include "author-toolbar/components/chunks/_help" %}
             </div>
+
+            {% for widget in settings.customWidgets %}
+                {% include widget["path"] %}
+            {% endfor %}
         </div>
 
         <div class="cat-toolbar-bottom">
@@ -94,13 +103,13 @@
             </div>
         </div>
 
-        {# <ul class="cat-toolbar-warnings-list">
+        <ul class="cat-toolbar-warnings-list">
             <li class="cat-toolbar-warnings-list-item">
                 {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/triangle-exclamation.svg") }}
 
                 <p class="cat-typo-body-md">{{ "Je bent inhoud aan het bewerken op de testomgeving" }}</p>
             </li>
-        </ul> #}
+        </ul>
     </div>
 
     <script>
@@ -112,3 +121,4 @@
         }
     </script>
 {% endif %}
+

@@ -38,15 +38,37 @@
     {{ hiddenInput('pluginHandle', 'author-toolbar') }}
 
     <div id="general">
-        {{ forms.lightswitchField({
-            label: 'Enable the toolbar'|t,
-            instructions: 'Show the toolbar on the frontend for logged in users'|t,
-            id: 'toolbarEnabled',
-            offLabel: 'Hide',
-            onLabel: 'Show',
-            name: 'settings[toolbarEnabled]',
-            on: settings.toolbarEnabled,
-        }) }}
+        <div class="flex-fields">
+            <div class="field width-50">
+                {{ forms.lightswitchField({
+                    label: 'Enable the toolbar'|t,
+                    instructions: 'Show the toolbar on the frontend for logged in users'|t,
+                    id: 'toolbarEnabled',
+                    offLabel: 'Hide',
+                    onLabel: 'Show',
+                    name: 'settings[toolbarEnabled]',
+                    on: settings.toolbarEnabled,
+                }) }}
+            </div>
+
+            <div class="line-break"></div>
+
+            <div class="field width-50">
+                {{ forms.editableTableField({
+                    label: 'Custom widgets',
+                    instructions: 'Extend the toolbar with your own custom widgets by specifying twig template paths here. \n Paths are relative to the **templates/** folder',
+                    id: 'customWidgets',
+                    name: 'settings[customWidgets]',
+                    cols: {
+                        path: { heading: "Template path", type: "template", code: true },
+                    },
+                    rows: settings.customWidgets,
+                    allowAdd: true,
+                    allowDelete: true,
+                    allowReorder: true,
+                }) }}
+            </div>
+        </div>
     </div>
 
     <div id="help" class="hidden">

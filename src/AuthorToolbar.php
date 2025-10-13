@@ -91,10 +91,12 @@ class AuthorToolbar extends Plugin {
             View::class,
             View::EVENT_BEFORE_RENDER_PAGE_TEMPLATE,
             function (TemplateEvent $event) {
-                $entry = $event->variables['entry'] ?? null;
+                $entry = $event->variables['entry'] ?? $event->variables['product'] ?? null;
+
                 $settings = $this->getSettings();
 
                 if (!$settings->toolbarEnabled) return;
+                if (!Craft::$app->getUser()->getIsAdmin()) return;
 
                 Craft::$app->getView()->registerAssetBundle(AuthorToolbarAssets::class);
 

@@ -1,5 +1,22 @@
 # Release Notes for Author toolbar
 
+## v1.1.0-beta - 2025.10.10
+
+-   Added Support for Craft Commerce
+-   Added commerce orders (with new orders badge), products and inventory to the startmenu when craft commerce is installed
+-   Fixed a layout issue where the url in the toolbar would wrap for extra long URL's
+-   Fixed a styling issue in create entry type menu
+-   Fixed an issue where the toolbar whould not show on product pages
+-   Only show the toolbar for admin user (temporary fix for [#2](https://github.com/tim-digitalastronaut/craft-author-toolbar/issues/2))
+-   Added context aware actions buttons so editing content pages and products is seamless
+-   Added products to the global search menu
+-   Improved the global search
+    -   limited results per entry type/product
+    -   removed unnessecary view all links and totals for single sections
+    -   Show product specific data when entry is a commerce product
+-   Added support for custom widgets that allow for site specific customisations (Work in progress)
+-   Added structured data analasys to the SEO menu for inspecting JSON-LD objects [#1](https://github.com/tim-digitalastronaut/craft-author-toolbar/issues/1)
+
 ## v1.0.9-beta - 2025.09.30
 
 -   Fixed empty help menu when no info is provided

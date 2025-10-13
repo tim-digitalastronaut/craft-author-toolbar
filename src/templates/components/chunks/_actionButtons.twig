@@ -1,8 +1,12 @@
 {# ======================= #}
 {# PROPERTIES              #}
 {# ======================= #}
-{% set allSections = craft.app.entries.allSections|default([]) %}
-{% set nonSingleSections = allSections|filter(section => section.type != 'single') %}
+{% if isProduct %}
+    {% set availableEntryTypes = craft.commerce.productTypes.allProductTypes|default([]) %}
+{% else %}
+    {% set allSections = craft.app.entries.allSections|default([]) %}
+    {% set availableEntryTypes = allSections|filter(section => section.type != 'single') %}
+{% endif %}
 
 {# ======================= #}
 {# TEMPLATE                #}
@@ -10,7 +14,7 @@
 <a href="{{ cpEditUrl }}" target="_blank" class="cat-button cat-typo-body-md">
     {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/pen.svg") }}
 
-    <span>{{ "Edit page"|t }}</span>
+    <span>{{ isProduct ? "Edit product"|t : "Edit page"|t }}</span>
 </a>
 
 <div 
@@ -26,38 +30,42 @@
     >
         {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/plus.svg") }}
 
-        <span class="cat-typo-body-md">{{ "Create new page"|t }}</span>
+        <span class="cat-typo-body-md">{{ isProduct ? "Create new product"|t : "Create new page"|t }}</span>
     </button>
 
     <div class="cat-toolbar-create-entry-menu-content">
-        <h2 class="cat-typo-body-md cat-semi-bold">{{ "Choose a page type"|t }}</h2>
+        <h2 class="cat-typo-body-md cat-semi-bold">{{ isProduct ? "Choose a product type"|t : "Choose a page type"|t }}</h2>
 
-        {% if nonSingleSections|length %}
+        {% if availableEntryTypes|length %}
             <ul class="cat-toolbar-create-entry-menu-entries-list">
-                {% for section in nonSingleSections %}
-                    {% set name = section.name|default("") %}
-                    {% set color = section.entryTypes[0].color.value|default("") %}
-                    {% set createUrl = cpUrl('entries/' ~ section.handle ~ '/new')|default("") %}
+                {% for entryType in availableEntryTypes %}
+                    {% set name = entryType.name|default("") %}
+                    {% set color = entryType.entryTypes[0].color.value|default("gray") %}
+                    {% set createUrl = cpUrl('entries/' ~ entryType.handle ~ '/new')|default("") %}
 
-                    {% if section.type != "single" %}
-                        <li 
-                            class="cat-toolbar-create-entry-menu-entries-list-item"
-                            style="--entry-type-light: var(--{{ color}}-100); --entry-type-dark: var(--{{ color }}-500)"
-                        >
-                            <a href="{{ createUrl }}" class="cat-toolbar-create-entry-menu-entries-list-item-link">
-                                <div class="cat-toolbar-create-entry-menu-entries-list-item-icon">
-                                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/plus.svg") }}
-                                </div>
-
-                                <span class="cat-typo-body-md">{{ "New"|t }} {{ name|lower }} {{ "entry"|t }}</span>
-                            </a>
-                        </li>
+                    {% if isProduct %}
+                        {% set createUrl = cpUrl('commerce/products/' ~ entryType.handle ~ '/new')|default("") %}
                     {% endif %}
+
+                    <li 
+                        class="cat-toolbar-create-entry-menu-entries-list-item"
+                        style="--entry-type-light: var(--{{ color }}-100); --entry-type-dark: var(--{{ color }}-500)"
+                    >
+                        <a href="{{ createUrl }}" class="cat-toolbar-create-entry-menu-entries-list-item-link">
+                            <div class="cat-toolbar-create-entry-menu-entries-list-item-icon">
+                                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/plus.svg") }}
+                            </div>
+
+                            <span class="cat-typo-body-md">{{ "New"|t }} {{ name|lower }} {{ isProduct ? "product"|t : "entry"|t }}</span>
+                        </a>
+                    </li>
                 {% endfor %}
             </ul>
         {% else %}
             <div class="cat-toolbar-create-entry-menu-empty">
-                <h3 class="cat-typo-body-md cat-semi-bold">{{ "No sections found"|t }}</h3>
+                <h3 class="cat-typo-body-md cat-semi-bold">
+                    {{ isProduct ? "No product types found"|t : "No sections with a URL found"|t }}
+                </h3>
             </div>
         {% endif %}
     </div>
