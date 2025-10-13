@@ -1,5 +1,9 @@
 # Release Notes for Author toolbar
 
+## v1.1.2-beta - 2025.10.13
+
+-   Fix for previous release fail again
+
 ## v1.1.1-beta - 2025.10.13
 
 -   Fix for previous release fail
