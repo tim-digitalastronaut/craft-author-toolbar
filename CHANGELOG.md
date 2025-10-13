@@ -1,6 +1,10 @@
 # Release Notes for Author toolbar
 
-## v1.1.0-beta - 2025.10.10
+## v1.1.1-beta - 2025.10.13
+
+-   Fix for previous release fail
+
+## v1.1.0-beta - 2025.10.13
 
 -   Added Support for Craft Commerce
 -   Added commerce orders (with new orders badge), products and inventory to the startmenu when craft commerce is installed
