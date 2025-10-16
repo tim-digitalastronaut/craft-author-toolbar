@@ -6,8 +6,8 @@
     { icon: "entries", label: "Entries"|t, href: cpUrl('entries') },
 ] %}
 
-{% if craft.commerce is defined %}
-    {% set newOrdersCount = craft.orders().status('new').count() %}
+{% if craft.app.plugins.isPluginEnabled('commerce') %}
+    {% set newOrdersCount = craft.orders.orderStatus('new').count %}
 
     {% set startMenuOptions = startMenuOptions|merge([
         { icon: "orders", label: "Orders"|t, href: cpUrl('commerce/orders'), badge: newOrdersCount }
@@ -30,51 +30,53 @@
 {# ======================= #}
 {# TEMPLATE                #}
 {# ======================= #}
-<div 
-    class="cat-toolbar-start-menu"
-    toolbar-on:click.outside="startMenuOpen = false"
-    toolbar-on:keydown.esc.window="startMenuOpen = false"
-    toolbar-bind:class="{ 'open': startMenuOpen }"
->
-    <button 
-        class="cat-toolbar-start-menu-toggle"
-        toolbar-on:click="startMenuOpen = !startMenuOpen" 
-        toolbar-on:keydown.tab="startMenuOpen = true"
+<div class="cat-toolbar-start cat-toolbar-chunk">
+    <div 
+        class="cat-toolbar-start-menu"
+        toolbar-on:click.outside="startMenuOpen = false"
+        toolbar-on:keydown.esc.window="startMenuOpen = false"
+        toolbar-bind:class="{ 'open': startMenuOpen }"
     >
-        <div class="cat-toolbar-start-menu-profile-picture">
-            {% if currentUser.photo %}
-                <img 
-                    src="{{ currentUser.photo.url }}" 
-                    alt="Profile picture of {{ currentUser.fullName|default("User") }}"
-                >
-            {% else %}
-                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/craftcms-icon.svg") }}
-            {% endif %}
+        <button 
+            class="cat-toolbar-start-menu-toggle"
+            toolbar-on:click="startMenuOpen = !startMenuOpen" 
+            toolbar-on:keydown.tab="startMenuOpen = true"
+        >
+            <div class="cat-toolbar-start-menu-profile-picture">
+                {% if currentUser.photo %}
+                    <img 
+                        src="{{ currentUser.photo.url }}" 
+                        alt="Profile picture of {{ currentUser.fullName|default("User") }}"
+                    >
+                {% else %}
+                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/craftcms-icon.svg") }}
+                {% endif %}
+            </div>
+
+            <div class="cat-toolbar-start-menu-user-info">
+                <p class="cat-typo-body-md cat-semi-bold">{{ currentUser.fullName|default("User") }}</p>
+                <p class="cat-typo-body-sm">{{ currentUser.email }}</p>
+            </div>
+
+            {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/chevron-down.svg") }}
+        </button>
+
+        <div class="cat-toolbar-start-menu-content">
+            <ul class="cat-toolbar-start-menu-options-list">
+                {% for option in startMenuOptions %}
+                    <li class="cat-toolbar-start-menu-options-list-item">
+                        <a href="{{ option.href }}" class="cat-toolbar-start-menu-options-list-item-link">
+                            {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/#{option.icon}.svg") }}
+
+                            <p class="cat-typo-body-md">{{ option.label }}</p>
+
+                            {% if option.badge is defined and option.badge %}
+                                <div class="cat-badge cat-typo-body-sm">{{ option.badge }} {{ "New"|t }}</div>                        
+                            {% endif %}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
-
-        <div class="cat-toolbar-start-menu-user-info">
-            <p class="cat-typo-body-md cat-semi-bold">{{ currentUser.fullName|default("User") }}</p>
-            <p class="cat-typo-body-sm">{{ currentUser.email }}</p>
-        </div>
-
-        {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/chevron-down.svg") }}
-    </button>
-
-    <div class="cat-toolbar-start-menu-content">
-        <ul class="cat-toolbar-start-menu-options-list">
-            {% for option in startMenuOptions %}
-                <li class="cat-toolbar-start-menu-options-list-item">
-                    <a href="{{ option.href }}" class="cat-toolbar-start-menu-options-list-item-link">
-                        {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/#{option.icon}.svg") }}
-
-                        <p class="cat-typo-body-md">{{ option.label }}</p>
-
-                        {% if option.badge is defined and option.badge %}
-                            <div class="cat-badge cat-typo-body-sm">{{ option.badge }} {{ "New"|t }}</div>                        
-                        {% endif %}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
     </div>
 </div>

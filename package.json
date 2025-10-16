@@ -4,8 +4,11 @@
 	"description": "A frontend toolbar that enhances the authoring experience",
 	"main": "index.js",
 	"scripts": {
-		"dev": "mix watch",
-		"build": "mix --production"
+		"plugin:dev": "mix watch",
+		"plugin:build": "mix --production",
+		"docs:dev": "vitepress dev docs",
+		"docs:build": "vitepress build docs",
+		"docs:preview": "vitepress preview docs"
 	},
 	"keywords": [],
 	"author": "",
@@ -15,9 +18,14 @@
 		"laravel-mix": "^6.0.49",
 		"resolve-url-loader": "^5.0.0",
 		"sass": "^1.93.2",
-		"sass-loader": "^12.6.0"
+		"sass-loader": "^12.6.0",
+		"vitepress": "^2.0.0-alpha.12",
+		"vue": "^3.5.22"
 	},
 	"dependencies": {
+		"@adobe/structured-data-validator": "^1.5.0",
+		"@floating-ui/dom": "^1.7.4",
+		"@marbec/web-auto-extractor": "^2.2.1",
 		"alpinejs": "^3.14.9"
 	}
 }

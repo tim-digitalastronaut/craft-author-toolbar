@@ -10,6 +10,8 @@ use digitalastronaut\craftauthortoolbar\AuthorToolbar;
 
 class SettingsController extends Controller {
     public function actionIndex(): Response {
+        $this->requirePermission('authorToolbar-editSettings');
+
         $settings = AuthorToolbar::getInstance()->getSettings();
         
         return $this->renderTemplate('author-toolbar/_settings.twig', [

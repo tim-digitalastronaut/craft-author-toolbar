@@ -51,8 +51,69 @@
                 }) }}
             </div>
 
+            <hr>
+
+            <h3>Default widgets</h3>
+
+            <div class="field width-25">
+                {{ forms.lightswitchField({
+                    label: 'Start menu'|t,
+                    id: 'startMenuEnabled',
+                    offLabel: 'Hide',
+                    onLabel: 'Show',
+                    name: 'settings[startMenuEnabled]',
+                    on: settings.startMenuEnabled,
+                }) }}
+            </div>
+
+            <div class="field width-25">
+                {{ forms.lightswitchField({
+                    label: 'Action buttons'|t,
+                    id: 'actionButtonsEnabled',
+                    offLabel: 'Hide',
+                    onLabel: 'Show',
+                    name: 'settings[actionButtonsEnabled]',
+                    on: settings.actionButtonsEnabled,
+                }) }}
+            </div>
+
+            <div class="field width-25">
+                {{ forms.lightswitchField({
+                    label: 'Global search'|t,
+                    id: 'globalSearchEnabled',
+                    offLabel: 'Hide',
+                    onLabel: 'Show',
+                    name: 'settings[globalSearchEnabled]',
+                    on: settings.globalSearchEnabled,
+                }) }}
+            </div>
+
             <div class="line-break"></div>
 
+            <div class="field width-25">
+                {{ forms.lightswitchField({
+                    label: 'SEO menu'|t,
+                    id: 'seoMenuEnabled',
+                    offLabel: 'Hide',
+                    onLabel: 'Show',
+                    name: 'settings[seoMenuEnabled]',
+                    on: settings.seoMenuEnabled,
+                }) }}
+            </div>
+
+            <div class="field width-25">
+                {{ forms.lightswitchField({
+                    label: 'Help menu'|t,
+                    id: 'helpMenuEnabled',
+                    offLabel: 'Hide',
+                    onLabel: 'Show',
+                    name: 'settings[helpMenuEnabled]',
+                    on: settings.helpMenuEnabled,
+                }) }}
+            </div>
+
+            <hr>
+            
             <div class="field width-50">
                 {{ forms.editableTableField({
                     label: 'Custom widgets',

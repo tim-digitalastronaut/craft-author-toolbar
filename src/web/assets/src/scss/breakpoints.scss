@@ -1,0 +1,27 @@
+@use "sass:map";
+
+// =======================
+// BREAKPOINTS
+// =======================
+$breakpoints: (
+	"mobileS": 320px,
+	"mobileM": 375px,
+	"mobileL": 425px,
+	"tabletS": 500px,
+	"tablet": 768px,
+	"desktopS": 1024px,
+	"desktopM": 1200px,
+	"desktopL": 1400px,
+);
+
+@mixin styles-above($size) {
+	@media (min-width: map.get($breakpoints, $size)) {
+		@content;
+	}
+}
+
+@mixin styles-below($size) {
+	@media (max-width: map.get($breakpoints, $size)) {
+		@content;
+	}
+}

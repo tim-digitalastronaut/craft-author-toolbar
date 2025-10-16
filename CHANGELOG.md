@@ -1,5 +1,15 @@
 # Release Notes for Author toolbar
 
+## v1.1.3-beta - 2025.10.14
+
+-   Also render the toolbar for custom pages
+-   Fixed issue where the share previews would not work for custom pages
+-   Fixed issue where the toolbar would show incorrect info for custom pages
+-   Fixed responsive issues with the menu's for smaller screen sizes
+-   Fixed responsive issues for the page info link
+-   Added settings for managing the default widgets
+-   Added settings for managing the start menu links
+
 ## v1.1.2-beta - 2025.10.13
 
 -   Fix for previous release fail again

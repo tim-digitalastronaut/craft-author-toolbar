@@ -1,0 +1,79 @@
+{# ======================= #}
+{# PROPERTIES              #}
+{# ======================= #}
+{% set tabs = [
+    { label: "Checklist"|t, id: "checklist" },
+    { label: "Share previews"|t, id: "previews" },
+    { label: "Images"|t, id: "images" },
+    { label: "Headings"|t, id: "headings" },
+] %}
+
+{# { label: "Structured data"|t, id: "structuredData" }, #}
+
+{# ======================= #}
+{# TEMPLATE                #}
+{# ======================= #}
+<div class="cat-toolbar-seo-checklist cat-toolbar-chunk" toolbar-data="menu">
+    <div 
+        class="cat-toolbar-seo-menu"
+        toolbar-on:click.outside="seoMenuOpen = false"
+        toolbar-on:keydown.esc.window="seoMenuOpen = false;"
+        toolbar-bind:class="{ 'open': seoMenuOpen }"
+    >
+        <button 
+            toolbar-on:click="seoMenuOpen = !seoMenuOpen" 
+            class="cat-toolbar-seo-menu-toggle"
+        >
+            <p class="cat-typo-body-md">{{ "SEO"|t }}</p>
+
+            <div class="cat-typo-body-md cat-semi-bold" toolbar-bind:class="overallSeoStatus">
+                <template toolbar-if="overallSeoStatus === 'passed'">
+                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/circle-check.svg") }}
+                </template>
+
+                <template toolbar-if="overallSeoStatus === 'warning'">
+                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/triangle-exclamation.svg") }}
+                </template>
+
+                <template toolbar-if="overallSeoStatus === 'failed'">
+                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/circle-exclamation.svg") }}
+                </template>
+
+                <p 
+                    class="cat-typo-body-md cat-semi-bold" 
+                    toolbar-text="`${passedSeoChecks}/${seoChecklistResults.length}`">
+                </p>
+            </div>
+
+            {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/chevron-down.svg") }}
+        </button>
+
+        <div class="cat-toolbar-seo-menu-content menu">
+            <ul class="cat-toolbar-seo-menu-tabs">
+                {% for tab in tabs %}
+                    <li class="cat-toolbar-seo-menu-tab">
+                        <button 
+                            class="cat-toolbar-seo-menu-tab-button cat-typo-body-sm" 
+                            toolbar-bind:class="{ 'active': seoMenuActiveTab === '{{ tab.id }}' }"
+                            toolbar-on:click="seoMenuActiveTab = '{{ tab.id }}'"
+                        >
+                            {{ tab.label }}
+                        </button>
+                    </li>     
+                {% endfor %}
+            </ul>
+
+            <div class="cat-toolbar-seo-menu-tabs-content">
+                {% include "author-toolbar/components/seoMenu/_checklistTab" %}
+
+                {% include "author-toolbar/components/seoMenu/_seoPreviewsTab" %}
+
+                {% include "author-toolbar/components/seoMenu/_imagesTab" %}
+
+                {% include "author-toolbar/components/seoMenu/_headingsTab" %}
+
+                {# {% include "author-toolbar/components/seoMenu/_structuredData" %} #}
+            </div>
+        </div>
+    </div>
+</div>

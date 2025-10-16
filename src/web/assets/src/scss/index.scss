@@ -1,5 +1,6 @@
 @use "variables";
 @use "typography";
+@use "breakpoints" as *;
 
 body {
 	margin-bottom: 120px;
@@ -85,8 +86,8 @@ body {
 
 	&-main {
 		display: flex;
+		flex-wrap: wrap;
 		border-top: 1px solid var(--clr-grey-300);
-		height: 60px;
 		width: 100%;
 	}
 
@@ -94,22 +95,43 @@ body {
 		position: relative;
 		width: fit-content;
 		padding-inline: 16px;
-		height: 100%;
+		height: 60px;
 		display: flex;
 		align-items: center;
 		gap: 12px;
 		border-right: 1px solid var(--clr-grey-300);
+
+		&::after {
+			content: "";
+			position: absolute;
+			bottom: 0px;
+			left: 0;
+			height: 1px;
+			width: 100vw;
+			background-color: var(--clr-grey-300);
+		}
 	}
 
 	&-bottom {
+		position: relative;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 12px 32px;
 		border-top: 1px solid var(--clr-grey-300);
-		height: 40px;
-		padding-inline: 16px;
-
+		padding: 8px 16px;
 		width: 100%;
+
+		&::after {
+			content: "";
+			position: absolute;
+			top: -1px;
+			left: 0;
+			width: 100vw;
+			height: 1px;
+			background-color: var(--clr-white);
+		}
 
 		svg {
 			color: var(--clr-grey-900);
@@ -124,12 +146,16 @@ body {
 		gap: 8px;
 
 		& > p {
-			max-width: 400px;
+			max-width: 200px;
 			user-select: all;
 			cursor: pointer;
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
+
+			@include styles-above(tablet) {
+				max-width: 400px;
+			}
 		}
 	}
 
@@ -261,6 +287,8 @@ body {
 }
 
 .cat-toolbar-start {
+	z-index: 99;
+
 	&-menu {
 		&.open {
 			.cat-toolbar-start-menu-content {
@@ -364,6 +392,8 @@ body {
 }
 
 .cat-toolbar-create-entry-menu {
+	z-index: 99;
+
 	&.open {
 		.cat-toolbar-create-entry-menu-content {
 			opacity: 1;
@@ -393,10 +423,14 @@ body {
 		padding: 8px 4px 4px;
 		border: 1px solid var(--clr-grey-300);
 		background-color: white;
-		min-width: 360px;
+		min-width: 260px;
 		opacity: 0;
 		pointer-events: none;
 		transition: all ease-out 0.3s;
+
+		@include styles-above(tabletS) {
+			min-width: 360px;
+		}
 
 		& > h2 {
 			padding-left: 8px;
@@ -405,8 +439,12 @@ body {
 
 	&-entries-list {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: 1fr;
 		gap: var(--space-4);
+
+		@include styles-above(tabletS) {
+			grid-template-columns: repeat(2, 1fr);
+		}
 
 		&-item {
 			&-link {
@@ -476,6 +514,17 @@ body {
 }
 
 .cat-toolbar-search {
+	z-index: 99;
+
+	&-menu {
+		&.open {
+			.cat-toolbar-search-results {
+				opacity: 1;
+				pointer-events: all;
+			}
+		}
+	}
+
 	&-bar {
 		display: flex;
 		align-items: center;
@@ -487,6 +536,7 @@ body {
 
 		input {
 			height: 100%;
+			width: 200px;
 			padding-inline: 8px;
 
 			&:focus {
@@ -516,25 +566,15 @@ body {
 		}
 	}
 
-	&.open {
-		.cat-toolbar-search-results {
-			opacity: 1;
-			pointer-events: all;
-		}
-	}
-
 	&-results {
 		position: absolute;
-		top: 0;
+		top: -1px;
 		left: -1px;
-		z-index: -1;
 		transform: translateY(-100%);
 		max-height: 360px;
-		min-width: 450px;
 		overflow-y: scroll;
 
 		border: 1px solid var(--clr-grey-300);
-		border-bottom: none;
 		border-top-left-radius: 4px;
 		border-top-right-radius: 4px;
 
@@ -544,6 +584,10 @@ body {
 		opacity: 0;
 		pointer-events: none;
 		transition: all ease-out 0.3s;
+
+		@include styles-above(tabletS) {
+			min-width: 450px;
+		}
 
 		&-groups-list {
 			display: flex;
@@ -650,7 +694,11 @@ body {
 					justify-content: center;
 					padding-inline: 12px 32px;
 					padding-block: 4px;
-					width: 280px;
+					width: 200px;
+
+					@include styles-above(tabletS) {
+						width: 280px;
+					}
 
 					& > p {
 						white-space: nowrap;
@@ -698,6 +746,8 @@ body {
 }
 
 .cat-toolbar-seo-menu {
+	z-index: 99;
+
 	&.open {
 		.cat-toolbar-seo-menu-toggle > svg {
 			transform: scaleY(-1);
@@ -764,14 +814,21 @@ body {
 	&-content {
 		display: flex;
 		flex-direction: column;
+		width: 360px;
+		max-width: 360px;
 		position: absolute;
-		top: 0;
+		top: -1px;
 		right: -1px;
 		transform: translateY(-100%);
 		opacity: 0;
 		pointer-events: none;
 		transition: all ease-out 0.3s;
 		z-index: -1;
+
+		@include styles-above(tabletS) {
+			width: 480px;
+			max-width: 480px;
+		}
 	}
 
 	&-tabs {
@@ -780,10 +837,15 @@ body {
 		border: 1px solid var(--clr-grey-300);
 		border-top-right-radius: 4px;
 		border-top-left-radius: 4px;
-		width: 480px;
-		max-width: 480px;
+		width: 360px;
+		max-width: 360px;
 		overflow-x: scroll;
 		list-style: none;
+
+		@include styles-above(tabletS) {
+			width: 480px;
+			max-width: 480px;
+		}
 	}
 
 	&-tab button {
@@ -808,13 +870,17 @@ body {
 		background-color: var(--clr-white);
 		border: 1px solid var(--clr-grey-300);
 		border-top: none;
-		border-bottom: none;
 		padding: 16px;
 		max-height: 380px;
 		height: 380px;
-		width: 480px;
-		max-width: 480px;
+		width: 360px;
+		max-width: 360px;
 		overflow-y: scroll;
+
+		@include styles-above(tabletS) {
+			width: 480px;
+			max-width: 480px;
+		}
 	}
 
 	&-checklist {
@@ -1556,6 +1622,8 @@ body {
 }
 
 .cat-toolbar-help-menu {
+	z-index: 99;
+
 	&.open {
 		.cat-toolbar-help-menu-toggle > svg:last-of-type {
 			transform: scaleY(-1);
@@ -1600,7 +1668,7 @@ body {
 
 	&-content {
 		position: absolute;
-		top: 0;
+		top: -1px;
 		right: -1px;
 		z-index: -1;
 		transform: translateY(-100%);
@@ -1610,7 +1678,6 @@ body {
 
 		background-color: var(--clr-white);
 		border: 1px solid var(--clr-grey-300);
-		border-bottom: none;
 		border-top-left-radius: 4px;
 		border-top-right-radius: 4px;
 
@@ -1721,4 +1788,7 @@ body {
 	color: var(--clr-white);
 	border-radius: 100px;
 	padding-inline: 8px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }

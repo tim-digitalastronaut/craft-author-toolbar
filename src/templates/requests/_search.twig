@@ -26,116 +26,112 @@
 {# TEMPLATE                #}
 {# ======================= #}
 {% if results|length %}
-    <div id="cat-search-results" class="cat-toolbar-search-results">
-        <ul class="cat-toolbar-search-results-groups-list">
-            {% for group, entries in results %}
-                {% set isProduct = null %}
-                {% set entryType = entries[0].type.handle|default("") %}
-                {% set sectionType = entries[0].section.type|default("") %}
+    <ul class="cat-toolbar-search-results-groups-list">
+        {% for group, entries in results %}
+            {% set isProduct = null %}
+            {% set entryType = entries[0].type.handle|default("") %}
+            {% set sectionType = entries[0].section.type|default("") %}
 
-                {% if entries[0].className == 'craft\\commerce\\elements\\Product' %}
-                    {% set isProduct = true %}
-                {% endif %}
+            {% if entries[0].className == 'craft\\commerce\\elements\\Product' %}
+                {% set isProduct = true %}
+            {% endif %}
 
-                {% if group %}
-                    <li class="cat-toolbar-search-results-groups-list-item">
-                        <div class="cat-toolbar-search-results-groups-list-item-top">
-                            <h2 class="cat-typo-body-md cat-semi-bold">
-                                {{ group }} 
+            {% if group %}
+                <li class="cat-toolbar-search-results-groups-list-item">
+                    <div class="cat-toolbar-search-results-groups-list-item-top">
+                        <h2 class="cat-typo-body-md cat-semi-bold">
+                            {{ group }} 
 
-                                {% if not sectionType == "single" %}
-                                     ({{ entries|length }})
-                                {% endif %}
-                            </h2>
+                            {% if not sectionType == "single" %}
+                                    ({{ entries|length }})
+                            {% endif %}
+                        </h2>
+
+                        {% if isProduct %}
+                            <a class="cat-typo-body-md" href="{{ cpUrl('commerce/products/' ~ entryType) }}">{{ "View all"|t }}</a>
+                        {% elseif not sectionType == "single" %}
+                            <a class="cat-typo-body-md" href="{{ cpUrl('entries/' ~ entryType) }}">{{ "View all"|t }}</a>
+                        {% endif %}
+                    </div>
+
+                    <ul class="cat-toolbar-search-results-list">
+                        {% for result in entries %}
+                            {% set url = result.url|default("") %}
+                            {% set title = result.title|default("Inhoud zonder titel") %}
+                            {% set status = result.status|default("") %}
+                            {% set thumbField = result.fieldLayout.thumbField %}
+                            {% set thumbnail = null %}
+
+                            {% set thumbField = result.fieldLayout.thumbField %}
+
+                            {% if 
+                                thumbField and 
+                                thumbField.className == "craft\\fieldlayoutelements\\CustomField" and 
+                                thumbField.field and 
+                                thumbField.field.className == "craft\\fields\\Assets" 
+                            %}
+                                {% set thumbnail = result[thumbField.field.handle].one %}
+                            {% endif %}
 
                             {% if isProduct %}
-                                <a class="cat-typo-body-md" href="{{ cpUrl('commerce/products/' ~ entryType) }}">{{ "View all"|t }}</a>
-                            {% elseif not sectionType == "single" %}
-                                <a class="cat-typo-body-md" href="{{ cpUrl('entries/' ~ entryType) }}">{{ "View all"|t }}</a>
+                                {% set amountOfVariants = result.variants|length %}
+
+                                {% set prices = result.variants|map(variant => variant.price) %}
+                                {% set minPrice = min(prices) %}
+                                {% set maxPrice = max(prices) %}
                             {% endif %}
-                        </div>
 
-                        <ul class="cat-toolbar-search-results-list">
-                            {% for result in entries %}
-                                {% set url = result.url|default("") %}
-                                {% set title = result.title|default("Inhoud zonder titel") %}
-                                {% set status = result.status|default("") %}
-                                {% set thumbField = result.fieldLayout.thumbField %}
-                                {% set thumbnail = null %}
+                            <li class="cat-toolbar-search-results-list-item">
+                                <a href="{{ url }}" class="cat-toolbar-search-results-list-item-link">
+                                    <article class="cat-toolbar-search-results-card">
+                                        <div class="cat-toolbar-search-results-card-main">
+                                            {% if thumbnail %}
+                                                <img src="{{ thumbnail.getUrl({ width: 200 }) }}">
+                                            {% endif %}
 
-                                {% set thumbField = result.fieldLayout.thumbField %}
-
-                                {% if 
-                                    thumbField and 
-                                    thumbField.className == "craft\\fieldlayoutelements\\CustomField" and 
-                                    thumbField.field and 
-                                    thumbField.field.className == "craft\\fields\\Assets" 
-                                %}
-                                    {% set thumbnail = result[thumbField.field.handle].one %}
-                                {% endif %}
-
-                                {% if isProduct %}
-                                    {% set amountOfVariants = result.variants|length %}
-
-                                    {% set prices = result.variants|map(variant => variant.price) %}
-                                    {% set minPrice = min(prices) %}
-                                    {% set maxPrice = max(prices) %}
-                                {% endif %}
-
-                                <li class="cat-toolbar-search-results-list-item">
-                                    <a href="{{ url }}" class="cat-toolbar-search-results-list-item-link">
-                                        <article class="cat-toolbar-search-results-card">
-                                            <div class="cat-toolbar-search-results-card-main">
-                                                {% if thumbnail %}
-                                                    <img src="{{ thumbnail.getUrl({ width: 200 }) }}">
-                                                {% endif %}
-
-                                                <div class="cat-toolbar-search-results-card-main-info">
-                                                    <p class="cat-typo-body-md">
-                                                        {{ title }}
-                                                        {% if isProduct %}
-                                                            {% if minPrice == maxPrice %}
-                                                                - {{ minPrice|commerceCurrency }}
-                                                            {% else %}
-                                                                - {{ minPrice|commerceCurrency }} - {{ maxPrice|commerceCurrency }}
-                                                            {% endif %}
-                                                            
-                                                            ({{ amountOfVariants }} {{ "variants"|t }})
+                                            <div class="cat-toolbar-search-results-card-main-info">
+                                                <p class="cat-typo-body-md">
+                                                    {{ title }}
+                                                    {% if isProduct %}
+                                                        {% if minPrice == maxPrice %}
+                                                            - {{ minPrice|commerceCurrency }}
+                                                        {% else %}
+                                                            - {{ minPrice|commerceCurrency }} - {{ maxPrice|commerceCurrency }}
                                                         {% endif %}
-                                                    </p>
+                                                        
+                                                        ({{ amountOfVariants }} {{ "variants"|t }})
+                                                    {% endif %}
+                                                </p>
 
-                                                    <div class="cat-toolbar-search-results-card-link">
-                                                        <span class="cat-typo-body-sm">{{ isProduct ? "View product"|t : "View page"|t }}</span>
+                                                <div class="cat-toolbar-search-results-card-link">
+                                                    <span class="cat-typo-body-sm">{{ isProduct ? "View product"|t : "View page"|t }}</span>
 
-                                                        {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/circle-arrow-right.svg") }}
-                                                    </div>
+                                                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/circle-arrow-right.svg") }}
                                                 </div>
-                                            </div>                                                
-
-                                            <div class="cat-page-status {{ status }}">
-                                                <div class="cat-page-status-icon"></div>
-
-                                                <p class="cat-typo-body-sm cat-uppercase">{{ status }}</p>
                                             </div>
-                                        </article>
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-    </div>
-{% else %}
-    <div id="cat-search-results" class="cat-toolbar-search-results">
-        <div class="cat-toolbar-search-results-empty">
-            <h2 class="cat-typo-body-md cat-semi-bold">{{ "Geen resultaten"|t }}</h2>
+                                        </div>                                                
 
-            <div class="cat-toolbar-search-results-empty-main">
-                <p class="cat-typo-body-sm">{{ "Geen inhoud gevonden voor"|t }}</p>
-                <p class="cat-typo-body-md cat-semi-bold">{{ "Zoekterm:" }} {{ queryParam }}</p>
-            </div>
+                                        <div class="cat-page-status {{ status }}">
+                                            <div class="cat-page-status-icon"></div>
+
+                                            <p class="cat-typo-body-sm cat-uppercase">{{ status }}</p>
+                                        </div>
+                                    </article>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% else %}
+    <div class="cat-toolbar-search-results-empty">
+        <h2 class="cat-typo-body-md cat-semi-bold">{{ "Geen resultaten"|t }}</h2>
+
+        <div class="cat-toolbar-search-results-empty-main">
+            <p class="cat-typo-body-sm">{{ "Geen inhoud gevonden voor"|t }}</p>
+            <p class="cat-typo-body-md cat-semi-bold">{{ "Zoekterm:" }} {{ queryParam }}</p>
         </div>
     </div>
 {% endif %}

@@ -57,7 +57,6 @@ export function jsonToHtml(data) {
 	if (Array.isArray(data)) {
 		data.forEach((item, index) => {
 			html += "<tr>";
-			html += `<td class="json-key">${index}</td>`;
 			html += '<td class="json-value">';
 
 			if (typeof item === "object" && item !== null) {

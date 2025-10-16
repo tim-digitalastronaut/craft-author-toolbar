@@ -11,62 +11,66 @@
 {# ======================= #}
 {# TEMPLATE                #}
 {# ======================= #}
-<a href="{{ cpEditUrl }}" target="_blank" class="cat-button cat-typo-body-md">
-    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/pen.svg") }}
+<div class="cat-toolbar-action-buttons cat-toolbar-chunk" toolbar-data="menu">
+    {% if entry %}
+        <a href="{{ cpEditUrl }}" target="_blank" class="cat-button cat-typo-body-md">
+            {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/pen.svg") }}
 
-    <span>{{ isProduct ? "Edit product"|t : "Edit page"|t }}</span>
-</a>
+            <span>{{ isProduct ? "Edit product"|t : "Edit page"|t }}</span>
+        </a>
+    {% endif %}
 
-<div 
-    class="cat-toolbar-create-entry-menu"
-    toolbar-on:click.outside="createPageMenuOpen = false"
-    toolbar-on:keydown.esc.window="createPageMenuOpen = false"
-    toolbar-bind:class="{ 'open': createPageMenuOpen }"
->
-    <button 
-        class="cat-toolbar-create-entry-menu-toggle cat-button"
-        toolbar-on:click="createPageMenuOpen = !createPageMenuOpen" 
-        toolbar-on:keydown.tab="createPageMenuOpen = true"
+    <div
+        class="cat-toolbar-create-entry-menu anchor"
+        toolbar-on:click.outside="createPageMenuOpen = false"
+        toolbar-on:keydown.esc.window="createPageMenuOpen = false"
+        toolbar-bind:class="{ 'open': createPageMenuOpen }"
     >
-        {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/plus.svg") }}
+        <button 
+            class="cat-toolbar-create-entry-menu-toggle cat-button"
+            toolbar-on:click="createPageMenuOpen = !createPageMenuOpen" 
+            toolbar-on:keydown.tab="createPageMenuOpen = true"
+        >
+            {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/plus.svg") }}
 
-        <span class="cat-typo-body-md">{{ isProduct ? "Create new product"|t : "Create new page"|t }}</span>
-    </button>
+            <span class="cat-typo-body-md">{{ isProduct ? "Create new product"|t : "Create new page"|t }}</span>
+        </button>
 
-    <div class="cat-toolbar-create-entry-menu-content">
-        <h2 class="cat-typo-body-md cat-semi-bold">{{ isProduct ? "Choose a product type"|t : "Choose a page type"|t }}</h2>
+        <div class="cat-toolbar-create-entry-menu-content menu">
+            <h2 class="cat-typo-body-md cat-semi-bold">{{ isProduct ? "Choose a product type"|t : "Choose a page type"|t }}</h2>
 
-        {% if availableEntryTypes|length %}
-            <ul class="cat-toolbar-create-entry-menu-entries-list">
-                {% for entryType in availableEntryTypes %}
-                    {% set name = entryType.name|default("") %}
-                    {% set color = entryType.entryTypes[0].color.value|default("gray") %}
-                    {% set createUrl = cpUrl('entries/' ~ entryType.handle ~ '/new')|default("") %}
+            {% if availableEntryTypes|length %}
+                <ul class="cat-toolbar-create-entry-menu-entries-list">
+                    {% for entryType in availableEntryTypes %}
+                        {% set name = entryType.name|default("") %}
+                        {% set color = entryType.entryTypes[0].color.value|default("gray") %}
+                        {% set createUrl = cpUrl('entries/' ~ entryType.handle ~ '/new')|default("") %}
 
-                    {% if isProduct %}
-                        {% set createUrl = cpUrl('commerce/products/' ~ entryType.handle ~ '/new')|default("") %}
-                    {% endif %}
+                        {% if isProduct %}
+                            {% set createUrl = cpUrl('commerce/products/' ~ entryType.handle ~ '/new')|default("") %}
+                        {% endif %}
 
-                    <li 
-                        class="cat-toolbar-create-entry-menu-entries-list-item"
-                        style="--entry-type-light: var(--{{ color }}-100); --entry-type-dark: var(--{{ color }}-500)"
-                    >
-                        <a href="{{ createUrl }}" class="cat-toolbar-create-entry-menu-entries-list-item-link">
-                            <div class="cat-toolbar-create-entry-menu-entries-list-item-icon">
-                                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/plus.svg") }}
-                            </div>
+                        <li 
+                            class="cat-toolbar-create-entry-menu-entries-list-item"
+                            style="--entry-type-light: var(--{{ color }}-100); --entry-type-dark: var(--{{ color }}-500)"
+                        >
+                            <a href="{{ createUrl }}" class="cat-toolbar-create-entry-menu-entries-list-item-link">
+                                <div class="cat-toolbar-create-entry-menu-entries-list-item-icon">
+                                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/plus.svg") }}
+                                </div>
 
-                            <span class="cat-typo-body-md">{{ "New"|t }} {{ name|lower }} {{ isProduct ? "product"|t : "entry"|t }}</span>
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <div class="cat-toolbar-create-entry-menu-empty">
-                <h3 class="cat-typo-body-md cat-semi-bold">
-                    {{ isProduct ? "No product types found"|t : "No sections with a URL found"|t }}
-                </h3>
-            </div>
-        {% endif %}
+                                <span class="cat-typo-body-md">{{ "New"|t }} {{ name|lower }} {{ isProduct ? "product"|t : "entry"|t }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="cat-toolbar-create-entry-menu-empty">
+                    <h3 class="cat-typo-body-md cat-semi-bold">
+                        {{ isProduct ? "No product types found"|t : "No sections with a URL found"|t }}
+                    </h3>
+                </div>
+            {% endif %}
+        </div>
     </div>
 </div>

@@ -2,7 +2,7 @@
 {# PROPERTIES              #}
 {# ======================= #}
 {% set pageUrl = craft.app.request.absoluteUrl %}
-{% set isProduct = null %}
+{% set isProduct = false %}
 
 {% if entry %}
     {% if entry.className == 'craft\\commerce\\elements\\Product' %}
@@ -17,12 +17,17 @@
         entry.dateUpdated|date("d F Y") ~ 
         " om "|t ~ 
         entry.dateUpdated|date("h:s")|default("") %}
+{% else %}
+    {% set pageTitle = "Custom route"|t %}
+    {% set cpEditUrl = craft.app.request.absoluteUrl|default("") %}
+    {% set pageStatus = "live" %}
+    {% set updatedAt = null %}
 {% endif %}
 
 {# ======================= #}
 {# TEMPLATE                #}
 {# ======================= #}
-{% if currentUser and entry %}
+{% if currentUser %}
     <div 
         id="cat-toolbar"
         toolbar-data="toolbar" 
@@ -30,48 +35,25 @@
         class="cat-toolbar"
     >
         <div class="cat-toolbar-main">
-            <div class="cat-toolbar-start cat-toolbar-chunk">
+            {% if settings.startMenuEnabled %}
                 {% include "author-toolbar/components/chunks/_startMenu" %}
-            </div>
+            {% endif %}
 
-            <div class="cat-toolbar-action-buttons cat-toolbar-chunk">
+            {% if settings.actionButtonsEnabled %}
                 {% include "author-toolbar/components/chunks/_actionButtons" %}
-            </div>
-
-            <div 
-                class="cat-toolbar-search cat-toolbar-chunk" 
-                toolbar-bind:class="{ 'open': searchResultsOpen }"
-                toolbar-on:click.outside="searchResultsOpen = false"
-            >
-                <div class="cat-toolbar-search-bar">
-                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/search.svg") }}
-
-                    <input 
-                        id="cat-search"
-                        type="text" 
-                        placeholder="{{ "Search entries"|t }}"
-                        toolbar-model="searchQuery",
-                        toolbar-on:focus="searchResultsOpen = true"
-                        toolbar-on:input="renderSearchResults"
-                    >
-
-                    <div class="cat-toolbar-search-bar-hotkey">
-                        {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/command.svg") }}
-
-                        <div class="cat-typo-body-sm uppercase">K</div>
-                    </div>
-                </div>
-
-                <div id="cat-search-results" class="cat-toolbar-search-results"></div>
-            </div>
-
-            <div class="cat-toolbar-seo-checklist cat-toolbar-chunk">
-                {% include "author-toolbar/components/chunks/_seo" %}
-            </div>
-
-            <div class="cat-toolbar-help cat-toolbar-chunk">
-                {% include "author-toolbar/components/chunks/_help" %}
-            </div>
+            {% endif %}
+            
+            {% if settings.globalSearchEnabled %}
+                    {% include "author-toolbar/components/chunks/_globalSearch" %}
+            {% endif %}
+            
+            {% if settings.seoMenuEnabled %}
+                {% include "author-toolbar/components/chunks/_seoMenu" %}
+            {% endif %}
+            
+            {% if settings.helpMenuEnabled %}
+                {% include "author-toolbar/components/chunks/_helpMenu" %}
+            {% endif %}
 
             {% for widget in settings.customWidgets %}
                 {% include widget["path"] %}

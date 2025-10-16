@@ -1,0 +1,36 @@
+{# ======================= #}
+{# PROPERTIES              #}
+{# ======================= #}
+
+
+{# ======================= #}
+{# TEMPLATE                #}
+{# ======================= #}
+<div class="cat-toolbar-search cat-toolbar-chunk" toolbar-data="menu">
+    <div 
+        class="cat-toolbar-search-menu"
+        toolbar-bind:class="{ 'open': searchResultsOpen }"
+        toolbar-on:click.outside="searchResultsOpen = false"
+    >
+        <div class="cat-toolbar-search-bar anchor">
+            {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/search.svg") }}
+
+            <input 
+                id="cat-search"
+                type="text" 
+                placeholder="{{ "Search entries"|t }}"
+                toolbar-model="searchQuery",
+                toolbar-on:focus="searchResultsOpen = true"
+                toolbar-on:input="renderSearchResults"
+            >
+
+            <div class="cat-toolbar-search-bar-hotkey">
+                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/command.svg") }}
+
+                <div class="cat-typo-body-sm uppercase">K</div>
+            </div>
+        </div>
+
+        <div id="cat-search-results" class="cat-toolbar-search-results menu"></div>
+    </div>
+</div>

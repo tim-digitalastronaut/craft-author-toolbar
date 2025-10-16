@@ -2,7 +2,6 @@
 {# TEMPLATE                #}
 {# ======================= #}
 <section 
-    toolbar-init="activeStructuredDataType = structuredData ? Object.entries.length : null" 
     toolbar-show="seoMenuActiveTab === 'structuredData'"
     class="cat-toolbar-seo-menu-structured-data" 
 >
@@ -22,7 +21,7 @@
                         class="cat-toolbar-seo-menu-tab-button cat-typo-body-sm" 
                         toolbar-bind:class="{ 'active': activeStructuredDataType === type[0]['@type'] }"
                         toolbar-on:click="activeStructuredDataType = type[0]['@type']"
-                        toolbar-text="`${type[0]['@type'].replace(/([A-Z])/g, ' $1')} (${type.length})`"
+                        toolbar-text="type[0]['@type'] ? `${type[0]['@type'].replace(/([A-Z])/g, ' $1')} (${type.length})` : 'Unknown'"
                     ></button>
                 </li>
             </template>

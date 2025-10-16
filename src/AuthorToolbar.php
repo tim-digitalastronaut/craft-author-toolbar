@@ -15,7 +15,8 @@ use craft\helpers\UrlHelper;
 use craft\events\RegisterTemplateRootsEvent;
 use craft\events\TemplateEvent;
 use craft\events\RegisterUrlRulesEvent;
-
+use craft\events\RegisterUserPermissionsEvent;
+use craft\services\UserPermissions;
 use digitalastronaut\craftauthortoolbar\models\Settings;
 use digitalastronaut\craftauthortoolbar\web\assets\AuthorToolbarAssets;
 
@@ -34,6 +35,7 @@ class AuthorToolbar extends Plugin {
         parent::init();
 
         $this->_registerTemplateRoots();
+        $this->_registerPermissions();
         
         $this->setComponents([]);
         
@@ -63,6 +65,18 @@ class AuthorToolbar extends Plugin {
                 $event->roots['author-toolbar'] = $this->getBasePath() . '/templates';
             }
         );
+    }
+
+    private function _registerPermissions(): void {
+        Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function(RegisterUserPermissionsEvent $event) {
+            $event->permissions[] = [
+                'heading' => 'Author toolbar',
+                'permissions' => [
+                    'authorToolbar-accessToolbar' => ['label' => 'Access toolbar'],
+                    'authorToolbar-editSettings' => ['label' => 'Edit settings'],
+                ],
+            ];
+        });
     }
 
     private function _registerSiteRoutes(): void {
@@ -96,7 +110,7 @@ class AuthorToolbar extends Plugin {
                 $settings = $this->getSettings();
 
                 if (!$settings->toolbarEnabled) return;
-                if (!Craft::$app->getUser()->getIsAdmin()) return;
+                if (!Craft::$app->getUser()->checkPermission('authorToolbar-accessToolbar')) return;
 
                 Craft::$app->getView()->registerAssetBundle(AuthorToolbarAssets::class);
 

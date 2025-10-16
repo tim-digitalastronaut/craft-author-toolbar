@@ -1,6 +1,9 @@
 import { seoChecklist } from "./seoChecklist.js";
 import { getSeoMeta } from "./seoPreviews.js";
 
+// import Validator from "@adobe/structured-data-validator";
+// import WebAutoExtractor from "@marbec/web-auto-extractor";
+
 import {
 	buildQueryString,
 	templateRequest,
@@ -23,7 +26,7 @@ export function toolbar() {
 		headings: [],
 		images: [],
 		structuredData: [],
-		activeStructuredDataType: [],
+		activeStructuredDataType: null,
 		overallSeoStatus: "",
 		searchResultsOpen: false,
 		searchQuery: "",
@@ -34,7 +37,7 @@ export function toolbar() {
 			this.getSeoPreviews();
 			this.getImagesOverview();
 			this.getSeoChecklist();
-			this.getStructuredData();
+			// this.getStructuredData();
 			this.renderSearchResults();
 
 			const menus = ["startMenuOpen", "createPageMenuOpen", "seoMenuOpen", "searchResultsOpen", "helpMenuOpen"];
@@ -75,7 +78,7 @@ export function toolbar() {
 				body: JSON.stringify(seoMeta),
 			});
 
-			document.querySelector("#cat-seo-previews").outerHTML = content;
+			document.querySelector("#cat-seo-previews").innerHTML = content;
 		},
 
 		async getImagesOverview() {
@@ -116,7 +119,6 @@ export function toolbar() {
 			}
 
 			this.images = imagesData;
-			console.log(this.images);
 		},
 
 		getHeadingsOverview() {
@@ -188,26 +190,45 @@ export function toolbar() {
 			}));
 		},
 
-		getStructuredData() {
-			const jsonLinkedDataScripts = document.querySelectorAll('script[type="application/ld+json"]');
-			const parsedJsonLinkedDataScripts = Array.from(jsonLinkedDataScripts)
-				.map((linkedDataScript) => {
-					try {
-						return JSON.parse(linkedDataScript.textContent);
-					} catch (error) {
-						return null;
-					}
-				})
-				.filter(Boolean)
-				.reduce((acc, item) => {
-					const type = item["@type"] || "Unknown";
-					if (!acc[type]) acc[type] = [];
-					acc[type].push(item);
-					return acc;
-				}, {});
+		// async getStructuredData() {
+		// 	const extractor = new WebAutoExtractor({ addLocation: true, embedSource: ["rdfa", "microdata"] });
+		// 	const extractedData = extractor.parse(document.body.outerHTML);
 
-			this.structuredData = parsedJsonLinkedDataScripts;
-		},
+		// 	const schemaOrgJson = await (
+		// 		await fetch("https://schema.org/version/latest/schemaorg-all-https.jsonld")
+		// 	).json();
+
+		// 	const validator = new Validator(schemaOrgJson);
+
+		// 	const results = await validator.validate(extractedData);
+
+		// 	console.log(extractedData.jsonld);
+		// 	console.log(results);
+
+		// 	const jsonLinkedDataScripts = document.querySelectorAll('script[type="application/ld+json"]');
+		// 	const parsedJsonLinkedDataScripts = Array.from(jsonLinkedDataScripts)
+		// 		.map((linkedDataScript) => {
+		// 			try {
+		// 				return JSON.parse(linkedDataScript.textContent);
+		// 			} catch (error) {
+		// 				return null;
+		// 			}
+		// 		})
+		// 		.filter(Boolean)
+		// 		.reduce((acc, item) => {
+		// 			const type = item["@type"] || "Unknown";
+		// 			if (!acc[type]) acc[type] = [];
+		// 			acc[type].push(item);
+		// 			return acc;
+		// 		}, {});
+
+		// 	console.log(parsedJsonLinkedDataScripts);
+
+		// 	if (jsonLinkedDataScripts.length) {
+		// 		this.structuredData = parsedJsonLinkedDataScripts;
+		// 		this.activeStructuredDataType = Object.entries(parsedJsonLinkedDataScripts)[0][0];
+		// 	}
+		// },
 
 		jsonToHtml(data) {
 			return jsonToHtml(data);
@@ -222,7 +243,7 @@ export function toolbar() {
 				},
 			});
 
-			document.querySelector("#cat-search-results").outerHTML = content;
+			document.querySelector("#cat-search-results").innerHTML = content;
 		},
 
 		async copyToPageURLToClipboard() {
