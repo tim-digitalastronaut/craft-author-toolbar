@@ -26,9 +26,11 @@
     { icon: "profile", label: "Account settings"|t('author-toolbar'), href: cpUrl('myaccount'), enabled: settings.accountSettingsLinkEnabled },
 ]) %}
 
-{% set startMenuOptions = startMenuOptions|merge(settings.customStartMenuLinks|map(item => item|merge({
-    href: cpUrl(item.href)
-}))) %}
+{% if settings.customStartMenuLinks|length %}
+    {% set startMenuOptions = startMenuOptions|merge(settings.customStartMenuLinks|map(item => item|merge({
+        href: cpUrl(item.href)
+    }))) %}
+{% endif %}
 
 {% set startMenuOptions = startMenuOptions|merge([
     { icon: "logout", label: "Logout"|t('author-toolbar'), href: cpUrl('logout'), enabled: settings.logoutLinkEnabled },    
@@ -71,7 +73,7 @@
         <div class="cat-toolbar-start-menu-content">
             <ul class="cat-toolbar-start-menu-options-list">
                 {% for option in startMenuOptions %}
-                    {% if option.enabled %}
+                    {% if option.enabled and option.label %}
                         <li class="cat-toolbar-start-menu-options-list-item">
                             <a href="{{ option.href }}" class="cat-toolbar-start-menu-options-list-item-link">
                                 {% if option.icon is defined %}

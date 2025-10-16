@@ -1,5 +1,9 @@
 # Release Notes for Author toolbar
 
+## v1.1.4-beta - 2025.10.16
+
+-   Fixed a bug where the toolbar would crash if empty custom start menu links where added
+
 ## v1.1.3-beta - 2025.10.16
 
 -   Also render the toolbar for custom pages
