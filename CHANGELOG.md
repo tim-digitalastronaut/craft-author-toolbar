@@ -1,6 +1,6 @@
 # Release Notes for Author toolbar
 
-## v1.1.3-beta - 2025.10.14
+## v1.1.3-beta - 2025.10.16
 
 -   Also render the toolbar for custom pages
 -   Fixed issue where the share previews would not work for custom pages
