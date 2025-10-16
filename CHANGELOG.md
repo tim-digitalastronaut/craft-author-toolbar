@@ -1,5 +1,9 @@
 # Release Notes for Author toolbar
 
+## v1.1.5-beta - 2025.10.16
+
+-   Fixed a bug where the global page search would crash for non craft commerce projects
+
 ## v1.1.4-beta - 2025.10.16
 
 -   Fixed a bug where the toolbar would crash if empty custom start menu links where added

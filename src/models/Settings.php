@@ -27,7 +27,7 @@ class Settings extends Model {
     public bool $logoutLinkEnabled = true;
 
     public array $customStartMenuLinks = [
-        ["label" => "", "url" => ""]
+        ["label" => "", "href" => "", "enabled" => false]
     ];
     public array $customChunks = [];
 

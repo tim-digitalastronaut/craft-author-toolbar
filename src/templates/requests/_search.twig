@@ -6,21 +6,29 @@
 {# ======================= #}
 {# QUERY LOGIC             #}
 {# ======================= #}
-{% set allProductsQuery = craft.products.status(null).uri(':notempty:') %}
-{% set filteredProductsQuery = clone(allProductsQuery) %}
-
 {% set allEntriesQuery = craft.entries.status(null).uri(':notempty:') %}
 {% set filteredEntriesQuery = clone(allEntriesQuery) %}
 
 {% if queryParam is not null %}
-    {% set filteredProductsQuery = allProductsQuery.search('title:' ~ queryParam) %}
     {% set filteredEntriesQuery = allEntriesQuery.search('title:' ~ queryParam) %}
 {% endif %}
 
-{% set groupedProducts = filteredProductsQuery.all|group("type.name") %}
 {% set groupedEntries = filteredEntriesQuery.all|group("section.name") %}
 
-{% set results = groupedProducts|merge(groupedEntries)|default([]) %}
+{% if craft.app.plugins.isPluginEnabled('commerce') %}
+    {% set allProductsQuery = craft.products.status(null).uri(':notempty:') %}
+    {% set filteredProductsQuery = clone(allProductsQuery) %}
+
+    {% if queryParam is not null %}
+        {% set filteredProductsQuery = allProductsQuery.search('title:' ~ queryParam) %}
+    {% endif %}
+
+    {% set groupedProducts = filteredProductsQuery.all|group("type.name") %}
+
+    {% set results = groupedProducts|merge(groupedEntries)|default([]) %}
+{% endif %}
+
+{% set results = groupedEntries|default([]) %}
 
 {# ======================= #}
 {# TEMPLATE                #}
@@ -28,7 +36,7 @@
 {% if results|length %}
     <ul class="cat-toolbar-search-results-groups-list">
         {% for group, entries in results %}
-            {% set isProduct = null %}
+            {% set isProduct = false %}
             {% set entryType = entries[0].type.handle|default("") %}
             {% set sectionType = entries[0].section.type|default("") %}
 
@@ -92,7 +100,7 @@
                                             <div class="cat-toolbar-search-results-card-main-info">
                                                 <p class="cat-typo-body-md">
                                                     {{ title }}
-                                                    {% if isProduct %}
+                                                    {# {% if isProduct %}
                                                         {% if minPrice == maxPrice %}
                                                             - {{ minPrice|commerceCurrency }}
                                                         {% else %}
@@ -100,7 +108,7 @@
                                                         {% endif %}
                                                         
                                                         ({{ amountOfVariants }} {{ "variants"|t('author-toolbar') }})
-                                                    {% endif %}
+                                                    {% endif %} #}
                                                 </p>
 
                                                 <div class="cat-toolbar-search-results-card-link">
