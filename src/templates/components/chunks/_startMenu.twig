@@ -2,29 +2,36 @@
 {# PROPERTIES              #}
 {# ======================= #}
 {% set startMenuOptions = [
-    { icon: "dashboard", label: "Dashboard"|t, href: cpUrl('dashboard') },
-    { icon: "entries", label: "Entries"|t, href: cpUrl('entries') },
+    { icon: "dashboard", label: "Dashboard"|t('author-toolbar'), href: cpUrl('dashboard'), enabled: settings.dashboardLinkEnabled },
+    { icon: "entries", label: "Entries"|t('author-toolbar'), href: cpUrl('entries'), enabled: settings.entriesLinkEnabled },
 ] %}
 
 {% if craft.app.plugins.isPluginEnabled('commerce') %}
     {% set newOrdersCount = craft.orders.orderStatus('new').count %}
 
     {% set startMenuOptions = startMenuOptions|merge([
-        { icon: "orders", label: "Orders"|t, href: cpUrl('commerce/orders'), badge: newOrdersCount }
+        { icon: "orders", label: "Orders"|t('author-toolbar'), href: cpUrl('commerce/orders'), badge: newOrdersCount, enabled: settings.ordersLinkEnabled }
     ]) %}
 
     {% if craft.products.exists %}
         {% set startMenuOptions = startMenuOptions|merge([
-            { icon: "products", label: "Products"|t, href: cpUrl('commerce/products') },
-            { icon: "warehouse", label: "Inventory"|t, href: cpUrl('commerce/inventory') }
+            { icon: "products", label: "Products"|t('author-toolbar'), href: cpUrl('commerce/products'), enabled: settings.productsLinkEnabled },
+            { icon: "warehouse", label: "Inventory"|t('author-toolbar'), href: cpUrl('commerce/inventory'), enabled: settings.inventoryLinkEnabled }
         ]) %}
     {% endif %}
 {% endif %}
 
 {% set startMenuOptions = startMenuOptions|merge([
-    { icon: "assets", label: "Assets"|t, href: cpUrl('assets') },
-    { icon: "profile", label: "Acount settings"|t, href: cpUrl('myaccount') },
-    { icon: "logout", label: "Logout"|t, href: cpUrl('logout') },    
+    { icon: "assets", label: "Assets"|t('author-toolbar'), href: cpUrl('assets'), enabled: settings.assetsLinkEnabled },
+    { icon: "profile", label: "Account settings"|t('author-toolbar'), href: cpUrl('myaccount'), enabled: settings.accountSettingsLinkEnabled },
+]) %}
+
+{% set startMenuOptions = startMenuOptions|merge(settings.customStartMenuLinks|map(item => item|merge({
+    href: cpUrl(item.href)
+}))) %}
+
+{% set startMenuOptions = startMenuOptions|merge([
+    { icon: "logout", label: "Logout"|t('author-toolbar'), href: cpUrl('logout'), enabled: settings.logoutLinkEnabled },    
 ]) %}
 
 {# ======================= #}
@@ -64,17 +71,23 @@
         <div class="cat-toolbar-start-menu-content">
             <ul class="cat-toolbar-start-menu-options-list">
                 {% for option in startMenuOptions %}
-                    <li class="cat-toolbar-start-menu-options-list-item">
-                        <a href="{{ option.href }}" class="cat-toolbar-start-menu-options-list-item-link">
-                            {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/#{option.icon}.svg") }}
+                    {% if option.enabled %}
+                        <li class="cat-toolbar-start-menu-options-list-item">
+                            <a href="{{ option.href }}" class="cat-toolbar-start-menu-options-list-item-link">
+                                {% if option.icon is defined %}
+                                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/#{option.icon}.svg") }}
+                                {% else %}
+                                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/link.svg") }}
+                                {% endif %}
 
-                            <p class="cat-typo-body-md">{{ option.label }}</p>
+                                <p class="cat-typo-body-md">{{ option.label }}</p>
 
-                            {% if option.badge is defined and option.badge %}
-                                <div class="cat-badge cat-typo-body-sm">{{ option.badge }} {{ "New"|t }}</div>                        
-                            {% endif %}
-                        </a>
-                    </li>
+                                {% if option.badge is defined and option.badge %}
+                                    <div class="cat-badge cat-typo-body-sm">{{ option.badge }} {{ "New"|t('author-toolbar') }}</div>                        
+                                {% endif %}
+                            </a>
+                        </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </div>

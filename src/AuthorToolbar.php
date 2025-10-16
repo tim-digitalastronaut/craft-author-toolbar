@@ -17,6 +17,7 @@ use craft\events\TemplateEvent;
 use craft\events\RegisterUrlRulesEvent;
 use craft\events\RegisterUserPermissionsEvent;
 use craft\services\UserPermissions;
+
 use digitalastronaut\craftauthortoolbar\models\Settings;
 use digitalastronaut\craftauthortoolbar\web\assets\AuthorToolbarAssets;
 
@@ -40,13 +41,17 @@ class AuthorToolbar extends Plugin {
         $this->setComponents([]);
         
         if (Craft::$app->getRequest()->getIsCpRequest()) {
+            $this->_registerAssetBundles();
             $this->_registerCpRoutes();
         }
         
         if (Craft::$app->getRequest()->getIsSiteRequest()) {
+            $this->_registerAssetBundles();
             $this->_registerSiteRoutes();
             $this->_registerToolbar();
         }
+
+        // dd(Craft::$app->i18n->translations);
     }
 
     protected function createSettingsModel(): ?Model {
@@ -72,8 +77,9 @@ class AuthorToolbar extends Plugin {
             $event->permissions[] = [
                 'heading' => 'Author toolbar',
                 'permissions' => [
-                    'authorToolbar-accessToolbar' => ['label' => 'Access toolbar'],
-                    'authorToolbar-editSettings' => ['label' => 'Edit settings'],
+                    'authorToolbar-accessToolbar' => ['label' => Craft::t('author-toolbar', 'Access toolbar')],
+                    // 'authorToolbar-accessAdvancedToolbar' => ['label' => Craft::t('author-toolbar', 'Access advanced toolbar'), 'info' => Craft::t('author-toolbar', 'This is info')],
+                    'authorToolbar-editSettings' => ['label' => Craft::t('author-toolbar', 'Edit settings')],
                 ],
             ];
         });
@@ -100,6 +106,10 @@ class AuthorToolbar extends Plugin {
         );
     }
 
+    private function _registerAssetBundles(): void {
+        Craft::$app->getView()->registerAssetBundle(AuthorToolbarAssets::class);
+    }
+
     private function _registerToolbar(): void {
         Event::on(
             View::class,
@@ -111,8 +121,6 @@ class AuthorToolbar extends Plugin {
 
                 if (!$settings->toolbarEnabled) return;
                 if (!Craft::$app->getUser()->checkPermission('authorToolbar-accessToolbar')) return;
-
-                Craft::$app->getView()->registerAssetBundle(AuthorToolbarAssets::class);
 
                 $html = Craft::$app->getView()->renderTemplate('author-toolbar/_toolbar.twig', [
                     'entry' => $entry,

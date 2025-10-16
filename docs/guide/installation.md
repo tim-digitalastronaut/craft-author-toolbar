@@ -4,12 +4,16 @@
 
 Install the latest version or a specific realese of the author toolbar via composer with the following console command
 
+::: code-group
+
+```bash[DDEV]
+ddev composer install digitalastronaut/craft-author-toolbar
 ```
+
+```bash[Other]
 composer install digitalastronaut/craft-author-toolbar
 ```
 
-::: tip
-If you are using DDEV for your development environment prefix the install command with `ddev`
 :::
 
 ## Plugin store

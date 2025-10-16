@@ -2,10 +2,10 @@
 {# PROPERTIES              #}
 {# ======================= #}
 {% set tabs = [
-    { label: "Checklist"|t, id: "checklist" },
-    { label: "Share previews"|t, id: "previews" },
-    { label: "Images"|t, id: "images" },
-    { label: "Headings"|t, id: "headings" },
+    { label: "Checklist"|t('author-toolbar'), id: "checklist" },
+    { label: "Share previews"|t('author-toolbar'), id: "previews" },
+    { label: "Images"|t('author-toolbar'), id: "images" },
+    { label: "Headings"|t('author-toolbar'), id: "headings" },
 ] %}
 
 {# { label: "Structured data"|t, id: "structuredData" }, #}
@@ -24,7 +24,7 @@
             toolbar-on:click="seoMenuOpen = !seoMenuOpen" 
             class="cat-toolbar-seo-menu-toggle"
         >
-            <p class="cat-typo-body-md">{{ "SEO"|t }}</p>
+            <p class="cat-typo-body-md">{{ "SEO"|t('author-toolbar') }}</p>
 
             <div class="cat-typo-body-md cat-semi-bold" toolbar-bind:class="overallSeoStatus">
                 <template toolbar-if="overallSeoStatus === 'passed'">

@@ -1,0 +1,32 @@
+.cat-admin {
+	&-start-menu-link {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		margin-top: 16px;
+		max-width: 360px;
+
+		svg {
+			width: 16px;
+			height: auto;
+			max-height: 16px;
+		}
+
+		.field {
+			width: 100%;
+			margin-top: 0;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 16px;
+
+			.heading {
+				margin-block: 0 0;
+
+				& > label {
+					font-weight: 400;
+				}
+			}
+		}
+	}
+}

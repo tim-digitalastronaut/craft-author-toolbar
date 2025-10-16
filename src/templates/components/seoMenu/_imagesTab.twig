@@ -3,9 +3,14 @@
 {# ======================= #}
 <section class="cat-toolbar-seo-menu-images" toolbar-show="seoMenuActiveTab === 'images'">
     <div class="cat-toolbar-seo-menu-images-top">
-        <h2 class="cat-typo-body-md cat-semi-bold">{{ "Page images"|t }} <span toolbar-text="`(${images.length})`"></span></h2>
+        <h2 class="cat-typo-body-md cat-semi-bold">
+            {{ "Page images"|t('author-toolbar') }} 
+            <span toolbar-text="`(${images.length})`"></span>
+        </h2>
 
-        <p class="cat-typo-body-sm">{{ "Get a list of all images on the page and their info/potential issues such as large file sizes or missing alt tags"|t }}</p>
+        <p class="cat-typo-body-sm">
+            {{ "Get a list of all images on the page and their info/potential issues such as large file sizes or missing alt tags"|t('author-toolbar') }}
+        </p>
     </div>
 
     <template toolbar-if="images.length">

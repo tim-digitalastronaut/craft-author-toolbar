@@ -16,7 +16,20 @@ class Settings extends Model {
     public bool $actionButtonsEnabled = true;
     public bool $seoMenuEnabled = true;
     public bool $helpMenuEnabled = true;
-    public array $customWidgets = [];
+
+    public bool $dashboardLinkEnabled = true;
+    public bool $entriesLinkEnabled = true;
+    public bool $ordersLinkEnabled = true;
+    public bool $productsLinkEnabled = true;
+    public bool $inventoryLinkEnabled = true;
+    public bool $assetsLinkEnabled = true;
+    public bool $accountSettingsLinkEnabled = true;
+    public bool $logoutLinkEnabled = true;
+
+    public array $customStartMenuLinks = [
+        ["label" => "", "url" => ""]
+    ];
+    public array $customChunks = [];
 
     public string $company = '';
     public array $companyLogo = [];

@@ -24,7 +24,7 @@
         >
             {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/circle-questionmark.svg") }}
 
-            <span class="cat-typo-body-md">{{ "Help"|t }}</span>
+            <span class="cat-typo-body-md">{{ "Help"|t('author-toolbar') }}</span>
 
             {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/chevron-down.svg") }}
         </button>
@@ -46,7 +46,7 @@
                         <li class="cat-toolbar-help-menu-contact-info-item">
                             <div>
                                 <span>{{ svg("@digitalastronaut/craftauthortoolbar/web/icons/company.svg") }}</span>
-                                <p class="cat-typo-body-md cat-semi-bold">{{ "Company"|t }}</p>
+                                <p class="cat-typo-body-md cat-semi-bold">{{ "Company"|t('author-toolbar') }}</p>
                             </div>
 
                             <p class="cat-typo-body-md">{{ settings.company }}</p>
@@ -57,7 +57,7 @@
                         <li class="cat-toolbar-help-menu-contact-info-item">
                             <div>
                                 <span>{{ svg("@digitalastronaut/craftauthortoolbar/web/icons/mail.svg") }}</span>
-                                <p class="cat-typo-body-md cat-semi-bold">{{ "Email"|t }}</p>
+                                <p class="cat-typo-body-md cat-semi-bold">{{ "Email"|t('author-toolbar') }}</p>
                             </div>
 
                             <a href="mailto:{{ settings.email }}" class="cat-typo-body-md">{{ settings.email }}</a>
@@ -69,7 +69,7 @@
                         <li class="cat-toolbar-help-menu-contact-info-item">
                             <div>
                                 <span>{{ svg("@digitalastronaut/craftauthortoolbar/web/icons/phone.svg") }}</span>
-                                <p class="cat-typo-body-md cat-semi-bold">{{ "Phone number"|t }}</p>
+                                <p class="cat-typo-body-md cat-semi-bold">{{ "Phone number"|t('author-toolbar') }}</p>
                             </div>
 
                             <a href="tel:{{ settings.phoneNumber }}" class="cat-typo-body-md">{{ settings.phoneNumber }}</a>
@@ -81,12 +81,12 @@
 
             {% if settings.issueTicketUrl %}
                 <div class="cat-toolbar-help-menu-bug-reports">
-                    <h2 class="cat-typo-body-md cat-semi-bold">{{ "Bug reports"|t }}</h2>
+                    <h2 class="cat-typo-body-md cat-semi-bold">{{ "Bug reports"|t('author-toolbar') }}</h2>
 
                     <a href="{{ settings.issueTicketUrl }}" target="_blank" class="cat-button cat-typo-body-md">
                         {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/bug.svg") }}
 
-                        <span>{{ "Create a bug report or feature request"|t }}</span>
+                        <span>{{ "Create a bug report or feature request"|t('author-toolbar') }}</span>
                     </a>
                 </div>
             {% endif %}

@@ -7,8 +7,14 @@
 -   Fixed issue where the toolbar would show incorrect info for custom pages
 -   Fixed responsive issues with the menu's for smaller screen sizes
 -   Fixed responsive issues for the page info link
+-   Added user permissions [#2](https://github.com/tim-digitalastronaut/craft-author-toolbar/issues/2)
 -   Added settings for managing the default widgets
 -   Added settings for managing the start menu links
+-   Added settings for adding custom links to the start menu
+-   Added translations for the plugin
+-   Added English and Dutch translations
+-   Added a documentation site
+-   Styling refactored
 
 ## v1.1.2-beta - 2025.10.13
 

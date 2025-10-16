@@ -18,7 +18,7 @@
             <input 
                 id="cat-search"
                 type="text" 
-                placeholder="{{ "Search entries"|t }}"
+                placeholder="{{ "Search entries"|t('author-toolbar') }}"
                 toolbar-model="searchQuery",
                 toolbar-on:focus="searchResultsOpen = true"
                 toolbar-on:input="renderSearchResults"

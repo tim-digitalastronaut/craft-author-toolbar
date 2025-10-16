@@ -16,7 +16,7 @@
         <a href="{{ cpEditUrl }}" target="_blank" class="cat-button cat-typo-body-md">
             {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/pen.svg") }}
 
-            <span>{{ isProduct ? "Edit product"|t : "Edit page"|t }}</span>
+            <span>{{ isProduct ? "Edit product"|t('author-toolbar') : "Edit page"|t('author-toolbar') }}</span>
         </a>
     {% endif %}
 
@@ -33,11 +33,11 @@
         >
             {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/plus.svg") }}
 
-            <span class="cat-typo-body-md">{{ isProduct ? "Create new product"|t : "Create new page"|t }}</span>
+            <span class="cat-typo-body-md">{{ isProduct ? "Create new product"|t('author-toolbar') : "Create new page"|t('author-toolbar') }}</span>
         </button>
 
         <div class="cat-toolbar-create-entry-menu-content menu">
-            <h2 class="cat-typo-body-md cat-semi-bold">{{ isProduct ? "Choose a product type"|t : "Choose a page type"|t }}</h2>
+            <h2 class="cat-typo-body-md cat-semi-bold">{{ isProduct ? "Choose a product type"|t('author-toolbar') : "Choose a page type"|t('author-toolbar') }}</h2>
 
             {% if availableEntryTypes|length %}
                 <ul class="cat-toolbar-create-entry-menu-entries-list">
@@ -45,29 +45,32 @@
                         {% set name = entryType.name|default("") %}
                         {% set color = entryType.entryTypes[0].color.value|default("gray") %}
                         {% set createUrl = cpUrl('entries/' ~ entryType.handle ~ '/new')|default("") %}
+                        {% set hasUrls = entryType.getSiteSettings|first.hasUrls|default(false) %}
 
                         {% if isProduct %}
                             {% set createUrl = cpUrl('commerce/products/' ~ entryType.handle ~ '/new')|default("") %}
                         {% endif %}
 
-                        <li 
-                            class="cat-toolbar-create-entry-menu-entries-list-item"
-                            style="--entry-type-light: var(--{{ color }}-100); --entry-type-dark: var(--{{ color }}-500)"
-                        >
-                            <a href="{{ createUrl }}" class="cat-toolbar-create-entry-menu-entries-list-item-link">
-                                <div class="cat-toolbar-create-entry-menu-entries-list-item-icon">
-                                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/plus.svg") }}
-                                </div>
+                        {% if hasUrls %}
+                            <li 
+                                class="cat-toolbar-create-entry-menu-entries-list-item"
+                                style="--entry-type-light: var(--{{ color }}-100); --entry-type-dark: var(--{{ color }}-500)"
+                            >
+                                <a href="{{ createUrl }}" class="cat-toolbar-create-entry-menu-entries-list-item-link">
+                                    <div class="cat-toolbar-create-entry-menu-entries-list-item-icon">
+                                        {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/plus.svg") }}
+                                    </div>
 
-                                <span class="cat-typo-body-md">{{ "New"|t }} {{ name|lower }} {{ isProduct ? "product"|t : "entry"|t }}</span>
-                            </a>
-                        </li>
+                                    <span class="cat-typo-body-md">{{ "New"|t('author-toolbar') }} {{ name|lower }} {{ isProduct ? "product"|t('author-toolbar') : "entry"|t('author-toolbar') }}</span>
+                                </a>
+                            </li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             {% else %}
                 <div class="cat-toolbar-create-entry-menu-empty">
                     <h3 class="cat-typo-body-md cat-semi-bold">
-                        {{ isProduct ? "No product types found"|t : "No sections with a URL found"|t }}
+                        {{ isProduct ? "No product types found"|t('author-toolbar') : "No sections with a URL found"|t('author-toolbar') }}
                     </h3>
                 </div>
             {% endif %}

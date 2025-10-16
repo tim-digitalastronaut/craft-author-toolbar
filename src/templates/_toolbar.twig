@@ -13,9 +13,9 @@
     {% set cpEditUrl = entry.cpEditUrl|default("") %}
     {% set pageStatus = entry.status|default("") %}
     {% set updatedAt = 
-        "Last edited "|t ~
+        "Last edited "|t('author-toolbar') ~
         entry.dateUpdated|date("d F Y") ~ 
-        " om "|t ~ 
+        " om "|t('author-toolbar') ~ 
         entry.dateUpdated|date("h:s")|default("") %}
 {% else %}
     {% set pageTitle = "Custom route"|t %}
@@ -55,7 +55,7 @@
                 {% include "author-toolbar/components/chunks/_helpMenu" %}
             {% endif %}
 
-            {% for widget in settings.customWidgets %}
+            {% for widget in settings.customChunks %}
                 {% include widget["path"] %}
             {% endfor %}
         </div>

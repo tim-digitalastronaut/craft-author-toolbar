@@ -6,29 +6,18 @@
 {% import '_includes/forms.twig' as forms %}
 
 {% set fullPageForm = true %}
-{% set title = "Settings"|t %}
+{% set title = "Settings"|t('author-toolbar') %}
 
 {% set crumbs = [
   {
-    label: 'Author toolbar'|t,
+    label: 'Author toolbar'|t('author-toolbar'),
     url: url('author-toolbar/settings'),
   },
   {
-    label: 'Settings'|t,
+    label: 'Settings'|t('author-toolbar'),
     url: url('author-toolbar/settings'),
   },
 ] %}
-
-{% set tabs = {
-  general: {
-    label: 'General'|t,
-    url: '#general',
-  },
-  help: {
-    label: 'Help'|t,
-    url: '#help',
-  },
-} %}
 
 {# ======================= #}
 {# TEMPLATE                #}
@@ -37,174 +26,293 @@
     {{ actionInput('plugins/save-plugin-settings') }}
     {{ hiddenInput('pluginHandle', 'author-toolbar') }}
 
-    <div id="general">
-        <div class="flex-fields">
-            <div class="field width-50">
+    <div class="flex-fields">
+        <div class="field width-50">
+            {{ forms.lightswitchField({
+                label: 'Enable the toolbar'|t('author-toolbar'),
+                instructions: 'Show the toolbar on the frontend for logged in users'|t('author-toolbar'),
+                id: 'toolbarEnabled',
+                offLabel: 'Hide'|t('author-toolbar'),
+                onLabel: 'Show'|t('author-toolbar'),
+                name: 'settings[toolbarEnabled]',
+                on: settings.toolbarEnabled,
+            }) }}
+        </div>
+
+        <h2>{{ "Chunks"|t('author-toolbar') }}</h2>
+
+        <h3>{{ "Default chunks"|t('author-toolbar') }}</h3>
+
+        <div class="field width-25">
+            {{ forms.lightswitchField({
+                label: 'Start menu'|t('author-toolbar'),
+                id: 'startMenuEnabled',
+                offLabel: 'Hide'|t('author-toolbar'),
+                onLabel: 'Show'|t('author-toolbar'),
+                name: 'settings[startMenuEnabled]',
+                on: settings.startMenuEnabled,
+            }) }}
+        </div>
+
+        <div class="field width-25">
+            {{ forms.lightswitchField({
+                label: 'Action buttons'|t('author-toolbar'),
+                id: 'actionButtonsEnabled',
+                offLabel: 'Hide'|t('author-toolbar'),
+                onLabel: 'Show'|t('author-toolbar'),
+                name: 'settings[actionButtonsEnabled]',
+                on: settings.actionButtonsEnabled,
+            }) }}
+        </div>
+
+        <div class="field width-25">
+            {{ forms.lightswitchField({
+                label: 'Global search'|t('author-toolbar'),
+                id: 'globalSearchEnabled',
+                offLabel: 'Hide'|t('author-toolbar'),
+                onLabel: 'Show'|t('author-toolbar'),
+                name: 'settings[globalSearchEnabled]',
+                on: settings.globalSearchEnabled,
+            }) }}
+        </div>
+
+        <div class="line-break"></div>
+
+        <div class="field width-25">
+            {{ forms.lightswitchField({
+                label: 'SEO menu'|t('author-toolbar'),
+                id: 'seoMenuEnabled',
+                offLabel: 'Hide'|t('author-toolbar'),
+                onLabel: 'Show'|t('author-toolbar'),
+                name: 'settings[seoMenuEnabled]',
+                on: settings.seoMenuEnabled,
+            }) }}
+        </div>
+
+        <div class="field width-25">
+            {{ forms.lightswitchField({
+                label: 'Help menu'|t('author-toolbar'),
+                id: 'helpMenuEnabled',
+                offLabel: 'Hide'|t('author-toolbar'),
+                onLabel: 'Show'|t('author-toolbar'),
+                name: 'settings[helpMenuEnabled]',
+                on: settings.helpMenuEnabled,
+            }) }}
+        </div>
+
+        <hr>
+        
+        <div class="field width-50">
+            {{ forms.editableTableField({
+                label: 'Custom chunks'|t('author-toolbar'),
+                instructions: 'Extend the toolbar with your own custom chunks by specifying twig template paths here. Paths are relative to the **templates/** folder'|t('author-toolbar'),
+                id: 'customChunks',
+                name: 'settings[customChunks]',
+                cols: {
+                    path: { heading: "Template path"|t('author-toolbar'), type: "template", code: true },
+                },
+                rows: settings.customChunks,
+                allowAdd: true,
+                allowDelete: true,
+                allowReorder: true,
+            }) }}
+        </div>
+
+        <h2>{{ "Start menu"|t('author-toolbar') }}</h2>
+
+        <div class="field width-50">
+            {{ forms.editableTableField({
+                label: 'Custom links'|t('author-toolbar'),
+                tip: 'All values in the URL column will be wrapped in the cpUrl() helper'|t('author-toolbar'),
+                instructions: 'Extend the start menu with extra links that are specific to your project'|t('author-toolbar'),
+                id: 'customStartMenuLinks',
+                name: 'settings[customStartMenuLinks]',
+                cols: {
+                    label: { heading: "Label"|t('author-toolbar'), type: "singleline" },
+                    href: { heading: "URL"|t('author-toolbar'), type: "singleline" },
+                    enabled: { heading: "Enabled"|t('author-toolbar'), type: "lightswitch" },
+                },
+                rows: settings.customStartMenuLinks,
+                allowAdd: true,
+                allowDelete: true,
+                allowReorder: true,
+            }) }}
+        </div>
+
+        <div class="field width-50">
+            <h3>{{ "Default links"|t('author-toolbar') }}</h3>
+
+            <div class="cat-admin-start-menu-link">
+                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/dashboard.svg") }}
                 {{ forms.lightswitchField({
-                    label: 'Enable the toolbar'|t,
-                    instructions: 'Show the toolbar on the frontend for logged in users'|t,
-                    id: 'toolbarEnabled',
-                    offLabel: 'Hide',
-                    onLabel: 'Show',
-                    name: 'settings[toolbarEnabled]',
-                    on: settings.toolbarEnabled,
+                    label: 'Dashboard'|t('author-toolbar'),
+                    id: 'dashboardLinkEnabled',
+                    offLabel: 'Hide'|t('author-toolbar'),
+                    onLabel: 'Show'|t('author-toolbar'),
+                    name: 'settings[dashboardLinkEnabled]',
+                    on: settings.dashboardLinkEnabled,
                 }) }}
             </div>
 
-            <hr>
-
-            <h3>Default widgets</h3>
-
-            <div class="field width-25">
+            <div class="cat-admin-start-menu-link">
+                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/entries.svg") }}
                 {{ forms.lightswitchField({
-                    label: 'Start menu'|t,
-                    id: 'startMenuEnabled',
-                    offLabel: 'Hide',
-                    onLabel: 'Show',
-                    name: 'settings[startMenuEnabled]',
-                    on: settings.startMenuEnabled,
+                    label: 'Entries'|t('author-toolbar'),
+                    id: 'entriesLinkEnabled',
+                    offLabel: 'Hide'|t('author-toolbar'),
+                    onLabel: 'Show'|t('author-toolbar'),
+                    name: 'settings[entriesLinkEnabled]',
+                    on: settings.entriesLinkEnabled,
                 }) }}
             </div>
 
-            <div class="field width-25">
-                {{ forms.lightswitchField({
-                    label: 'Action buttons'|t,
-                    id: 'actionButtonsEnabled',
-                    offLabel: 'Hide',
-                    onLabel: 'Show',
-                    name: 'settings[actionButtonsEnabled]',
-                    on: settings.actionButtonsEnabled,
-                }) }}
-            </div>
+            {% if craft.app.plugins.isPluginEnabled('commerce') %}
+                <div class="cat-admin-start-menu-link">
+                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/orders.svg") }}
+                    {{ forms.lightswitchField({
+                        label: 'Orders'|t('author-toolbar'),
+                        id: 'ordersLinkEnabled',
+                        offLabel: 'Hide'|t('author-toolbar'),
+                        onLabel: 'Show'|t('author-toolbar'),
+                        name: 'settings[ordersLinkEnabled]',
+                        on: settings.ordersLinkEnabled,
+                    }) }}
+                </div>
 
-            <div class="field width-25">
-                {{ forms.lightswitchField({
-                    label: 'Global search'|t,
-                    id: 'globalSearchEnabled',
-                    offLabel: 'Hide',
-                    onLabel: 'Show',
-                    name: 'settings[globalSearchEnabled]',
-                    on: settings.globalSearchEnabled,
-                }) }}
-            </div>
+                <div class="cat-admin-start-menu-link">
+                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/products.svg") }}
+                    {{ forms.lightswitchField({
+                        label: 'Products'|t('author-toolbar'),
+                        id: 'productsLinkEnabled',
+                        offLabel: 'Hide'|t('author-toolbar'),
+                        onLabel: 'Show'|t('author-toolbar'),
+                        name: 'settings[productsLinkEnabled]',
+                        on: settings.productsLinkEnabled,
+                    }) }}
+                </div>
 
-            <div class="line-break"></div>
-
-            <div class="field width-25">
-                {{ forms.lightswitchField({
-                    label: 'SEO menu'|t,
-                    id: 'seoMenuEnabled',
-                    offLabel: 'Hide',
-                    onLabel: 'Show',
-                    name: 'settings[seoMenuEnabled]',
-                    on: settings.seoMenuEnabled,
-                }) }}
-            </div>
-
-            <div class="field width-25">
-                {{ forms.lightswitchField({
-                    label: 'Help menu'|t,
-                    id: 'helpMenuEnabled',
-                    offLabel: 'Hide',
-                    onLabel: 'Show',
-                    name: 'settings[helpMenuEnabled]',
-                    on: settings.helpMenuEnabled,
-                }) }}
-            </div>
-
-            <hr>
+                <div class="cat-admin-start-menu-link">
+                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/warehouse.svg") }}
+                    {{ forms.lightswitchField({
+                        label: 'Inventory'|t('author-toolbar'),
+                        id: 'inventoryLinkEnabled',
+                        offLabel: 'Hide'|t('author-toolbar'),
+                        onLabel: 'Show'|t('author-toolbar'),
+                        name: 'settings[inventoryLinkEnabled]',
+                        on: settings.inventoryLinkEnabled,
+                    }) }}
+                </div>
+            {% endif %}
             
-            <div class="field width-50">
-                {{ forms.editableTableField({
-                    label: 'Custom widgets',
-                    instructions: 'Extend the toolbar with your own custom widgets by specifying twig template paths here. \n Paths are relative to the **templates/** folder',
-                    id: 'customWidgets',
-                    name: 'settings[customWidgets]',
-                    cols: {
-                        path: { heading: "Template path", type: "template", code: true },
-                    },
-                    rows: settings.customWidgets,
-                    allowAdd: true,
-                    allowDelete: true,
-                    allowReorder: true,
+            <div class="cat-admin-start-menu-link">
+                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/assets.svg") }}
+                {{ forms.lightswitchField({
+                    label: 'Assets'|t('author-toolbar'),
+                    id: 'assetsLinkEnabled',
+                    offLabel: 'Hide'|t('author-toolbar'),
+                    onLabel: 'Show'|t('author-toolbar'),
+                    name: 'settings[assetsLinkEnabled]',
+                    on: settings.assetsLinkEnabled,
+                }) }}
+            </div>
+
+            <div class="cat-admin-start-menu-link">
+                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/profile.svg") }}
+                {{ forms.lightswitchField({
+                    label: 'Account settings'|t('author-toolbar'),
+                    id: 'accountSettingsLinkEnabled',
+                    offLabel: 'Hide'|t('author-toolbar'),
+                    onLabel: 'Show'|t('author-toolbar'),
+                    name: 'settings[accountSettingsLinkEnabled]',
+                    on: settings.accountSettingsLinkEnabled,
+                }) }}
+            </div>
+
+            <div class="cat-admin-start-menu-link">
+                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/logout.svg") }}
+                {{ forms.lightswitchField({
+                    label: 'Logout'|t('author-toolbar'),
+                    id: 'logoutLinkEnabled',
+                    offLabel: 'Hide'|t('author-toolbar'),
+                    onLabel: 'Show'|t('author-toolbar'),
+                    name: 'settings[logoutLinkEnabled]',
+                    on: settings.logoutLinkEnabled,
                 }) }}
             </div>
         </div>
-    </div>
 
-    <div id="help" class="hidden">
-        <div class="flex-fields">
-            <div class="field width-50">
-                {{ forms.textField({
-                    label: 'Company'|t,
-                    instructions: 'Specify the company that built the website'|t,
-                    id: 'company',
-                    name: 'settings[company]',
-                    value: settings.company,
-                    placeholder: 'Company name'|t
-                }) }}
-            </div>
+        <h2>{{ "Help menu"|t('author-toolbar') }}</h2>
 
-            <div class="field width-50">
-                {{ forms.elementSelectField({
-                    label: 'Company logo'|t,
-                    instructions: 'Provide a logo that will be displayed to the authors'|t,
-					elementType: 'craft\\elements\\Asset',
-                    id: 'companyLogo',
-                    name: 'settings[companyLogo]',
-                    value: settings.companyLogo,
-					elements: settings.companyLogo ? [craft.assets.id(settings.companyLogo).one()] : [],
-    				limit: 1,
-					criteria: {
-						kind: 'image'
-					}
-                }) }}
-            </div>
+        <div class="field width-50">
+            {{ forms.textField({
+                label: 'Company'|t('author-toolbar'),
+                instructions: 'Specify the company that built the website'|t('author-toolbar'),
+                id: 'company',
+                name: 'settings[company]',
+                value: settings.company,
+                placeholder: 'Company name'|t('author-toolbar')
+            }) }}
+        </div>
 
-            <div class="field width-50">
-                {{ forms.textField({
-                    label: 'Email'|t,
-                    instructions: 'Choose an email the authors of this website can get help with'|t,
-                    id: 'email',
-                    name: 'settings[email]',
-                    value: settings.email,
-                    placeholder: 'support@example.com'|t
-                }) }}
-            </div>
+        <div class="field width-50">
+            {{ forms.elementSelectField({
+                label: 'Company logo'|t('author-toolbar'),
+                instructions: 'Provide a logo that will be displayed to the authors'|t('author-toolbar'),
+                elementType: 'craft\\elements\\Asset',
+                id: 'companyLogo',
+                name: 'settings[companyLogo]',
+                value: settings.companyLogo,
+                elements: settings.companyLogo ? [craft.assets.id(settings.companyLogo).one()] : [],
+                limit: 1,
+                criteria: {
+                    kind: 'image'
+                }
+            }) }}
+        </div>
 
-            <div class="field width-50">
-                {{ forms.textField({
-                    label: 'Phone Number'|t,
-                    instructions: 'Choose an phone number the authors can call for help'|t,
-                    id: 'phoneNumber',
-                    name: 'settings[phoneNumber]',
-                    value: settings.phoneNumber,
-                    placeholder: '+32 (0)123 45 67 89'
-                }) }}
-            </div>
+        <div class="field width-50">
+            {{ forms.textField({
+                label: 'Email'|t('author-toolbar'),
+                instructions: 'Choose an email the authors of this website can get help with'|t('author-toolbar'),
+                id: 'email',
+                name: 'settings[email]',
+                value: settings.email,
+                placeholder: 'support@example.com'|t('author-toolbar')
+            }) }}
+        </div>
 
-			<div class="field width-100">
-				{{ forms.textField({
-					label: 'Issue ticket URL',
-					instructions: 'URL where authors can submit bug reports/feature requests',
-					id: 'issueTicketUrl',
-					name: 'settings[issueTicketUrl]',
-					value: settings.issueTicketUrl,
-					placeholder: 'https://report-issues-here.com'
-				}) }}
-			</div>
+        <div class="field width-50">
+            {{ forms.textField({
+                label: 'Phone Number'|t('author-toolbar'),
+                instructions: 'Choose an phone number the authors can call for help'|t('author-toolbar'),
+                id: 'phoneNumber',
+                name: 'settings[phoneNumber]',
+                value: settings.phoneNumber,
+                placeholder: '+32 (0)123 45 67 89'
+            }) }}
+        </div>
 
-			<div class="field width-100">
-				{{ forms.textareaField({
-					label: 'Additional info',
-					instructions: 'Enter additional information to help the authors',
-					id: 'info',
-					name: 'settings[info]',
-					value: settings.info,
-					placeholder: 'Information',
-					rows: 4
-				}) }}
-			</div>
+        <div class="field width-100">
+            {{ forms.textField({
+                label: 'Issue ticket URL'|t('author-toolbar'),
+                instructions: 'URL where authors can submit bug reports/feature requests'|t('author-toolbar'),
+                id: 'issueTicketUrl',
+                name: 'settings[issueTicketUrl]',
+                value: settings.issueTicketUrl,
+                placeholder: 'https://report-issues-here.com'
+            }) }}
+        </div>
+
+        <div class="field width-100">
+            {{ forms.textareaField({
+                label: 'Additional info'|t('author-toolbar'),
+                instructions: 'Enter additional information to help the authors'|t('author-toolbar'),
+                id: 'info',
+                name: 'settings[info]',
+                value: settings.info,
+                placeholder: 'Information'|t('author-toolbar'),
+                rows: 4
+            }) }}
         </div>
     </div>
 {% endblock %}

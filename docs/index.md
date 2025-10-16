@@ -8,13 +8,13 @@ hero:
     actions:
         - theme: brand
           text: Getting started
-          link: /guide/installation
+          link: /guide/getting-started
         - theme: alt
           text: Leave a review
           link: https://plugins.craftcms.com/author-toolbar/reviews?craft5
 
 features:
-    - title: Handy startmenu
+    - title: Handy start menu
       icon: 🏁
       details: A menu that makes hopping between the frontend and control panel a breeze.
     - title: Page quick actions
@@ -26,7 +26,7 @@ features:
     - title: Global page search
       icon: 🔎
       details: A global page search that eliminates the need of the control panel for jumping between page entries.
-    - title: Base checklist
+    - title: Base SEO checklist
       icon: ✅
       details: A basic SEO checklist aimed at users with no prior experience with search engine optimisation.
     - title: Share previews

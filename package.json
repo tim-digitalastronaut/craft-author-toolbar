@@ -23,9 +23,7 @@
 		"vue": "^3.5.22"
 	},
 	"dependencies": {
-		"@adobe/structured-data-validator": "^1.5.0",
 		"@floating-ui/dom": "^1.7.4",
-		"@marbec/web-auto-extractor": "^2.2.1",
 		"alpinejs": "^3.14.9"
 	}
 }

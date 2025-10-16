@@ -42,22 +42,22 @@
                         <h2 class="cat-typo-body-md cat-semi-bold">
                             {{ group }} 
 
-                            {% if not sectionType == "single" %}
-                                    ({{ entries|length }})
+                            {% if sectionType != "single" %}
+                                ({{ entries|length }})
                             {% endif %}
                         </h2>
 
                         {% if isProduct %}
-                            <a class="cat-typo-body-md" href="{{ cpUrl('commerce/products/' ~ entryType) }}">{{ "View all"|t }}</a>
-                        {% elseif not sectionType == "single" %}
-                            <a class="cat-typo-body-md" href="{{ cpUrl('entries/' ~ entryType) }}">{{ "View all"|t }}</a>
+                            <a class="cat-typo-body-md" href="{{ cpUrl('commerce/products/' ~ entryType) }}">{{ "View all"|t('author-toolbar') }}</a>
+                        {% elseif sectionType != "single" %}
+                            <a class="cat-typo-body-md" href="{{ cpUrl('entries/' ~ entryType) }}">{{ "View all"|t('author-toolbar') }}</a>
                         {% endif %}
                     </div>
 
                     <ul class="cat-toolbar-search-results-list">
                         {% for result in entries %}
                             {% set url = result.url|default("") %}
-                            {% set title = result.title|default("Inhoud zonder titel") %}
+                            {% set title = result.title|default("Inhoud zonder titel"|t('author-toolbar')) %}
                             {% set status = result.status|default("") %}
                             {% set thumbField = result.fieldLayout.thumbField %}
                             {% set thumbnail = null %}
@@ -99,12 +99,12 @@
                                                             - {{ minPrice|commerceCurrency }} - {{ maxPrice|commerceCurrency }}
                                                         {% endif %}
                                                         
-                                                        ({{ amountOfVariants }} {{ "variants"|t }})
+                                                        ({{ amountOfVariants }} {{ "variants"|t('author-toolbar') }})
                                                     {% endif %}
                                                 </p>
 
                                                 <div class="cat-toolbar-search-results-card-link">
-                                                    <span class="cat-typo-body-sm">{{ isProduct ? "View product"|t : "View page"|t }}</span>
+                                                    <span class="cat-typo-body-sm">{{ isProduct ? "View product"|t('author-toolbar') : "View page"|t('author-toolbar') }}</span>
 
                                                     {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/circle-arrow-right.svg") }}
                                                 </div>
@@ -127,11 +127,11 @@
     </ul>
 {% else %}
     <div class="cat-toolbar-search-results-empty">
-        <h2 class="cat-typo-body-md cat-semi-bold">{{ "Geen resultaten"|t }}</h2>
+        <h2 class="cat-typo-body-md cat-semi-bold">{{ "Geen resultaten"|t('author-toolbar') }}</h2>
 
         <div class="cat-toolbar-search-results-empty-main">
-            <p class="cat-typo-body-sm">{{ "Geen inhoud gevonden voor"|t }}</p>
-            <p class="cat-typo-body-md cat-semi-bold">{{ "Zoekterm:" }} {{ queryParam }}</p>
+            <p class="cat-typo-body-sm">{{ "Geen inhoud gevonden voor"|t('author-toolbar') }}</p>
+            <p class="cat-typo-body-md cat-semi-bold">{{ "Zoekterm:"|t('author-toolbar') }} {{ queryParam }}</p>
         </div>
     </div>
 {% endif %}
