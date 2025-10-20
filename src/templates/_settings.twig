@@ -100,6 +100,17 @@
             }) }}
         </div>
 
+        <div class="field width-25">
+            {{ forms.lightswitchField({
+                label: 'Context bar'|t('author-toolbar'),
+                id: 'contextBarEnabled',
+                offLabel: 'Hide'|t('author-toolbar'),
+                onLabel: 'Show'|t('author-toolbar'),
+                name: 'settings[contextBarEnabled]',
+                on: settings.contextBarEnabled,
+            }) }}
+        </div>
+
         <hr>
         
         <div class="field width-50">

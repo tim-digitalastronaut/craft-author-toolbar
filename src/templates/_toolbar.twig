@@ -30,10 +30,19 @@
 {% if currentUser %}
     <div 
         id="cat-toolbar"
-        toolbar-data="toolbar" 
-        toolbar-on:keydown.meta.k.window="focusSearch" 
         class="cat-toolbar"
+        toolbar-data="toolbar" 
+        toolbar-bind:class="{ 'hidden': toolbarHidden }"
+        toolbar-on:keydown.meta.k.window="focusSearch" 
     >
+        <div class="cat-toolbar-toggle">
+            <button toolbar-on:click="toolbarHidden = !toolbarHidden" class="cat-toolbar-toggle-button cat-typo-body-sm">
+                <span toolbar-text="toolbarHidden ? 'Show toolbar' : 'Hide toolbar'"></span>
+
+                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/chevron-down.svg") }}
+            </button>
+        </div>
+        
         <div class="cat-toolbar-main">
             {% if settings.startMenuEnabled %}
                 {% include "author-toolbar/components/chunks/_startMenu" %}
@@ -44,7 +53,7 @@
             {% endif %}
             
             {% if settings.globalSearchEnabled %}
-                    {% include "author-toolbar/components/chunks/_globalSearch" %}
+                {% include "author-toolbar/components/chunks/_globalSearch" %}
             {% endif %}
             
             {% if settings.seoMenuEnabled %}
@@ -60,30 +69,32 @@
             {% endfor %}
         </div>
 
-        <div class="cat-toolbar-bottom">
-            <div class="cat-toolbar-location-info">
-                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/globe.svg") }}
+        {% if settings.contextBarEnabled %}
+            <div class="cat-toolbar-bottom">
+                <div class="cat-toolbar-location-info">
+                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/globe.svg") }}
 
-                <p class="cat-typo-body-sm">
-                    <span class="cat-semi-bold">{{ pageTitle }}</span>
-                    <span>{{ pageUrl }}</span>
-                </p>
+                    <p class="cat-typo-body-sm">
+                        <span class="cat-semi-bold">{{ pageTitle }}</span>
+                        <span>{{ pageUrl }}</span>
+                    </p>
 
-                <button toolbar-on:click="copyToPageURLToClipboard" class="cat-copy-to-clipboard">
-                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/copy.svg") }}
-                </button>
+                    <button toolbar-on:click="copyToPageURLToClipboard" class="cat-copy-to-clipboard">
+                        {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/copy.svg") }}
+                    </button>
 
-                <div class="cat-page-status {{ pageStatus }}">
-                    <div class="cat-page-status-icon"></div>
+                    <div class="cat-page-status {{ pageStatus }}">
+                        <div class="cat-page-status-icon"></div>
 
-                    <p class="cat-typo-body-sm cat-uppercase">{{ pageStatus }}</p>
+                        <p class="cat-typo-body-sm cat-uppercase">{{ pageStatus }}</p>
+                    </div>
+                </div>
+
+                <div class="cat-toolbar-bottom-extra">
+                    <p class="cat-typo-body-sm">{{ updatedAt }}</p>
                 </div>
             </div>
-
-            <div class="cat-toolbar-bottom-extra">
-                <p class="cat-typo-body-sm">{{ updatedAt }}</p>
-            </div>
-        </div>
+        {% endif %}
 
         {# <ul class="cat-toolbar-warnings-list">
             <li class="cat-toolbar-warnings-list-item">

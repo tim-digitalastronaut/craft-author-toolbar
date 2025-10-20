@@ -16,6 +16,7 @@ import {
 
 export function toolbar() {
 	return {
+		toolbarHidden: false,
 		startMenuOpen: false,
 		createPageMenuOpen: false,
 		seoMenuOpen: false,
@@ -258,8 +259,8 @@ export function toolbar() {
 		showElementOnPage(element) {
 			if (!element) return;
 
-			element.classList.add("show-on-page");
-			setTimeout(() => element.classList.remove("show-on-page"), 1000);
+			element.classList.add("cat-show-on-page");
+			setTimeout(() => element.classList.remove("cat-show-on-page"), 1000);
 
 			element.scrollIntoView({
 				behavior: "smooth",

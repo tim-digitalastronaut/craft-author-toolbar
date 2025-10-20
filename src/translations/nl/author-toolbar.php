@@ -16,6 +16,7 @@ return [
     'Global search' => 'Globale zoekopdracht',
     'SEO menu' => 'SEO menu',
     'Help menu' => 'Help menu',
+    'Context bar' => 'Context balk',
     'Custom chunks' => 'Aangepaste onderdelen',
     'Template path' => 'Sjabloon',
     'Custom links' => 'Aangepaste links',

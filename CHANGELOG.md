@@ -1,5 +1,15 @@
 # Release Notes for Author toolbar
 
+## v1.1.6-beta - 2025.10.20
+
+-   Fixed show element on page class for headings tab
+-   Fixed issue where the toolbar would render on livePreview requests [#3](https://github.com/tim-digitalastronaut/craft-author-toolbar/issues/3)
+-   Added visibility toggle button to the toolbar for better control on smaller screens [#4](https://github.com/tim-digitalastronaut/craft-author-toolbar/issues/4)
+-   Added a setting for showing and hiding the context bar
+
+> [!NOTE]  
+> If you experience crashes when visiting the settings page about an unknown customWidgets variable. Try reinstalling the plugin.
+
 ## v1.1.5-beta - 2025.10.16
 
 -   Fixed a bug where the global page search would crash for non craft commerce projects

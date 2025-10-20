@@ -16,6 +16,7 @@ return [
     'Global search' => 'Global search',
     'SEO menu' => 'SEO menu',
     'Help menu' => 'Help menu',
+    'Context bar' => 'Context bar',
     'Custom chunks' => 'Custom chunks',
     'Template path' => 'Template path',
     'Custom links' => 'Custom links',

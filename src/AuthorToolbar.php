@@ -29,7 +29,7 @@ use digitalastronaut\craftauthortoolbar\web\assets\AuthorToolbarAssets;
  * @license https://craftcms.github.io/license/ Craft License
  */
 class AuthorToolbar extends Plugin {
-    public string $schemaVersion = 'v1.1.5-beta';
+    public string $schemaVersion = 'v1.1.6-beta';
     public bool $hasCpSettings = true;
 
     public function init(): void {
@@ -40,18 +40,16 @@ class AuthorToolbar extends Plugin {
         
         $this->setComponents([]);
         
-        if (Craft::$app->getRequest()->getIsCpRequest()) {
+        if (Craft::$app->request->isCpRequest) {
             $this->_registerAssetBundles();
             $this->_registerCpRoutes();
         }
         
-        if (Craft::$app->getRequest()->getIsSiteRequest()) {
+        if (Craft::$app->request->isSiteRequest) {
             $this->_registerAssetBundles();
             $this->_registerSiteRoutes();
             $this->_registerToolbar();
         }
-
-        // dd(Craft::$app->i18n->translations);
     }
 
     protected function createSettingsModel(): ?Model {
@@ -107,7 +105,7 @@ class AuthorToolbar extends Plugin {
     }
 
     private function _registerAssetBundles(): void {
-        Craft::$app->getView()->registerAssetBundle(AuthorToolbarAssets::class);
+        Craft::$app->view->registerAssetBundle(AuthorToolbarAssets::class);
     }
 
     private function _registerToolbar(): void {
@@ -120,7 +118,10 @@ class AuthorToolbar extends Plugin {
                 $settings = $this->getSettings();
 
                 if (!$settings->toolbarEnabled) return;
-                if (!Craft::$app->getUser()->checkPermission('authorToolbar-accessToolbar')) return;
+                if (!Craft::$app->user->checkPermission('authorToolbar-accessToolbar')) return;
+                if (Craft::$app->request->isPreview) return;
+                if (Craft::$app->request->isAjax) return;
+                if (Craft::$app->request->isConsoleRequest) return;
 
                 $html = Craft::$app->getView()->renderTemplate('author-toolbar/_toolbar.twig', [
                     'entry' => $entry,

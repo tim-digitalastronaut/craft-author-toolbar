@@ -16,6 +16,7 @@ class Settings extends Model {
     public bool $actionButtonsEnabled = true;
     public bool $seoMenuEnabled = true;
     public bool $helpMenuEnabled = true;
+    public bool $contextBarEnabled = true;
 
     public bool $dashboardLinkEnabled = true;
     public bool $entriesLinkEnabled = true;
