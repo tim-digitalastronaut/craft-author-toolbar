@@ -1,5 +1,10 @@
 # Release Notes for Author toolbar
 
+## v1.1.9-beta - 2025.10.22
+
+-   Fixed commerce crashed
+-   Fixed more styling scope issues
+
 ## v1.1.8-beta - 2025.10.22
 
 -   Fixed issue where toolbar would crash if some settings where not saved
