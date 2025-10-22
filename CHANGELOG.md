@@ -1,6 +1,6 @@
 # Release Notes for Author toolbar
 
-## v1.1.7-beta - 2025.10.20
+## v1.1.7-beta - 2025.10.22
 
 -   Added hotkey **Cmd + V** for collapsing the toolbar
 -   Fixed escapce key not working for closing menus

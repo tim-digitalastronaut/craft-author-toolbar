@@ -30,7 +30,7 @@ use digitalastronaut\craftauthortoolbar\web\twig\AuthorToolbarTwigExtension;
  * @license https://craftcms.github.io/license/ Craft License
  */
 class AuthorToolbar extends Plugin {
-    public string $schemaVersion = 'v1.1.6-beta';
+    public string $schemaVersion = 'v1.1.7-beta';
     public bool $hasCpSettings = true;
 
     public function init(): void {
@@ -78,8 +78,8 @@ class AuthorToolbar extends Plugin {
                 'heading' => 'Author toolbar',
                 'permissions' => [
                     'authorToolbar-accessToolbar' => ['label' => Craft::t('author-toolbar', 'Access toolbar')],
-                    // 'authorToolbar-accessAdvancedToolbar' => ['label' => Craft::t('author-toolbar', 'Access advanced toolbar'), 'info' => Craft::t('author-toolbar', 'This is info')],
                     'authorToolbar-editSettings' => ['label' => Craft::t('author-toolbar', 'Edit settings')],
+                    // 'authorToolbar-accessAdvancedToolbar' => ['label' => Craft::t('author-toolbar', 'Access advanced toolbar'), 'info' => Craft::t('author-toolbar', 'This is info')],
                 ],
             ];
         });
