@@ -1,0 +1,20 @@
+{% macro getTranslationsObject() %}
+    {%- set staticTranslations = getStaticTranslations(craft.app.language) -%}
+    {%- set translations = {} -%}
+    {%- for key, value in staticTranslations -%}
+        {%- set translations = translations|merge({
+            (key): value
+        }) -%}
+    {%- endfor -%}
+    {{- translations|json_encode|raw -}}
+{% endmacro %}
+
+<script>
+    window.craftAuthorToolbar = {
+        siteId: {{ currentSite.id }},
+        siteHandle: `{{ currentSite.handle }}`,
+        siteName: `{{ currentSite.handle }}`,
+        csrfTokenValue: `{{ craft.app.request.getCsrfToken() }}`,
+        translations: {{ _self.getTranslationsObject() }}
+    }
+</script>

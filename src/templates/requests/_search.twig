@@ -63,7 +63,7 @@
                     </div>
 
                     <ul class="cat-toolbar-search-results-list">
-                        {% for result in entries %}
+                        {% for result in entries|slice(0, 5) %}
                             {% set url = result.url|default("") %}
                             {% set title = result.title|default("Inhoud zonder titel"|t('author-toolbar')) %}
                             {% set status = result.status|default("") %}
@@ -128,6 +128,14 @@
                                 </a>
                             </li>
                         {% endfor %}
+
+                        {# {% if entries|length > 5 %}
+                            <div class="cat-toolbar-search-results-card">
+                                <p class="cat-typo-body-md">
+                                    {{ entries|length - 5 }} {{ "more"|t('author-toolbar') }}
+                                </p>
+                            </div>
+                        {% endif %} #}
                     </ul>
                 </li>
             {% endif %}
@@ -139,7 +147,7 @@
 
         <div class="cat-toolbar-search-results-empty-main">
             <p class="cat-typo-body-sm">{{ "Geen inhoud gevonden voor"|t('author-toolbar') }}</p>
-            <p class="cat-typo-body-md cat-semi-bold">{{ "Zoekterm:"|t('author-toolbar') }} {{ queryParam }}</p>
+            <p class="cat-typo-body-md cat-semi-bold">{{ "Zoekterm:"|t('author-toolbar') }} {{ queryParam|truncate(40) }}</p>
         </div>
     </div>
 {% endif %}

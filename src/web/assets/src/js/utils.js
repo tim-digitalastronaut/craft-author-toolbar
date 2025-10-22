@@ -52,12 +52,12 @@ export const getFileSizeClass = (rawFileSize) => {
 };
 
 export function jsonToHtml(data) {
-	let html = '<table class="json-table">';
+	let html = '<table class="cat-json-table">';
 
 	if (Array.isArray(data)) {
 		data.forEach((item, index) => {
 			html += "<tr>";
-			html += '<td class="json-value">';
+			html += '<td class="cat-json-value">';
 
 			if (typeof item === "object" && item !== null) {
 				html += jsonToHtml(item);
@@ -73,11 +73,11 @@ export function jsonToHtml(data) {
 			const value = data[key];
 
 			html += "<tr>";
-			html += `<td class="json-key">${key
+			html += `<td class="cat-json-key">${key
 				.replace(/@/g, "")
 				.replace(/([a-z])([A-Z])/g, "$1 $2")
 				.replace(/\b[a-z]/g, (c) => c.toUpperCase())}</td>`;
-			html += '<td class="json-value">';
+			html += '<td class="cat-json-value">';
 
 			if (Array.isArray(value) || (typeof value === "object" && value !== null)) {
 				html += jsonToHtml(value);
@@ -93,3 +93,5 @@ export function jsonToHtml(data) {
 	html += "</table>";
 	return html;
 }
+
+export const translate = window.craftAuthorToolbar?.translations;

@@ -1,9 +1,4 @@
 {# ======================= #}
-{# PROPERTIES              #}
-{# ======================= #}
-
-
-{# ======================= #}
 {# TEMPLATE                #}
 {# ======================= #}
 <div class="cat-toolbar-search cat-toolbar-chunk" toolbar-data="menu">
@@ -11,6 +6,8 @@
         class="cat-toolbar-search-menu"
         toolbar-bind:class="{ 'open': searchResultsOpen }"
         toolbar-on:click.outside="searchResultsOpen = false"
+        toolbar-on:keydown.esc.window="searchResultsOpen = false; document.activeElement.blur()"
+        toolbar-on:keydown.meta.k.window="focusSearch" 
     >
         <div class="cat-toolbar-search-bar anchor">
             {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/search.svg") }}

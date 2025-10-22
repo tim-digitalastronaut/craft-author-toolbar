@@ -1,0 +1,51 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+p {
+	color: var(--clr-grey-900);
+}
+
+ul,
+ol {
+	list-style: none;
+}
+
+fieldset {
+	border: 0;
+}
+
+textarea {
+	resize: none;
+}
+
+button,
+input,
+textarea,
+select {
+	border: none;
+	outline: none;
+	background: transparent;
+
+	&:not([type="checkbox"]):not([type="radio"]) {
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+	}
+}
+
+::-webkit-scrollbar {
+	display: none;
+}
+
+[x-cloak] {
+	display: none !important;
+}

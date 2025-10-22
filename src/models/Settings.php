@@ -18,6 +18,8 @@ class Settings extends Model {
     public bool $helpMenuEnabled = true;
     public bool $contextBarEnabled = true;
 
+    public array $creatableEntries = [];
+
     public bool $dashboardLinkEnabled = true;
     public bool $entriesLinkEnabled = true;
     public bool $ordersLinkEnabled = true;

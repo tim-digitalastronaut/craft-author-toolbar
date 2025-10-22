@@ -1,0 +1,37 @@
+@use "../base/breakpoints" as *;
+
+.cat-page-status {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 4px 8px 4px 6px;
+	border-radius: 100px;
+	background-color: var(--clr-green-100);
+	color: var(--clr-green-500);
+
+	&.disabled {
+		color: var(--clr-grey-900);
+		background-color: var(--clr-grey-300);
+
+		.cat-page-status-icon {
+			background-color: var(--clr-grey-300);
+			border: 1px solid var(--clr-grey-900);
+		}
+	}
+
+	&.draft {
+		color: var(--clr-grey-900);
+		background-color: var(--clr-grey-300);
+
+		.cat-page-status-icon {
+			background-color: var(--clr-grey-700);
+		}
+	}
+
+	&-icon {
+		width: 12px;
+		height: 12px;
+		background-color: var(--clr-green-500);
+		border-radius: 100px;
+	}
+}

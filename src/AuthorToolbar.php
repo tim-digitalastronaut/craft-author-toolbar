@@ -20,6 +20,7 @@ use craft\services\UserPermissions;
 
 use digitalastronaut\craftauthortoolbar\models\Settings;
 use digitalastronaut\craftauthortoolbar\web\assets\AuthorToolbarAssets;
+use digitalastronaut\craftauthortoolbar\web\twig\AuthorToolbarTwigExtension;
 
 /**
  * Author toolbar plugin
@@ -47,6 +48,7 @@ class AuthorToolbar extends Plugin {
         
         if (Craft::$app->request->isSiteRequest) {
             $this->_registerAssetBundles();
+            $this->_registerTwigExtensions();
             $this->_registerSiteRoutes();
             $this->_registerToolbar();
         }
@@ -106,6 +108,10 @@ class AuthorToolbar extends Plugin {
 
     private function _registerAssetBundles(): void {
         Craft::$app->view->registerAssetBundle(AuthorToolbarAssets::class);
+    }
+
+    private function _registerTwigExtensions(): void {
+        Craft::$app->view->registerTwigExtension(new AuthorToolbarTwigExtension());
     }
 
     private function _registerToolbar(): void {

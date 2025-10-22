@@ -2,6 +2,85 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./node_modules/@alpinejs/persist/dist/module.esm.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@alpinejs/persist/dist/module.esm.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ module_default),
+/* harmony export */   persist: () => (/* binding */ src_default)
+/* harmony export */ });
+// packages/persist/src/index.js
+function src_default(Alpine) {
+  let persist = () => {
+    let alias;
+    let storage;
+    try {
+      storage = localStorage;
+    } catch (e) {
+      console.error(e);
+      console.warn("Alpine: $persist is using temporary storage since localStorage is unavailable.");
+      let dummy = /* @__PURE__ */ new Map();
+      storage = {
+        getItem: dummy.get.bind(dummy),
+        setItem: dummy.set.bind(dummy)
+      };
+    }
+    return Alpine.interceptor((initialValue, getter, setter, path, key) => {
+      let lookup = alias || `_x_${path}`;
+      let initial = storageHas(lookup, storage) ? storageGet(lookup, storage) : initialValue;
+      setter(initial);
+      Alpine.effect(() => {
+        let value = getter();
+        storageSet(lookup, value, storage);
+        setter(value);
+      });
+      return initial;
+    }, (func) => {
+      func.as = (key) => {
+        alias = key;
+        return func;
+      }, func.using = (target) => {
+        storage = target;
+        return func;
+      };
+    });
+  };
+  Object.defineProperty(Alpine, "$persist", { get: () => persist() });
+  Alpine.magic("persist", persist);
+  Alpine.persist = (key, { get, set }, storage = localStorage) => {
+    let initial = storageHas(key, storage) ? storageGet(key, storage) : get();
+    set(initial);
+    Alpine.effect(() => {
+      let value = get();
+      storageSet(key, value, storage);
+      set(value);
+    });
+  };
+}
+function storageHas(key, storage) {
+  return storage.getItem(key) !== null;
+}
+function storageGet(key, storage) {
+  let value = storage.getItem(key);
+  if (value === void 0)
+    return;
+  return JSON.parse(value);
+}
+function storageSet(key, value, storage) {
+  storage.setItem(key, JSON.stringify(value));
+}
+
+// packages/persist/builds/module.js
+var module_default = src_default;
+
+
+
+/***/ }),
+
 /***/ "./node_modules/@floating-ui/core/dist/floating-ui.core.mjs":
 /*!******************************************************************!*\
   !*** ./node_modules/@floating-ui/core/dist/floating-ui.core.mjs ***!
@@ -5681,14 +5760,17 @@ var module_default = src_default;
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
-/* harmony import */ var _toolbar_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./toolbar.js */ "./src/web/assets/src/js/toolbar.js");
-/* harmony import */ var _menu_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./menu.js */ "./src/web/assets/src/js/menu.js");
+/* harmony import */ var _alpinejs_persist__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @alpinejs/persist */ "./node_modules/@alpinejs/persist/dist/module.esm.js");
+/* harmony import */ var _toolbar_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./toolbar.js */ "./src/web/assets/src/js/toolbar.js");
+/* harmony import */ var _menu_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./menu.js */ "./src/web/assets/src/js/menu.js");
 
 
 
+
+alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].plugin(_alpinejs_persist__WEBPACK_IMPORTED_MODULE_1__["default"]);
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].prefix("toolbar-");
-alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].data("toolbar", _toolbar_js__WEBPACK_IMPORTED_MODULE_1__.toolbar);
-alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].data("menu", _menu_js__WEBPACK_IMPORTED_MODULE_2__.menu);
+alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].data("toolbar", _toolbar_js__WEBPACK_IMPORTED_MODULE_2__.toolbar);
+alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].data("menu", _menu_js__WEBPACK_IMPORTED_MODULE_3__.menu);
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
 
 /***/ }),
@@ -5750,30 +5832,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   checkSubHeadings: () => (/* binding */ checkSubHeadings),
 /* harmony export */   seoChecklist: () => (/* binding */ seoChecklist)
 /* harmony export */ });
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils.js */ "./src/web/assets/src/js/utils.js");
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+
 var checkPageTitle = function checkPageTitle() {
   var titleElement = document.querySelector("title");
   if (!titleElement || !titleElement.innerText) {
     return {
       status: "failed",
-      message: "The page is missing a title"
+      message: _utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The page is missing a title"]
     };
   }
   var titleLength = titleElement.innerText.length;
   if (titleLength > 60) {
     return {
       status: "warning",
-      message: "The page title is too long (".concat(titleLength, " characters). Recommended to be under 60 characters.")
+      message: "".concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The page title is too long"], " (").concat(titleLength, " ").concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["characters"], "). ").concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["Recommended to be under 60 characters"])
     };
   }
   return {
     status: "passed",
-    message: "The page has a title and is (under 60 characters)"
+    message: _utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The page has a title and is (under 60 characters)"]
   };
 };
 var checkMetaDescription = function checkMetaDescription() {
@@ -5781,31 +5865,31 @@ var checkMetaDescription = function checkMetaDescription() {
   if (!descriptionMetaElement) {
     return {
       status: "failed",
-      message: "The page is missing a meta description"
+      message: _utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The page is missing a meta description"]
     };
   }
   var descriptionLength = descriptionMetaElement.getAttribute("content").length;
   if (descriptionLength === 0) {
     return {
       status: "failed",
-      message: "The page is missing a meta description"
+      message: _utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The page is missing a meta description"]
     };
   }
   if (descriptionLength < 120) {
     return {
       status: "warning",
-      message: "Meta description is too short (".concat(descriptionLength, " characters). Should be 120-160 characters.")
+      message: "".concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["Meta description is too short"], " (").concat(descriptionLength, " ").concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["characters"], "). ").concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["Should be 120-160 characters"])
     };
   }
   if (descriptionLength > 160) {
     return {
       status: "warning",
-      message: "Meta description is too long (".concat(descriptionLength, " characters). Should be 120-160 characters.")
+      message: "".concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["Meta description is too long"], " (").concat(descriptionLength, " ").concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["characters"], "). ").concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["Should be 120-160 characters"])
     };
   }
   return {
     status: "passed",
-    message: "The page has a meta description (120 - 160 characters)"
+    message: _utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The page has a meta description (120 - 160 characters)"]
   };
 };
 var checkH1Heading = function checkH1Heading() {
@@ -5813,25 +5897,25 @@ var checkH1Heading = function checkH1Heading() {
   if (h1Elements.length === 0) {
     return {
       status: "failed",
-      message: "The page is missing an h1 heading tag"
+      message: _utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The page is missing an h1 heading tag"]
     };
   }
   if (h1Elements.length > 1) {
     return {
       status: "failed",
-      message: "The page has ".concat(h1Elements.length, " h1 headings. It should have exactly one h1 tag.")
+      message: "".concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The page has"], " ").concat(h1Elements.length, " ").concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["h1 headings. It should have exactly one h1 tag"])
     };
   }
   var h1Length = h1Elements[0].innerText.length;
   if (h1Length > 70) {
     return {
       status: "warning",
-      message: "The h1 heading exceeds the 70 characters recommendation (".concat(h1Length, " characters)")
+      message: "".concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The h1 heading exceeds the 70 characters recommendation"], " (").concat(h1Length, " ").concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["characters"], ")")
     };
   }
   return {
     status: "passed",
-    message: "The page has an h1 heading tag"
+    message: _utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The page has an h1 heading tag"]
   };
 };
 var checkContentLength = function checkContentLength() {
@@ -5839,7 +5923,7 @@ var checkContentLength = function checkContentLength() {
   if (!mainElement) {
     return {
       status: "failed",
-      message: "The page is missing a main element tag"
+      message: _utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The page is missing a main element tag"]
     };
   }
   var wordCount = mainElement.textContent.trim().split(/\s+/).filter(function (word) {
@@ -5848,18 +5932,18 @@ var checkContentLength = function checkContentLength() {
   if (wordCount === 0) {
     return {
       status: "failed",
-      message: "This page has no main content"
+      message: _utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["This page has no main content"]
     };
   }
   if (wordCount < 300) {
     return {
       status: "warning",
-      message: "Main content contains only ".concat(wordCount, " words. Should have at least 300 words.")
+      message: "".concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["Main content contains only"], " ").concat(wordCount, " ").concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["words. Should have at least 300 words"])
     };
   }
   return {
     status: "passed",
-    message: "The main content on the page is at least 300+ words"
+    message: _utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The main content on the page is at least 300+ words"]
   };
 };
 var checkSubHeadings = function checkSubHeadings() {
@@ -5867,12 +5951,12 @@ var checkSubHeadings = function checkSubHeadings() {
   if (subHeadingsCount === 0) {
     return {
       status: "warning",
-      message: "The page is missing subheadings (h2, h3 tags)"
+      message: _utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The page is missing subheadings (h2, h3 tags)"]
     };
   }
   return {
     status: "passed",
-    message: "The page contains subheadings such as h2 and h3 tags"
+    message: _utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The page contains subheadings such as h2 and h3 tags"]
   };
 };
 var checkImages = function checkImages() {
@@ -5880,7 +5964,7 @@ var checkImages = function checkImages() {
   if (images.length === 0) {
     return {
       status: "warning",
-      message: "The page has no images"
+      message: _utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The page has no images"]
     };
   }
   var imagesWithoutAlt = images.filter(function (image) {
@@ -5889,12 +5973,12 @@ var checkImages = function checkImages() {
   if (imagesWithoutAlt.length > 0) {
     return {
       status: "failed",
-      message: "".concat(imagesWithoutAlt.length, " out of ").concat(images.length, " images are missing an alt text")
+      message: "".concat(imagesWithoutAlt.length, " ").concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["out of"], " ").concat(images.length, " ").concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["images are missing an alt text"])
     };
   }
   return {
     status: "passed",
-    message: "The page contains ".concat(images.length, " image").concat(images.length === 1 ? "" : "s", " with descriptive alt texts")
+    message: "".concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The page contains"], " ").concat(images.length, " ").concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["image"]).concat(images.length === 1 ? "" : "s", " ").concat(_utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["with descriptive alt texts"])
   };
 };
 var checkLinks = function checkLinks() {
@@ -5902,12 +5986,12 @@ var checkLinks = function checkLinks() {
   if (linksCount === 0) {
     return {
       status: "warning",
-      message: "The page has no links to internal or external pages"
+      message: _utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The page has no links to internal or external pages"]
     };
   }
   return {
     status: "passed",
-    message: "There are links on this page that point to external or internal pages"
+    message: _utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["There are links on this page that point to external or internal pages"]
   };
 };
 var checkSocialImages = function checkSocialImages() {
@@ -5918,24 +6002,24 @@ var checkSocialImages = function checkSocialImages() {
   if (!hasOgImage && !hasTwitterImage) {
     return {
       status: "warning",
-      message: "The page is missing both og:image and twitter:image meta tags"
+      message: _utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The page is missing both og:image and twitter:image meta tags"]
     };
   }
   if (!hasOgImage) {
     return {
       status: "warning",
-      message: "The page is missing og:image meta tag"
+      message: _utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The page is missing og:image meta tag"]
     };
   }
   if (!hasTwitterImage) {
     return {
       status: "warning",
-      message: "The page is missing twitter:image meta tag"
+      message: _utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The page is missing twitter:image meta tag"]
     };
   }
   return {
     status: "passed",
-    message: "The page has valid social images"
+    message: _utils_js__WEBPACK_IMPORTED_MODULE_0__.translate["The page has valid social images"]
   };
 };
 var seoChecklist = [checkPageTitle, checkMetaDescription, checkH1Heading, checkContentLength, checkSubHeadings, checkImages, checkLinks, checkSocialImages];
@@ -6012,6 +6096,59 @@ var getSeoMeta = function getSeoMeta() {
 
 /***/ }),
 
+/***/ "./src/web/assets/src/js/timeStorage.js":
+/*!**********************************************!*\
+  !*** ./src/web/assets/src/js/timeStorage.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   timeStorage: () => (/* binding */ timeStorage)
+/* harmony export */ });
+var timeStorage = function timeStorage(duration) {
+  return {
+    getItem: function getItem(key) {
+      var stored = localStorage.getItem(key);
+      if (!stored) return null;
+      try {
+        var _JSON$parse = JSON.parse(stored),
+          value = _JSON$parse.value,
+          expiry = _JSON$parse.expiry;
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key);
+          return null;
+        }
+        return value;
+      } catch (e) {
+        console.error(error);
+        return null;
+      }
+    },
+    setItem: function setItem(key, value) {
+      var stored = localStorage.getItem(key);
+      var expiry;
+      if (stored) {
+        try {
+          var parsed = JSON.parse(stored);
+          if (parsed.expiry && Date.now() <= parsed.expiry) {
+            expiry = parsed.expiry;
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      if (!expiry) expiry = Date.now() + duration;
+      localStorage.setItem(key, JSON.stringify({
+        value: value,
+        expiry: expiry
+      }));
+    }
+  };
+};
+
+/***/ }),
+
 /***/ "./src/web/assets/src/js/toolbar.js":
 /*!******************************************!*\
   !*** ./src/web/assets/src/js/toolbar.js ***!
@@ -6022,9 +6159,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   toolbar: () => (/* binding */ toolbar)
 /* harmony export */ });
-/* harmony import */ var _seoChecklist_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./seoChecklist.js */ "./src/web/assets/src/js/seoChecklist.js");
-/* harmony import */ var _seoPreviews_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./seoPreviews.js */ "./src/web/assets/src/js/seoPreviews.js");
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils.js */ "./src/web/assets/src/js/utils.js");
+/* harmony import */ var _timeStorage_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./timeStorage.js */ "./src/web/assets/src/js/timeStorage.js");
+/* harmony import */ var _seoChecklist_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./seoChecklist.js */ "./src/web/assets/src/js/seoChecklist.js");
+/* harmony import */ var _seoPreviews_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./seoPreviews.js */ "./src/web/assets/src/js/seoPreviews.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils.js */ "./src/web/assets/src/js/utils.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -6049,12 +6187,14 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 
+
 // import Validator from "@adobe/structured-data-validator";
 // import WebAutoExtractor from "@marbec/web-auto-extractor";
 
 
 function toolbar() {
   return {
+    showEnvironmentMessage: this.$persist(true).using((0,_timeStorage_js__WEBPACK_IMPORTED_MODULE_0__.timeStorage)(24 * 60 * 60 * 1000)),
     toolbarHidden: false,
     startMenuOpen: false,
     createPageMenuOpen: false,
@@ -6071,14 +6211,16 @@ function toolbar() {
     searchResultsOpen: false,
     searchQuery: "",
     helpMenuOpen: false,
+    translate: _utils_js__WEBPACK_IMPORTED_MODULE_3__.translate,
     init: function init() {
       var _this = this;
       this.getHeadingsOverview();
       this.getSeoPreviews();
       this.getImagesOverview();
       this.getSeoChecklist();
-      // this.getStructuredData();
       this.renderSearchResults();
+      // this.getStructuredData();
+
       var menus = ["startMenuOpen", "createPageMenuOpen", "seoMenuOpen", "searchResultsOpen", "helpMenuOpen"];
       menus.forEach(function (menu) {
         _this.$watch(menu, function (value) {
@@ -6089,9 +6231,17 @@ function toolbar() {
           });
         });
       });
+      if (!this.toolbarHidden) {
+        var toolbarElement = this.$el;
+        document.body.style.marginBottom = "".concat(toolbarElement.offsetHeight, "px");
+        var resizeObserver = new ResizeObserver(function (entries) {
+          document.body.style.marginBottom = "".concat(entries[0].target.offsetHeight, "px");
+        });
+        resizeObserver.observe(toolbarElement);
+      }
     },
     getSeoChecklist: function getSeoChecklist() {
-      this.seoChecklistResults = _seoChecklist_js__WEBPACK_IMPORTED_MODULE_0__.seoChecklist.map(function (checkFunction) {
+      this.seoChecklistResults = _seoChecklist_js__WEBPACK_IMPORTED_MODULE_1__.seoChecklist.map(function (checkFunction) {
         return checkFunction();
       }).sort(function (a, b) {
         var statusOrder = {
@@ -6118,9 +6268,9 @@ function toolbar() {
         return _regenerator().w(function (_context) {
           while (1) switch (_context.n) {
             case 0:
-              seoMeta = (0,_seoPreviews_js__WEBPACK_IMPORTED_MODULE_1__.getSeoMeta)();
+              seoMeta = (0,_seoPreviews_js__WEBPACK_IMPORTED_MODULE_2__.getSeoMeta)();
               _context.n = 1;
-              return (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.templateRequest)("/author-toolbar/seo/previews", {
+              return (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.templateRequest)("/author-toolbar/seo/previews", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
@@ -6169,10 +6319,10 @@ function toolbar() {
               response = _context2.v;
               contentLength = response.headers.get("content-length");
               contentType = response.headers.get("content-type");
-              if (contentType) fileType = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.mimeToExtension)(contentType);
+              if (contentType) fileType = (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.mimeToExtension)(contentType);
               if (contentLength) {
-                fileSize = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.formatFileSize)(parseInt(contentLength));
-                fileSizeClass = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getFileSizeClass)(parseInt(contentLength));
+                fileSize = (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.formatFileSize)(parseInt(contentLength));
+                fileSizeClass = (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.getFileSizeClass)(parseInt(contentLength));
               }
               _context2.n = 6;
               break;
@@ -6183,7 +6333,7 @@ function toolbar() {
             case 6:
               imagesData.push({
                 src: image.src,
-                path: (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.getUrlPath)(image.src),
+                path: (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.getUrlPath)(image.src),
                 fileSize: fileSize,
                 fileSizeClass: fileSizeClass,
                 fileType: fileType,
@@ -6303,7 +6453,7 @@ function toolbar() {
     // 	}
     // },
     jsonToHtml: function jsonToHtml(data) {
-      return (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.jsonToHtml)(data);
+      return (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.jsonToHtml)(data);
     },
     renderSearchResults: function renderSearchResults() {
       var _this3 = this;
@@ -6312,12 +6462,12 @@ function toolbar() {
         return _regenerator().w(function (_context3) {
           while (1) switch (_context3.n) {
             case 0:
-              queryString = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.buildQueryString)([{
+              queryString = (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.buildQueryString)([{
                 key: "query",
                 value: _this3.searchQuery
               }]);
               _context3.n = 1;
-              return (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.templateRequest)("/author-toolbar/search?".concat(queryString), {
+              return (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.templateRequest)("/author-toolbar/search?".concat(queryString), {
                 headers: {
                   "X-Craft-Site": window.craftAuthorToolbar.siteId
                 }
@@ -6348,6 +6498,7 @@ function toolbar() {
       }))();
     },
     focusSearch: function focusSearch() {
+      this.toolbarHidden = false;
       document.querySelector("#cat-search").focus();
     },
     showElementOnPage: function showElementOnPage(element) {
@@ -6381,8 +6532,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   getUrlPath: () => (/* binding */ getUrlPath),
 /* harmony export */   jsonToHtml: () => (/* binding */ jsonToHtml),
 /* harmony export */   mimeToExtension: () => (/* binding */ mimeToExtension),
-/* harmony export */   templateRequest: () => (/* binding */ templateRequest)
+/* harmony export */   templateRequest: () => (/* binding */ templateRequest),
+/* harmony export */   translate: () => (/* binding */ translate)
 /* harmony export */ });
+var _window$craftAuthorTo;
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
@@ -6455,11 +6608,11 @@ var getFileSizeClass = function getFileSizeClass(rawFileSize) {
   return "large"; // > 1MB
 };
 function jsonToHtml(data) {
-  var html = '<table class="json-table">';
+  var html = '<table class="cat-json-table">';
   if (Array.isArray(data)) {
     data.forEach(function (item, index) {
       html += "<tr>";
-      html += '<td class="json-value">';
+      html += '<td class="cat-json-value">';
       if (_typeof(item) === "object" && item !== null) {
         html += jsonToHtml(item);
       } else {
@@ -6472,10 +6625,10 @@ function jsonToHtml(data) {
     for (var key in data) {
       var value = data[key];
       html += "<tr>";
-      html += "<td class=\"json-key\">".concat(key.replace(/@/g, "").replace(/([a-z])([A-Z])/g, "$1 $2").replace(/\b[a-z]/g, function (c) {
+      html += "<td class=\"cat-json-key\">".concat(key.replace(/@/g, "").replace(/([a-z])([A-Z])/g, "$1 $2").replace(/\b[a-z]/g, function (c) {
         return c.toUpperCase();
       }), "</td>");
-      html += '<td class="json-value">';
+      html += '<td class="cat-json-value">';
       if (Array.isArray(value) || _typeof(value) === "object" && value !== null) {
         html += jsonToHtml(value);
       } else {
@@ -6488,6 +6641,7 @@ function jsonToHtml(data) {
   html += "</table>";
   return html;
 }
+var translate = (_window$craftAuthorTo = window.craftAuthorToolbar) === null || _window$craftAuthorTo === void 0 ? void 0 : _window$craftAuthorTo.translations;
 
 /***/ }),
 

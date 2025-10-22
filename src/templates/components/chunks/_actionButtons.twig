@@ -45,13 +45,14 @@
                         {% set name = entryType.name|default("") %}
                         {% set color = entryType.entryTypes[0].color.value|default("gray") %}
                         {% set createUrl = cpUrl('entries/' ~ entryType.handle ~ '/new')|default("") %}
+                        {% set enabled = settings.creatableEntries[entryType.name|pascal] %}
                         {% set hasUrls = entryType.getSiteSettings|first.hasUrls|default(false) %}
 
                         {% if isProduct %}
                             {% set createUrl = cpUrl('commerce/products/' ~ entryType.handle ~ '/new')|default("") %}
                         {% endif %}
 
-                        {% if hasUrls %}
+                        {% if enabled and hasUrls %}
                             <li 
                                 class="cat-toolbar-create-entry-menu-entries-list-item"
                                 style="--entry-type-light: var(--{{ color }}-100); --entry-type-dark: var(--{{ color }}-500)"

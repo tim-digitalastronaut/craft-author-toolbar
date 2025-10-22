@@ -8,6 +8,15 @@
 {% set fullPageForm = true %}
 {% set title = "Settings"|t('author-toolbar') %}
 
+{% set availableEntryTypes = [] %}
+
+{% if craft.app.plugins.isPluginEnabled('commerce') %}
+    {% set availableEntryTypes = availableEntryTypes|merge(craft.commerce.productTypes.allProductTypes|default([])) %}
+{% endif %}
+
+{% set allSections = craft.app.entries.allSections|default([]) %}
+{% set availableEntryTypes = availableEntryTypes|merge(allSections|filter(section => section.type != 'single')) %}
+
 {% set crumbs = [
   {
     label: 'Author toolbar'|t('author-toolbar'),
@@ -251,6 +260,33 @@
                 }) }}
             </div>
         </div>
+
+        <hr>
+
+        <div class="cat-admin-settings-section-intro">
+            <h2>{{ "Create action button"|t('author-toolbar') }}</h2>
+
+            <p>{{ "Choose which entries with urls can be created from the toolbar create action button"|t('author-toolbar') }}</p>
+        </div>
+
+        {% for entryType in availableEntryTypes %}
+            {% set hasUrls = entryType.getSiteSettings|first.hasUrls|default(false) %}
+
+            {% if hasUrls %}
+                <div class="field width-25">
+                    {{ forms.lightswitchField({
+                        label: entryType.name,
+                        id: entryType.name|pascal,
+                        offLabel: 'Hide'|t('author-toolbar'),
+                        onLabel: 'Show'|t('author-toolbar'),
+                        name: 'settings[creatableEntries][' ~ entryType.name|pascal ~ ']',
+                        on: settings.creatableEntries[entryType.name|pascal] ?? true,
+                    }) }}
+                </div>
+            {% else %}
+                <input type="hidden" name="{{ 'settings[creatableEntries][' ~ entryType.name|pascal ~ ']' }}" value="0">
+            {% endif %}
+        {% endfor %}        
 
         <h2>{{ "Help menu"|t('author-toolbar') }}</h2>
 

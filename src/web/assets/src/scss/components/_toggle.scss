@@ -1,0 +1,33 @@
+@use "../base/breakpoints" as *;
+
+.cat-toolbar-toggle {
+	position: absolute;
+	top: 0px;
+	right: 16px;
+	transform: translateY(-100%);
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	background-color: var(--clr-white);
+	border: 1px solid var(--clr-grey-300);
+	border-bottom: 0;
+	z-index: -1;
+	padding: 4px;
+	transition: all ease-out 0.15s;
+
+	&-button {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding: 4px 16px;
+		border-radius: 4px;
+		transition: all ease-out 0.15s;
+		color: var(--clr-grey-900);
+
+		@media (hover: hover) and (pointer: fine) {
+			&:hover {
+				cursor: pointer;
+				background-color: var(--clr-grey-200);
+			}
+		}
+	}
+}

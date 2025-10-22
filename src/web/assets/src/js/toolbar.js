@@ -1,3 +1,4 @@
+import { timeStorage } from "./timeStorage.js";
 import { seoChecklist } from "./seoChecklist.js";
 import { getSeoMeta } from "./seoPreviews.js";
 
@@ -12,10 +13,12 @@ import {
 	mimeToExtension,
 	getFileSizeClass,
 	jsonToHtml,
+	translate,
 } from "./utils.js";
 
 export function toolbar() {
 	return {
+		showEnvironmentMessage: this.$persist(true).using(timeStorage(24 * 60 * 60 * 1000)),
 		toolbarHidden: false,
 		startMenuOpen: false,
 		createPageMenuOpen: false,
@@ -32,14 +35,15 @@ export function toolbar() {
 		searchResultsOpen: false,
 		searchQuery: "",
 		helpMenuOpen: false,
+		translate,
 
 		init() {
 			this.getHeadingsOverview();
 			this.getSeoPreviews();
 			this.getImagesOverview();
 			this.getSeoChecklist();
-			// this.getStructuredData();
 			this.renderSearchResults();
+			// this.getStructuredData();
 
 			const menus = ["startMenuOpen", "createPageMenuOpen", "seoMenuOpen", "searchResultsOpen", "helpMenuOpen"];
 
@@ -48,6 +52,18 @@ export function toolbar() {
 					if (value) menus.filter((menu) => menu !== menu).forEach((menu) => (this[menu] = false));
 				});
 			});
+
+			if (!this.toolbarHidden) {
+				const toolbarElement = this.$el;
+
+				document.body.style.marginBottom = `${toolbarElement.offsetHeight}px`;
+
+				const resizeObserver = new ResizeObserver((entries) => {
+					document.body.style.marginBottom = `${entries[0].target.offsetHeight}px`;
+				});
+
+				resizeObserver.observe(toolbarElement);
+			}
 		},
 
 		getSeoChecklist() {
@@ -253,6 +269,7 @@ export function toolbar() {
 		},
 
 		focusSearch() {
+			this.toolbarHidden = false;
 			document.querySelector("#cat-search").focus();
 		},
 

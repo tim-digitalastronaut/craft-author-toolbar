@@ -33,11 +33,12 @@
         class="cat-toolbar"
         toolbar-data="toolbar" 
         toolbar-bind:class="{ 'hidden': toolbarHidden }"
-        toolbar-on:keydown.meta.k.window="focusSearch" 
+        toolbar-on:keydown.meta.v.window="toolbarHidden = !toolbarHidden" 
+        toolbar-on:keydown.meta.d.window.prevent="window.location = '{{ cpUrl('dashboard') }}'"
     >
         <div class="cat-toolbar-toggle">
             <button toolbar-on:click="toolbarHidden = !toolbarHidden" class="cat-toolbar-toggle-button cat-typo-body-sm">
-                <span toolbar-text="toolbarHidden ? 'Show toolbar' : 'Hide toolbar'"></span>
+                <span toolbar-text="toolbarHidden ? translate['Show toolbar'] : translate['Hide toolbar']"></span>
 
                 {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/chevron-down.svg") }}
             </button>
@@ -96,22 +97,23 @@
             </div>
         {% endif %}
 
-        {# <ul class="cat-toolbar-warnings-list">
-            <li class="cat-toolbar-warnings-list-item">
-                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/triangle-exclamation.svg") }}
+        <ul class="cat-toolbar-warnings-list">
+            <template toolbar-if="showEnvironmentMessage">
+                <li class="cat-toolbar-warnings-list-item">
+                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/triangle-exclamation.svg") }}
 
-                <p class="cat-typo-body-md">{{ "Je bent inhoud aan het bewerken op de testomgeving" }}</p>
-            </li>
-        </ul> #}
+                    <p class="cat-typo-body-md">
+                        {{ "You are currently viewing the" }}
+                        {{ getenv('ENVIRONMENT') ?: getenv('CRAFT_ENVIRONMENT') }}
+                        {{ "environment" }}
+
+                        <a toolbar-on:click.prevent="showEnvironmentMessage = false">{{ "Don't show for this session"|t('author-toolbar') }}</a>
+                    </p>
+                </li>
+            </template>
+        </ul>
     </div>
 
-    <script>
-        window.craftAuthorToolbar = {
-            siteId: {{ currentSite.id }},
-            siteHandle: `{{ currentSite.handle }}`,
-            siteName: `{{ currentSite.handle }}`,
-            csrfTokenValue: `{{ craft.app.request.getCsrfToken() }}`
-        }
-    </script>
+    {% include "author-toolbar/_windowObject" %}
 {% endif %}
 

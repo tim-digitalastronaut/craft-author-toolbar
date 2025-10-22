@@ -1,0 +1,22 @@
+@use "../base/breakpoints" as *;
+
+.cat-copy-to-clipboard {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--clr-grey-300);
+	border-radius: 4px;
+	height: 25px;
+	width: 25px;
+	transition: background-color ease-out 0.15s;
+
+	&:hover {
+		cursor: pointer;
+		background-color: var(--clr-grey-400);
+	}
+
+	&:focus-visible {
+		border: 1px solid var(--clr-blue-500);
+		outline: none;
+	}
+}

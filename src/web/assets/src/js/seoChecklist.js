@@ -1,10 +1,12 @@
+import { translate } from "./utils.js";
+
 export const checkPageTitle = () => {
 	const titleElement = document.querySelector("title");
 
 	if (!titleElement || !titleElement.innerText) {
 		return {
 			status: "failed",
-			message: "The page is missing a title",
+			message: translate["The page is missing a title"],
 		};
 	}
 
@@ -13,13 +15,13 @@ export const checkPageTitle = () => {
 	if (titleLength > 60) {
 		return {
 			status: "warning",
-			message: `The page title is too long (${titleLength} characters). Recommended to be under 60 characters.`,
+			message: `${translate["The page title is too long"]} (${titleLength} ${translate["characters"]}). ${translate["Recommended to be under 60 characters"]}`,
 		};
 	}
 
 	return {
 		status: "passed",
-		message: "The page has a title and is (under 60 characters)",
+		message: translate["The page has a title and is (under 60 characters)"],
 	};
 };
 
@@ -29,7 +31,7 @@ export const checkMetaDescription = () => {
 	if (!descriptionMetaElement) {
 		return {
 			status: "failed",
-			message: "The page is missing a meta description",
+			message: translate["The page is missing a meta description"],
 		};
 	}
 
@@ -38,27 +40,27 @@ export const checkMetaDescription = () => {
 	if (descriptionLength === 0) {
 		return {
 			status: "failed",
-			message: "The page is missing a meta description",
+			message: translate["The page is missing a meta description"],
 		};
 	}
 
 	if (descriptionLength < 120) {
 		return {
 			status: "warning",
-			message: `Meta description is too short (${descriptionLength} characters). Should be 120-160 characters.`,
+			message: `${translate["Meta description is too short"]} (${descriptionLength} ${translate["characters"]}). ${translate["Should be 120-160 characters"]}`,
 		};
 	}
 
 	if (descriptionLength > 160) {
 		return {
 			status: "warning",
-			message: `Meta description is too long (${descriptionLength} characters). Should be 120-160 characters.`,
+			message: `${translate["Meta description is too long"]} (${descriptionLength} ${translate["characters"]}). ${translate["Should be 120-160 characters"]}`,
 		};
 	}
 
 	return {
 		status: "passed",
-		message: "The page has a meta description (120 - 160 characters)",
+		message: translate["The page has a meta description (120 - 160 characters)"],
 	};
 };
 
@@ -68,14 +70,14 @@ export const checkH1Heading = () => {
 	if (h1Elements.length === 0) {
 		return {
 			status: "failed",
-			message: "The page is missing an h1 heading tag",
+			message: translate["The page is missing an h1 heading tag"],
 		};
 	}
 
 	if (h1Elements.length > 1) {
 		return {
 			status: "failed",
-			message: `The page has ${h1Elements.length} h1 headings. It should have exactly one h1 tag.`,
+			message: `${translate["The page has"]} ${h1Elements.length} ${translate["h1 headings. It should have exactly one h1 tag"]}`,
 		};
 	}
 
@@ -84,13 +86,13 @@ export const checkH1Heading = () => {
 	if (h1Length > 70) {
 		return {
 			status: "warning",
-			message: `The h1 heading exceeds the 70 characters recommendation (${h1Length} characters)`,
+			message: `${translate["The h1 heading exceeds the 70 characters recommendation"]} (${h1Length} ${translate["characters"]})`,
 		};
 	}
 
 	return {
 		status: "passed",
-		message: "The page has an h1 heading tag",
+		message: translate["The page has an h1 heading tag"],
 	};
 };
 
@@ -100,7 +102,7 @@ export const checkContentLength = () => {
 	if (!mainElement) {
 		return {
 			status: "failed",
-			message: "The page is missing a main element tag",
+			message: translate["The page is missing a main element tag"],
 		};
 	}
 
@@ -112,20 +114,20 @@ export const checkContentLength = () => {
 	if (wordCount === 0) {
 		return {
 			status: "failed",
-			message: "This page has no main content",
+			message: translate["This page has no main content"],
 		};
 	}
 
 	if (wordCount < 300) {
 		return {
 			status: "warning",
-			message: `Main content contains only ${wordCount} words. Should have at least 300 words.`,
+			message: `${translate["Main content contains only"]} ${wordCount} ${translate["words. Should have at least 300 words"]}`,
 		};
 	}
 
 	return {
 		status: "passed",
-		message: "The main content on the page is at least 300+ words",
+		message: translate["The main content on the page is at least 300+ words"],
 	};
 };
 
@@ -135,13 +137,13 @@ export const checkSubHeadings = () => {
 	if (subHeadingsCount === 0) {
 		return {
 			status: "warning",
-			message: "The page is missing subheadings (h2, h3 tags)",
+			message: translate["The page is missing subheadings (h2, h3 tags)"],
 		};
 	}
 
 	return {
 		status: "passed",
-		message: "The page contains subheadings such as h2 and h3 tags",
+		message: translate["The page contains subheadings such as h2 and h3 tags"],
 	};
 };
 
@@ -151,7 +153,7 @@ export const checkImages = () => {
 	if (images.length === 0) {
 		return {
 			status: "warning",
-			message: "The page has no images",
+			message: translate["The page has no images"],
 		};
 	}
 
@@ -160,13 +162,15 @@ export const checkImages = () => {
 	if (imagesWithoutAlt.length > 0) {
 		return {
 			status: "failed",
-			message: `${imagesWithoutAlt.length} out of ${images.length} images are missing an alt text`,
+			message: `${imagesWithoutAlt.length} ${translate["out of"]} ${images.length} ${translate["images are missing an alt text"]}`,
 		};
 	}
 
 	return {
 		status: "passed",
-		message: `The page contains ${images.length} image${images.length === 1 ? "" : "s"} with descriptive alt texts`,
+		message: `${translate["The page contains"]} ${images.length} ${translate["image"]}${
+			images.length === 1 ? "" : "s"
+		} ${translate["with descriptive alt texts"]}`,
 	};
 };
 
@@ -176,13 +180,13 @@ export const checkLinks = () => {
 	if (linksCount === 0) {
 		return {
 			status: "warning",
-			message: "The page has no links to internal or external pages",
+			message: translate["The page has no links to internal or external pages"],
 		};
 	}
 
 	return {
 		status: "passed",
-		message: "There are links on this page that point to external or internal pages",
+		message: translate["There are links on this page that point to external or internal pages"],
 	};
 };
 
@@ -196,27 +200,27 @@ export const checkSocialImages = () => {
 	if (!hasOgImage && !hasTwitterImage) {
 		return {
 			status: "warning",
-			message: "The page is missing both og:image and twitter:image meta tags",
+			message: translate["The page is missing both og:image and twitter:image meta tags"],
 		};
 	}
 
 	if (!hasOgImage) {
 		return {
 			status: "warning",
-			message: "The page is missing og:image meta tag",
+			message: translate["The page is missing og:image meta tag"],
 		};
 	}
 
 	if (!hasTwitterImage) {
 		return {
 			status: "warning",
-			message: "The page is missing twitter:image meta tag",
+			message: translate["The page is missing twitter:image meta tag"],
 		};
 	}
 
 	return {
 		status: "passed",
-		message: "The page has valid social images",
+		message: translate["The page has valid social images"],
 	};
 };
 

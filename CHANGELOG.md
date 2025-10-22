@@ -1,5 +1,17 @@
 # Release Notes for Author toolbar
 
+## v1.1.7-beta - 2025.10.20
+
+-   Added hotkey **Cmd + V** for collapsing the toolbar
+-   Fixed escapce key not working for closing menus
+-   Fixed JS text not getting translated correctly
+-   Fixed some missing translations
+-   Fixed issue where the margin for the toolbar would be applied if its not there
+-   Limited search results per group to 5
+-   Added an environment warning banner
+-   Added settings to manage which entries can be created from the toolbar aciton buttons
+-   Automatically update page margin to prevent the toolbar from covering page content
+
 ## v1.1.6-beta - 2025.10.20
 
 -   Fixed show element on page class for headings tab
