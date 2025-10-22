@@ -45,7 +45,7 @@
                         {% set name = entryType.name|default("") %}
                         {% set color = entryType.entryTypes[0].color.value|default("gray") %}
                         {% set createUrl = cpUrl('entries/' ~ entryType.handle ~ '/new')|default("") %}
-                        {% set enabled = settings.creatableEntries[entryType.name|pascal] %}
+                        {% set enabled = settings.creatableEntries[entryType.name|pascal] ?? true %}
                         {% set hasUrls = entryType.getSiteSettings|first.hasUrls|default(false) %}
 
                         {% if isProduct %}

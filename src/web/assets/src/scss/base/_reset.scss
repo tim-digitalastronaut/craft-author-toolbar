@@ -1,51 +1,53 @@
-*,
-*::before,
-*::after {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-}
-
-a {
-	text-decoration: none;
-}
-
-p {
-	color: var(--clr-grey-900);
-}
-
-ul,
-ol {
-	list-style: none;
-}
-
-fieldset {
-	border: 0;
-}
-
-textarea {
-	resize: none;
-}
-
-button,
-input,
-textarea,
-select {
-	border: none;
-	outline: none;
-	background: transparent;
-
-	&:not([type="checkbox"]):not([type="radio"]) {
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		appearance: none;
+#cat-toolbar {
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
 	}
-}
 
-::-webkit-scrollbar {
-	display: none;
-}
+	a {
+		text-decoration: none;
+	}
 
-[x-cloak] {
-	display: none !important;
+	p {
+		color: var(--clr-grey-900);
+	}
+
+	ul,
+	ol {
+		list-style: none;
+	}
+
+	fieldset {
+		border: 0;
+	}
+
+	textarea {
+		resize: none;
+	}
+
+	button,
+	input,
+	textarea,
+	select {
+		border: none;
+		outline: none;
+		background: transparent;
+
+		&:not([type="checkbox"]):not([type="radio"]) {
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+		}
+	}
+
+	::-webkit-scrollbar {
+		display: none;
+	}
+
+	[x-cloak] {
+		display: none !important;
+	}
 }
