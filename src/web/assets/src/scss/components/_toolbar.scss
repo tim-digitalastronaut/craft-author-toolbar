@@ -19,6 +19,7 @@
 	transition: all ease-out 0.3s;
 
 	&.hidden {
+		display: flex;
 		transform: translateY(100%);
 
 		.cat-toolbar-toggle-button svg {

@@ -9,5 +9,7 @@ use yii\web\Response;
 use digitalastronaut\craftauthortoolbar\AuthorToolbar;
 
 class ToolbarController extends Controller {
-
+    // public function actionRender() {
+    //     return AuthorToolbar::getInstance()->toolbar->getHtml();
+    // }
 }

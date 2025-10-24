@@ -9,6 +9,7 @@
         {% set isProduct = true %}
     {% endif %}
 
+    {% set pageUrl = entry.url|default("") %}
     {% set pageTitle = entry.title|default("") %}
     {% set cpEditUrl = entry.cpEditUrl|default("") %}
     {% set pageStatus = entry.status|default("") %}
@@ -19,7 +20,7 @@
         entry.dateUpdated|date("h:s")|default("") %}
 {% else %}
     {% set pageTitle = "Custom route"|t %}
-    {% set cpEditUrl = craft.app.request.absoluteUrl|default("") %}
+    {% set cpEditUrl = cpUrl("dashboard") %}
     {% set pageStatus = "live" %}
     {% set updatedAt = null %}
 {% endif %}
@@ -27,7 +28,7 @@
 {# ======================= #}
 {# TEMPLATE                #}
 {# ======================= #}
-{% if currentUser %}
+{% if currentUser and entry %}
     <div 
         id="cat-toolbar"
         class="cat-toolbar"

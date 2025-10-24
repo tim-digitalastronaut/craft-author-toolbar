@@ -19,6 +19,7 @@ use craft\events\RegisterUserPermissionsEvent;
 use craft\services\UserPermissions;
 
 use digitalastronaut\craftauthortoolbar\models\Settings;
+use digitalastronaut\craftauthortoolbar\services\ToolbarService;
 use digitalastronaut\craftauthortoolbar\web\assets\AuthorToolbarAssets;
 use digitalastronaut\craftauthortoolbar\web\twig\AuthorToolbarTwigExtension;
 
@@ -30,7 +31,7 @@ use digitalastronaut\craftauthortoolbar\web\twig\AuthorToolbarTwigExtension;
  * @license https://craftcms.github.io/license/ Craft License
  */
 class AuthorToolbar extends Plugin {
-    public string $schemaVersion = 'v1.1.9-beta';
+    public string $schemaVersion = 'v1.1.10-beta';
     public bool $hasCpSettings = true;
 
     public function init(): void {
@@ -39,7 +40,7 @@ class AuthorToolbar extends Plugin {
         $this->_registerTemplateRoots();
         $this->_registerPermissions();
         
-        $this->setComponents([]);
+        $this->setComponents(["toolbar" => ToolbarService::class]);
         
         if (Craft::$app->request->isCpRequest) {
             $this->_registerAssetBundles();

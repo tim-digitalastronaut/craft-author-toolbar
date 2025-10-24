@@ -1,5 +1,9 @@
 # Release Notes for Author toolbar
 
+## v1.1.10-beta - 2025.10.24
+
+-   Added text highlighting to search matches
+
 ## v1.1.9-beta - 2025.10.22
 
 -   Fixed commerce crashed

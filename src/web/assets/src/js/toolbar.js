@@ -254,13 +254,20 @@ export function toolbar() {
 		async renderSearchResults() {
 			const queryString = buildQueryString([{ key: "query", value: this.searchQuery }]);
 
-			const { content } = await templateRequest(`/author-toolbar/search?${queryString}`, {
+			const { html } = await templateRequest(`/author-toolbar/search?${queryString}`, {
 				headers: {
 					"X-Craft-Site": window.craftAuthorToolbar.siteId,
 				},
 			});
 
-			document.querySelector("#cat-search-results").innerHTML = content;
+			const entryTitles = html.querySelectorAll(".entry-title");
+
+			entryTitles.forEach((title) => {
+				const regex = new RegExp(`(${this.searchQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi");
+				title.innerHTML = title.textContent.replace(regex, '<span class="query-match">$1</span>');
+			});
+
+			document.querySelector("#cat-search-results").innerHTML = html.body.innerHTML;
 		},
 
 		async copyToPageURLToClipboard() {

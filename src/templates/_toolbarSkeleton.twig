@@ -1,33 +1,7 @@
 {# ======================= #}
-{# PROPERTIES              #}
-{# ======================= #}
-{% set pageUrl = craft.app.request.absoluteUrl %}
-{% set isProduct = false %}
-
-{% if entry %}
-    {% if entry.className == 'craft\\commerce\\elements\\Product' %}
-        {% set isProduct = true %}
-    {% endif %}
-
-    {% set pageTitle = entry.title|default("") %}
-    {% set cpEditUrl = entry.cpEditUrl|default("") %}
-    {% set pageStatus = entry.status|default("") %}
-    {% set updatedAt = 
-        "Last edited "|t('author-toolbar') ~
-        entry.dateUpdated|date("d F Y") ~ 
-        " om "|t('author-toolbar') ~ 
-        entry.dateUpdated|date("h:s")|default("") %}
-{% else %}
-    {% set pageTitle = "Custom route"|t %}
-    {% set cpEditUrl = craft.app.request.absoluteUrl|default("") %}
-    {% set pageStatus = "live" %}
-    {% set updatedAt = null %}
-{% endif %}
-
-{# ======================= #}
 {# TEMPLATE                #}
 {# ======================= #}
-<div id="cat-toolbar" class="cat-toolbar skeleton">
+<div toolbar-data="toolbarSkeleton" id="cat-toolbar" class="cat-toolbar skeleton">
     <div class="cat-toolbar-toggle">
         <div></div>
     </div>
@@ -35,24 +9,40 @@
     <div class="cat-toolbar-main">
         {% if settings.startMenuEnabled %}
             <div class="cat-toolbar-chunk cat-toolbar-start">
-                <div></div>
+                <div class="cat-toolbar-start-menu">
+                    <div class="cat-toolbar-start-menu-profile-picture"></div>
+
+                    <div class="cat-toolbar-start-menu-user-info">
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
             </div>
         {% endif %}
 
         {% if settings.actionButtonsEnabled %}
-            <div class="cat-toolbar-chunk"></div>
+            <div class="cat-toolbar-chunk cat-toolbar-action-buttons">
+                <div></div>
+                <div></div>
+            </div>
         {% endif %}
 
         {% if settings.globalSearchEnabled %}
-            <div class="cat-toolbar-chunk"></div>
+            <div class="cat-toolbar-chunk cat-toolbar-search">
+                <div></div>
+            </div>
         {% endif %}
 
         {% if settings.seoMenuEnabled %}
-            <div class="cat-toolbar-chunk"></div>
+            <div class="cat-toolbar-chunk cat-toolbar-seo-checklist">
+                <div></div>
+            </div>
         {% endif %}
 
         {% if settings.helpMenuEnabled %}
-            <div class="cat-toolbar-chunk"></div>
+            <div class="cat-toolbar-chunk cat-toolbar-help">
+                <div></div>
+            </div>
         {% endif %}
     </div>
 

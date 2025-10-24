@@ -131,6 +131,11 @@
 						color: var(--clr-grey-900);
 					}
 				}
+
+				.query-match {
+					background-color: var(--clr-white);
+					color: var(--clr-grey-600);
+				}
 			}
 		}
 
@@ -142,6 +147,11 @@
 			justify-content: space-between;
 			background-color: var(--clr-grey-200);
 			border-radius: 4px;
+
+			.query-match {
+				background-color: var(--clr-blue-500);
+				color: var(--clr-white);
+			}
 
 			&:hover {
 				cursor: pointer;
@@ -162,6 +172,11 @@
 					p {
 						color: var(--clr-grey-900);
 					}
+				}
+
+				.query-match {
+					background-color: var(--clr-white);
+					color: var(--clr-grey-600);
 				}
 			}
 

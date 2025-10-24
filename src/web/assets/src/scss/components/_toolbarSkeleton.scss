@@ -1,0 +1,76 @@
+.cat-toolbar.skeleton {
+	.cat-toolbar-start-menu {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+
+		&-profile-picture {
+			height: 36px;
+			width: 36px;
+			border-radius: 4px;
+			background-color: var(--clr-grey-300);
+		}
+
+		&-user-info {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+
+			div:first-child {
+				height: 16px;
+				width: 100px;
+				border-radius: 2px;
+				background-color: var(--clr-grey-300);
+			}
+
+			div:nth-child(2) {
+				height: 8px;
+				width: 120px;
+				border-radius: 2px;
+				background-color: var(--clr-grey-300);
+			}
+		}
+	}
+
+	.cat-toolbar-search div,
+	.cat-toolbar-action-buttons div {
+		height: 32px;
+		width: 180px;
+		border-radius: 4px;
+		background-color: var(--clr-grey-300);
+	}
+
+	.cat-toolbar-search div {
+		width: 260px;
+	}
+
+	.cat-toolbar-seo-checklist div {
+		height: 40px;
+		width: 160px;
+		border-radius: 4px;
+		background-color: var(--clr-grey-300);
+	}
+
+	.cat-toolbar-help div {
+		height: 40px;
+		width: 120px;
+		border-radius: 4px;
+		background-color: var(--clr-grey-300);
+	}
+
+	.cat-toolbar-location-info div,
+	.cat-toolbar-bottom-extra div {
+		height: 18px;
+		border-radius: 4px;
+		width: 200px;
+		background-color: var(--clr-grey-300);
+	}
+
+	.cat-toolbar-location-info div {
+		width: 400px;
+	}
+
+	.cat-toolbar-bottom {
+		height: 42px;
+	}
+}
