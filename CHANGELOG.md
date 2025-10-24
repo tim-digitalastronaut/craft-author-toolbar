@@ -1,5 +1,9 @@
 # Release Notes for Author toolbar
 
+## v1.1.11-beta - 2025.10.24
+
+-   Fixed a failed release
+
 ## v1.1.10-beta - 2025.10.24
 
 -   Added text highlighting to search matches

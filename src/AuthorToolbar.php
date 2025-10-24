@@ -31,7 +31,7 @@ use digitalastronaut\craftauthortoolbar\web\twig\AuthorToolbarTwigExtension;
  * @license https://craftcms.github.io/license/ Craft License
  */
 class AuthorToolbar extends Plugin {
-    public string $schemaVersion = 'v1.1.10-beta';
+    public string $schemaVersion = 'v1.1.11-beta';
     public bool $hasCpSettings = true;
 
     public function init(): void {
