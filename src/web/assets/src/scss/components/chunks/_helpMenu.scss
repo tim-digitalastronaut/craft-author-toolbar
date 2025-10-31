@@ -36,6 +36,11 @@
 
 		svg {
 			transition: transform ease-out 0.15s;
+			color: var(--clr-grey-900);
+		}
+
+		span {
+			color: var(--clr-grey-900);
 		}
 
 		svg:first-child {

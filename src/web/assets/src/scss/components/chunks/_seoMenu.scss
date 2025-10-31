@@ -64,6 +64,10 @@
 		svg {
 			transition: transform ease-out 0.15s;
 		}
+
+		& > :last-child {
+			color: var(--clr-grey-900);
+		}
 	}
 
 	&-content {

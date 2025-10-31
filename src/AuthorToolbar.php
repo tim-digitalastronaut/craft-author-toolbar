@@ -23,6 +23,9 @@ use digitalastronaut\craftauthortoolbar\services\ToolbarService;
 use digitalastronaut\craftauthortoolbar\web\assets\AuthorToolbarAssets;
 use digitalastronaut\craftauthortoolbar\web\twig\AuthorToolbarTwigExtension;
 
+use putyourlightson\blitz\Blitz;
+use putyourlightson\blitz\variables\BlitzVariable;
+
 /**
  * Author toolbar plugin
  *
@@ -31,18 +34,19 @@ use digitalastronaut\craftauthortoolbar\web\twig\AuthorToolbarTwigExtension;
  * @license https://craftcms.github.io/license/ Craft License
  */
 class AuthorToolbar extends Plugin {
-    public string $schemaVersion = 'v1.1.11-beta';
     public bool $hasCpSettings = true;
 
     public function init(): void {
         parent::init();
 
-        $this->_registerTemplateRoots();
-        $this->_registerPermissions();
-        
         $this->setComponents(["toolbar" => ToolbarService::class]);
         
+        if (Craft::$app->request->isCpRequest || Craft::$app->request->isSiteRequest) {
+            $this->_registerTemplateRoots();
+        }
+        
         if (Craft::$app->request->isCpRequest) {
+            $this->_registerPermissions();
             $this->_registerAssetBundles();
             $this->_registerCpRoutes();
         }
@@ -129,6 +133,14 @@ class AuthorToolbar extends Plugin {
                 if (Craft::$app->request->isPreview) return;
                 if (Craft::$app->request->isAjax) return;
                 if (Craft::$app->request->isConsoleRequest) return;
+
+                // $blitzVariable = new BlitzVariable();
+
+                // $html = $blitzVariable->includeDynamic('author-toolbar/_toolbar.twig', [
+                //     'entry' => $entry,
+                //     'settings' => $settings
+                // ], 
+                // ['requestType' => 'ajax',]);
 
                 $html = Craft::$app->getView()->renderTemplate('author-toolbar/_toolbar.twig', [
                     'entry' => $entry,
