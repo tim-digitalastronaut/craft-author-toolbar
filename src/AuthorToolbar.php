@@ -128,7 +128,8 @@ class AuthorToolbar extends Plugin {
             View::class,
             View::EVENT_BEFORE_RENDER_PAGE_TEMPLATE,
             function (TemplateEvent $event) {
-                $entryId = $event->variables['entry'] ?? $event->variables['product'] ?? null;
+                $entry = $event->variables['entry'] ?? $event->variables['product'] ?? null;
+                $entryId = $entry->id;
 
                 $settings = $this->getSettings();
 

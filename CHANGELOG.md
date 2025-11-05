@@ -1,5 +1,9 @@
 # Release Notes for Author toolbar
 
+## v1.2.4-beta - 2025.11.06
+
+- Fixed wrong query param type for toolbar load script
+
 ## v1.2.3-beta - 2025.11.06
 
 - Improved validation rules for the plugin settings
