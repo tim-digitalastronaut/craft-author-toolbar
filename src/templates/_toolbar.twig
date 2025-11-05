@@ -29,6 +29,8 @@
 {# TEMPLATE                #}
 {# ======================= #}
 {% if currentUser and entry %}
+    {% include "author-toolbar/_windowObject" %}
+
     <author-toolbar id="cat-toolbar" class="cat-toolbar">
          <div class="cat-toolbar-toggle">
             <button id="author-toolbar-toggle-button" class="cat-toolbar-toggle-button cat-typo-body-sm">
@@ -91,23 +93,21 @@
             </div>
         {% endif %}
 
-        {# <ul class="cat-toolbar-warnings-list">
-            <template toolbar-if="showEnvironmentMessage">
-                <li class="cat-toolbar-warnings-list-item">
-                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/triangle-exclamation.svg") }}
+         <ul class="cat-toolbar-warnings-list">
+            <li id="cat-environment-message" class="cat-toolbar-warnings-list-item">
+                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/triangle-exclamation.svg") }}
 
-                    <p class="cat-typo-body-md">
-                        {{ "You are currently viewing the" }}
-                        {{ getenv('ENVIRONMENT') ?: getenv('CRAFT_ENVIRONMENT') }}
-                        {{ "environment" }}
+                <p class="cat-typo-body-md">
+                    {{ "You are currently viewing the" }}
+                    {{ getenv('ENVIRONMENT') ?: getenv('CRAFT_ENVIRONMENT') }}
+                    {{ "environment" }}
 
-                        <a toolbar-on:click.prevent="showEnvironmentMessage = false">{{ "Don't show for this session"|t('author-toolbar') }}</a>
-                    </p>
-                </li>
-            </template>
-        </ul> #}
+                    <a id="cat-hide-environment-message-button">
+                        {{ "Don't show for this session"|t('author-toolbar') }}
+                    </a>
+                </p>
+            </li>
+        </ul>
     </author-toolbar>
-
-    {% include "author-toolbar/_windowObject" %}
 {% endif %}
 

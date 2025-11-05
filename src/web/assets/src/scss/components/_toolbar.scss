@@ -127,6 +127,10 @@
 			color: var(--clr-orange-500);
 			padding: 10px 16px;
 
+			&.hidden {
+				display: none;
+			}
+
 			svg {
 				min-width: 19px;
 				width: 19px;

@@ -39,8 +39,6 @@ class AuthorToolbar extends Plugin {
     public function init(): void {
         parent::init();
 
-        $this->setComponents(["toolbar" => ToolbarService::class]);
-        
         if (Craft::$app->request->isCpRequest || Craft::$app->request->isSiteRequest) {
             $this->_registerTemplateRoots();
         }
@@ -82,9 +80,15 @@ class AuthorToolbar extends Plugin {
             $event->permissions[] = [
                 'heading' => 'Author toolbar',
                 'permissions' => [
-                    'authorToolbar-accessToolbar' => ['label' => Craft::t('author-toolbar', 'Access toolbar')],
-                    'authorToolbar-editSettings' => ['label' => Craft::t('author-toolbar', 'Edit settings')],
-                    // 'authorToolbar-accessAdvancedToolbar' => ['label' => Craft::t('author-toolbar', 'Access advanced toolbar'), 'info' => Craft::t('author-toolbar', 'This is info')],
+                    'authorToolbar-accessToolbar' => [
+                        'label' => Craft::t('author-toolbar', 'Access toolbar')
+                    ],
+                    'authorToolbar-editSettings' => [
+                        'label' => Craft::t('author-toolbar', 'Edit settings')
+                    ],
+                    'authorToolbar-accessAdvancedToolbar' => [
+                        'label' => Craft::t('author-toolbar', 'Access advanced toolbar'), 'info' => Craft::t('author-toolbar', 'This is info')
+                    ],
                 ],
             ];
         });
@@ -134,20 +138,22 @@ class AuthorToolbar extends Plugin {
                 if (Craft::$app->request->isAjax) return;
                 if (Craft::$app->request->isConsoleRequest) return;
 
-                // $blitzVariable = new BlitzVariable();
+                Craft::$app->view->registerHtml(Craft::$app->view->renderTemplate('author-toolbar/_windowObject.twig'), View::POS_BEGIN);
 
-                // $html = $blitzVariable->includeDynamic('author-toolbar/_toolbar.twig', [
-                //     'entry' => $entry,
-                //     'settings' => $settings
-                // ], 
-                // ['requestType' => 'ajax',]);
+                $script = <<<JS
+                    document.addEventListener("DOMContentLoaded", async () => {
+                        try {
+                            const toolbarElement = await fetch("/actions/author-toolbar/toolbar/get-html?entryId=2");
+                            const toolbarElementHtmlString = await toolbarElement.text();
+                            
+                            document.body.insertAdjacentHTML('afterbegin', toolbarElementHtmlString);
+                        } catch (error) {
+                            console.error('Failed to load author toolbar:', error);
+                        }
+                    });
+                JS;
 
-                $html = Craft::$app->getView()->renderTemplate('author-toolbar/_toolbar.twig', [
-                    'entry' => $entry,
-                    'settings' => $settings
-                ]);
-
-                Craft::$app->getView()->registerHtml($html, View::POS_BEGIN);
+                Craft::$app->getView()->registerJs($script, View::POS_END);
             }
         );
     }

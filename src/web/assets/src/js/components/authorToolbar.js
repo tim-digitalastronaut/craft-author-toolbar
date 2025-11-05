@@ -1,6 +1,7 @@
 import hotkeys from 'hotkeys-js';
 import { translate } from "../utils.js";
 import { closeMenusEvent } from "../helpers/events.js";
+import { timeStorage } from "../helpers/timeStorage.js";
 
 class AuthorToolbar extends HTMLElement {
 	constructor() {
@@ -9,12 +10,16 @@ class AuthorToolbar extends HTMLElement {
 		this.hidden = false;
 		this.toolbarElement = null;
 		this.copyPageUrlButtonElement = null
+		this.hideEnvironmentMessageButtonElement = null;
+		this.environmentMessageElement = null;
 	}
 
 	connectedCallback() {
 		this.toolbarElement = this;
 		this.copyPageUrlButtonElement = document.querySelector("#author-toolbar-copy-page-url-button");
 		this.toggleButtonElement = document.querySelector("#author-toolbar-toggle-button")
+		this.hideEnvironmentMessageButtonElement = document.querySelector("#cat-hide-environment-message-button");
+		this.environmentMessageElement = document.querySelector("#cat-environment-message");
 
 		document.body.style.marginBottom = `${this.toolbarElement.offsetHeight}px`;
 
@@ -23,6 +28,9 @@ class AuthorToolbar extends HTMLElement {
 		});
 
 		resizeObserver.observe(this.toolbarElement);
+
+		if (timeStorage.getItem("author-toolbar:environment-message") === "hidden")
+			this.environmentMessageElement.classList.add("hidden");
 
 		this.registerEventListeners();
 	}
@@ -47,11 +55,16 @@ class AuthorToolbar extends HTMLElement {
 			await this.copyPageURLToClipboard();
 		})
 
+		this.hideEnvironmentMessageButtonElement.addEventListener("click", () => {
+			timeStorage.setItem("author-toolbar:environment-message", "hidden", 24 * 60 * 60 * 1000);
+			this.environmentMessageElement.classList.add("hidden");
+		})
+
 		this.toggleButtonElement.addEventListener("click", () => {
 			this.toggleToolbar();
 		})
 
-		document.addEventListener("show-toolbar", (event) => {
+		document.addEventListener("show-toolbar", () => {
 			if (this.toolbarElement.classList.contains("hidden")) this.toggleToolbar();
 		})
 

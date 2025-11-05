@@ -1,10 +1,10 @@
-export const timeStorage = (duration) => ({
+export const timeStorage = {
 	getItem(key) {
 		const stored = localStorage.getItem(key);
 		if (!stored) return null;
 
 		try {
-			const { value, expiry } = JSON.parse(stored);
+			const {value, expiry} = JSON.parse(stored);
 
 			if (Date.now() > expiry) {
 				localStorage.removeItem(key);
@@ -12,13 +12,13 @@ export const timeStorage = (duration) => ({
 			}
 
 			return value;
-		} catch (e) {
+		} catch (error) {
 			console.error(error);
 			return null;
 		}
 	},
 
-	setItem(key, value) {
+	setItem(key, value, duration) {
 		const stored = localStorage.getItem(key);
 		let expiry;
 
@@ -35,6 +35,6 @@ export const timeStorage = (duration) => ({
 
 		if (!expiry) expiry = Date.now() + duration;
 
-		localStorage.setItem(key, JSON.stringify({ value, expiry }));
+		localStorage.setItem(key, JSON.stringify({value, expiry}));
 	},
-});
+};

@@ -24,6 +24,8 @@ class SearchMenu extends BaseMenu {
     async renderSearchResults() {
         const queryString = buildQueryString([{ key: "query", value: this.searchQuery }]);
 
+        console.log(window)
+
         const { html } = await templateRequest(`/actions/author-toolbar/search/get-search-results-html?${queryString}`, {
             headers: {
                 "X-Craft-Site": window.craftAuthorToolbar.siteId,

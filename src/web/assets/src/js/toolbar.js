@@ -1,4 +1,4 @@
-import { timeStorage } from "./timeStorage.js";
+import { timeStorage } from "./helpers/timeStorage.js";
 import { seoChecklist } from "./helpers/seoChecklist.js";
 import { getSeoMeta } from "./seoPreviews.js";
 
