@@ -1,43 +1,43 @@
 {# ======================= #}
 {# TEMPLATE                #}
 {# ======================= #}
-<div toolbar-show="seoPreview === 'whatsapp'" class="cat-toolbar-seo-menu-previews-results-whatsapp">
-    <div class="cat-toolbar-seo-menu-previews-results-whatsapp-text-bubble">
-        <div class="cat-toolbar-seo-menu-previews-results-whatsapp-text-bubble-content">
-            <div class="cat-toolbar-seo-menu-previews-results-whatsapp-thumbnail">
-                {% if og.image %}
-                    <img src="{{ og.image }}" alt="whatsapp social preview image">
-                {% else %}
-                    <div class="cat-toolbar-seo-menu-previews-results-placeholder-image">
-                        {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/image.svg") }}
+<div class="cat-toolbar-seo-menu-previews-results-whatsapp-text-bubble">
+    <div class="cat-toolbar-seo-menu-previews-results-whatsapp-text-bubble-content">
+        <div class="cat-toolbar-seo-menu-previews-results-whatsapp-thumbnail">
+            {% if og.image %}
+                <img src="{{ og.image }}" alt="whatsapp social preview image">
+            {% else %}
+                <div class="cat-toolbar-seo-menu-previews-results-placeholder-image">
+                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/image.svg") }}
 
-                        <p class="cat-typo-body-md">{{ "No social image provided"|t('author-toolbar') }}</p>
-                    </div>
-                {% endif %}
+                    <p class="cat-typo-body-md">{{ "No social image provided"|t('author-toolbar') }}</p>
+                </div>
+            {% endif %}
 
-                {% if favicon %}
-                    <img src="{{ favicon }}" alt="whatsapp social preview image favicon">
-                {% endif %}
-            </div>
-
-            <div class="cat-toolbar-seo-menu-previews-results-whatsapp-main">
-                {% if og.title %}
-                    <h3 class="cat-typo-body-md cat-semi-bold">{{ og.title }}</h3>
-                {% endif %}
-
-                {% if og.description %}
-                    <p class="cat-typo-body-sm">{{ og.description|truncate(160) }}</p>
-                {% endif %}
-            </div>
+            {% if favicon %}
+                <img src="{{ favicon }}" alt="whatsapp social preview image favicon">
+            {% endif %}
         </div>
 
-        <div class="cat-toolbar-seo-menu-previews-results-whatsapp-text-bubble-info">
-            <p class="cat-typo-body-md">{{ og.url|replace({'https://': '', 'http://': ''})|split('/')[0] }}</p>
+        <div class="cat-toolbar-seo-menu-previews-results-whatsapp-main">
+            {% if og.title %}
+                <h3 class="cat-typo-body-md cat-semi-bold">{{ og.title }}</h3>
+            {% endif %}
 
-            <div>
-                <span class="cat-typo-body-sm">12:00</span>
-                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/double-check.svg") }}
-            </div>
+            {% if og.description %}
+                <p class="cat-typo-body-sm">{{ og.description|truncate(160) }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="cat-toolbar-seo-menu-previews-results-whatsapp-text-bubble-info">
+        <p class="cat-typo-body-md">{{ og.url|replace({'https://': '', 'http://': ''})|split('/')[0] }}</p>
+
+        <div>
+            <span class="cat-typo-body-sm">12:00</span>
+            {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/double-check.svg") }}
         </div>
     </div>
 </div>
+
+

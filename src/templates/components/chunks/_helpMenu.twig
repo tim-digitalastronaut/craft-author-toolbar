@@ -11,17 +11,9 @@
 {# ======================= #}
 {# TEMPLATE                #}
 {# ======================= #}
-<div class="cat-toolbar-help cat-toolbar-chunk" toolbar-data="menu">
-    <div 
-        class="cat-toolbar-help-menu"
-        toolbar-on:click.outside="helpMenuOpen = false"
-        toolbar-on:keydown.esc.window="helpMenuOpen = false;"
-        toolbar-bind:class="{ 'open': helpMenuOpen }"
-    >
-        <button 
-            toolbar-on:click="helpMenuOpen = !helpMenuOpen" 
-            class="cat-toolbar-help-menu-toggle"
-        >
+<div id="help-menu-anchor" class="cat-toolbar-help cat-toolbar-chunk">
+    <help-menu class="cat-toolbar-help-menu">
+        <button id="help-menu-toggle" class="cat-toolbar-help-menu-toggle">
             {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/circle-questionmark.svg") }}
 
             <span class="cat-typo-body-md">{{ "Help"|t('author-toolbar') }}</span>
@@ -29,7 +21,7 @@
             {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/chevron-down.svg") }}
         </button>
 
-        <div class="cat-toolbar-help-menu-content menu">
+        <div id="help-menu-content" class="cat-toolbar-help-menu-content">
             {% if settings.info or companyLogo %}
                 <div class="cat-toolbar-help-menu-intro">
                     {% if companyLogo %}
@@ -91,5 +83,5 @@
                 </div>
             {% endif %}
         </div>
-    </div>
+    </help-menu>
 </div>

@@ -1,23 +1,16 @@
 {# ======================= #}
 {# TEMPLATE                #}
 {# ======================= #}
-<div class="cat-toolbar-search cat-toolbar-chunk" toolbar-data="menu">
-    <div 
-        class="cat-toolbar-search-menu"
-        toolbar-bind:class="{ 'open': searchResultsOpen }"
-        toolbar-on:click.outside="searchResultsOpen = false"
-        toolbar-on:keydown.esc.window="searchResultsOpen = false; document.activeElement.blur()"
-        toolbar-on:keydown.meta.k.window="focusSearch" 
-    >
+<div id="search-menu-anchor" class="cat-toolbar-search cat-toolbar-chunk">
+    <search-menu class="cat-toolbar-search-menu">
         <div class="cat-toolbar-search-bar anchor">
             {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/search.svg") }}
 
             <input 
-                id="cat-search"
+                id="search-menu-input"
                 type="text" 
                 placeholder="{{ "Search entries"|t('author-toolbar') }}"
                 toolbar-model="searchQuery",
-                toolbar-on:focus="searchResultsOpen = true"
                 toolbar-on:input="renderSearchResults"
             >
 
@@ -28,6 +21,6 @@
             </div>
         </div>
 
-        <div id="cat-search-results" class="cat-toolbar-search-results menu"></div>
-    </div>
+        <div id="search-menu-content" class="cat-toolbar-search-results"></div>
+    </search-menu>
 </div>

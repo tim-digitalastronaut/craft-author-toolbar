@@ -11,7 +11,7 @@
 {# ======================= #}
 {# TEMPLATE                #}
 {# ======================= #}
-<div class="cat-toolbar-action-buttons cat-toolbar-chunk" toolbar-data="menu">
+<div id="create-menu-anchor" class="cat-toolbar-action-buttons cat-toolbar-chunk">
     {% if entry %}
         <a href="{{ cpEditUrl }}" target="_blank" class="cat-button cat-typo-body-md">
             {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/pen.svg") }}
@@ -20,23 +20,14 @@
         </a>
     {% endif %}
 
-    <div
-        class="cat-toolbar-create-entry-menu anchor"
-        toolbar-on:click.outside="createPageMenuOpen = false"
-        toolbar-on:keydown.esc.window="createPageMenuOpen = false"
-        toolbar-bind:class="{ 'open': createPageMenuOpen }"
-    >
-        <button 
-            class="cat-toolbar-create-entry-menu-toggle cat-button"
-            toolbar-on:click="createPageMenuOpen = !createPageMenuOpen" 
-            toolbar-on:keydown.tab="createPageMenuOpen = true"
-        >
+    <create-menu class="cat-toolbar-create-entry-menu anchor">
+        <button id="create-menu-toggle" class="cat-toolbar-create-entry-menu-toggle cat-button">
             {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/plus.svg") }}
 
             <span class="cat-typo-body-md">{{ isProduct ? "Create new product"|t('author-toolbar') : "Create new page"|t('author-toolbar') }}</span>
         </button>
 
-        <div class="cat-toolbar-create-entry-menu-content menu">
+        <div id="create-menu-content" class="cat-toolbar-create-entry-menu-content">
             <h2 class="cat-typo-body-md cat-semi-bold">{{ isProduct ? "Choose a product type"|t('author-toolbar') : "Choose a page type"|t('author-toolbar') }}</h2>
 
             {% if availableEntryTypes|length %}
@@ -53,7 +44,7 @@
                         {% endif %}
 
                         {% if enabled and hasUrls %}
-                            <li 
+                            <li
                                 class="cat-toolbar-create-entry-menu-entries-list-item"
                                 style="--entry-type-light: var(--{{ color }}-100); --entry-type-dark: var(--{{ color }}-500)"
                             >
@@ -76,5 +67,5 @@
                 </div>
             {% endif %}
         </div>
-    </div>
+    </create-menu>
 </div>

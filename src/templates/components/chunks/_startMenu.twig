@@ -39,18 +39,9 @@
 {# ======================= #}
 {# TEMPLATE                #}
 {# ======================= #}
-<div class="cat-toolbar-start cat-toolbar-chunk">
-    <div 
-        class="cat-toolbar-start-menu"
-        toolbar-on:click.outside="startMenuOpen = false"
-        toolbar-on:keydown.esc.window="startMenuOpen = false"
-        toolbar-bind:class="{ 'open': startMenuOpen }"
-    >
-        <button 
-            class="cat-toolbar-start-menu-toggle"
-            toolbar-on:click="startMenuOpen = !startMenuOpen" 
-            toolbar-on:keydown.tab="startMenuOpen = true"
-        >
+<div id="start-menu-anchor" class="cat-toolbar-start cat-toolbar-chunk">
+    <start-menu class="cat-toolbar-start-menu">
+        <button id="start-menu-toggle" class="cat-toolbar-start-menu-toggle">
             <div class="cat-toolbar-start-menu-profile-picture">
                 {% if currentUser.photo %}
                     <img 
@@ -70,7 +61,7 @@
             {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/chevron-down.svg") }}
         </button>
 
-        <div class="cat-toolbar-start-menu-content">
+        <div id="start-menu-content" class="cat-toolbar-start-menu-content">
             <ul class="cat-toolbar-start-menu-options-list">
                 {% for option in startMenuOptions %}
                     {% if option.enabled and option.label %}
@@ -93,5 +84,5 @@
                 {% endfor %}
             </ul>
         </div>
-    </div>
+    </start-menu>
 </div>

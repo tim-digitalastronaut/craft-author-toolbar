@@ -38,22 +38,38 @@
 			display: flex;
 			align-items: center;
 			gap: 4px;
-			background-color: var(--clr-green-500);
 			color: var(--clr-white);
 			border-radius: 4px;
 			padding: 4px 8px;
 
+			svg {
+				display: none;
+				height: auto;
+				width: 14px;
+			}
+
+			&.passed {
+				background-color: var(--clr-green-500);
+
+				svg.passed {
+					display: flex;
+				}
+			}
+
 			&.warning {
 				background-color: var(--clr-orange-500);
+
+				svg.warning {
+					display: flex;
+				}
 			}
 
 			&.failed {
 				background-color: var(--clr-red-500);
-			}
 
-			svg {
-				height: auto;
-				width: 14px;
+				svg.failed {
+					display: flex;
+				}
 			}
 
 			p {
@@ -125,7 +141,7 @@
 		}
 	}
 
-	&-tabs-content {
+	&-tab-content {
 		background-color: var(--clr-white);
 		border: 1px solid var(--clr-grey-300);
 		border-top: none;
@@ -139,6 +155,14 @@
 		@include styles-above(tabletS) {
 			width: 480px;
 			max-width: 480px;
+		}
+
+		& > section {
+			display: none;
+
+			&.active {
+				display: flex;
+			}
 		}
 	}
 
@@ -250,6 +274,14 @@
 			}
 		}
 
+		&-tab-content {
+			display: none;
+
+			&.active {
+				display: flex;
+			}
+		}
+
 		&-top {
 			display: flex;
 			flex-direction: column;
@@ -290,7 +322,6 @@
 		}
 
 		&-facebook {
-			display: flex;
 			flex-direction: column;
 			max-width: 400px;
 			border: 1px solid var(--clr-grey-300);
@@ -324,7 +355,6 @@
 		}
 
 		&-twitter {
-			display: flex;
 			flex-direction: column;
 			max-width: 400px;
 			gap: 4px;
@@ -359,6 +389,7 @@
 		}
 
 		&-linkedin {
+			flex-direction: column;
 			max-width: 400px;
 			border: 1px solid var(--clr-grey-300);
 			border-radius: 8px;
@@ -408,6 +439,7 @@
 				padding: 8px;
 				background-color: rgb(49, 78, 59);
 				border-radius: 8px;
+				width: 100%;
 
 				&-content {
 					position: relative;
@@ -483,6 +515,7 @@
 
 		&-discord {
 			max-width: 400px;
+			width: 100%;
 
 			&-text-bubble {
 				display: flex;
@@ -494,6 +527,7 @@
 				background-color: rgb(36, 36, 41);
 				border-radius: 4px;
 				overflow: hidden;
+				width: 100%;
 
 				&::before {
 					content: "";

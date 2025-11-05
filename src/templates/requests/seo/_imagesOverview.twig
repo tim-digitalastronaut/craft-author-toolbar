@@ -1,0 +1,54 @@
+{# ======================= #}
+{# PROPERTIES              #}
+{# ======================= #}
+{% set imagesData = imagesData|default([]) %}
+
+{# ======================= #}
+{# TEMPLATE                #}
+{# ======================= #}
+<div class="cat-toolbar-seo-menu-images-top">
+    <h2 class="cat-typo-body-md cat-semi-bold">
+        {{ "Page images"|t('author-toolbar') }}
+        <span>({{ imagesData|length }})</span>
+    </h2>
+
+    <p class="cat-typo-body-sm">
+        {{ "Get a list of all images on the page and their info/potential issues such as large file sizes or missing alt tags"|t('author-toolbar') }}
+    </p>
+</div>
+
+{% if imagesData|length %}
+    <ul class="cat-toolbar-seo-menu-images-list">
+        {% for image in imagesData %}
+            <li class="cat-toolbar-seo-menu-images-list-item">
+                <button class="cat-toolbar-seo-menu-images-list-item-button">
+                    <img src="{{ image.src }}" alt="{{ image.alt }}">
+
+                    <p class="cat-typo-body-sm cat-semi-bold {{ image.fileType }}">
+                        {{ image.fileType }}
+                    </p>
+
+                    <div class="cat-toolbar-seo-menu-images-list-item-button-main">
+                        <p class="cat-typo-body-md">{{ image.path }}</p>
+
+                        <p class="cat-typo-body-sm {{ image.alt ? "" : "error" }}">
+                            {{ image.alt ? "" : "Alt tag is missing"|t("author-toolbar") }}
+                        </p>
+                    </div>
+
+                    <div class="cat-toolbar-seo-menu-images-list-item-button-extra">
+                        <p class="cat-typo-body-sm cat-semi-bold {{ image.fileSizeClass }}">
+                            {{ image.fileSize }}
+                        </p>
+                    </div>
+                </button>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<template toolbar-if="!images.length">
+    <div class="cat-toolbar-seo-menu-images-empty">
+        <h3 class="cat-typo-body-md cat-semi-bold">{{ "No images found"|t('author-toolbar') }}</h3>
+    </div>
+</template>

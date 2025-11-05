@@ -29,17 +29,10 @@
 {# TEMPLATE                #}
 {# ======================= #}
 {% if currentUser and entry %}
-    <div 
-        id="cat-toolbar"
-        class="cat-toolbar"
-        toolbar-data="toolbar" 
-        toolbar-bind:class="{ 'hidden': toolbarHidden }"
-        toolbar-on:keydown.meta.v.window="toolbarHidden = !toolbarHidden" 
-        toolbar-on:keydown.meta.d.window.prevent="window.location = '{{ cpUrl('dashboard') }}'"
-    >
-        <div class="cat-toolbar-toggle">
-            <button toolbar-on:click="toolbarHidden = !toolbarHidden" class="cat-toolbar-toggle-button cat-typo-body-sm">
-                <span toolbar-text="toolbarHidden ? translate['Show toolbar'] : translate['Hide toolbar']"></span>
+    <author-toolbar id="cat-toolbar" class="cat-toolbar">
+         <div class="cat-toolbar-toggle">
+            <button id="author-toolbar-toggle-button" class="cat-toolbar-toggle-button cat-typo-body-sm">
+                <span>{{ "Hide toolbar"|t("author-toolbar") }}</span>
 
                 {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/chevron-down.svg") }}
             </button>
@@ -50,18 +43,18 @@
                 {% include "author-toolbar/components/chunks/_startMenu" %}
             {% endif %}
 
-            {% if settings.actionButtonsEnabled %}
+             {% if settings.actionButtonsEnabled %}
                 {% include "author-toolbar/components/chunks/_actionButtons" %}
             {% endif %}
             
             {% if settings.globalSearchEnabled %}
                 {% include "author-toolbar/components/chunks/_globalSearch" %}
             {% endif %}
-            
+
             {% if settings.seoMenuEnabled %}
                 {% include "author-toolbar/components/chunks/_seoMenu" %}
             {% endif %}
-            
+
             {% if settings.helpMenuEnabled %}
                 {% include "author-toolbar/components/chunks/_helpMenu" %}
             {% endif %}
@@ -71,7 +64,7 @@
             {% endfor %}
         </div>
 
-        {% if settings.contextBarEnabled %}
+         {% if settings.contextBarEnabled %}
             <div class="cat-toolbar-bottom">
                 <div class="cat-toolbar-location-info">
                     {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/globe.svg") }}
@@ -81,7 +74,7 @@
                         <span>{{ pageUrl }}</span>
                     </p>
 
-                    <button toolbar-on:click="copyToPageURLToClipboard" class="cat-copy-to-clipboard">
+                    <button id="author-toolbar-copy-page-url-button" class="cat-copy-to-clipboard">
                         {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/copy.svg") }}
                     </button>
 
@@ -98,7 +91,7 @@
             </div>
         {% endif %}
 
-        <ul class="cat-toolbar-warnings-list">
+        {# <ul class="cat-toolbar-warnings-list">
             <template toolbar-if="showEnvironmentMessage">
                 <li class="cat-toolbar-warnings-list-item">
                     {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/triangle-exclamation.svg") }}
@@ -112,8 +105,8 @@
                     </p>
                 </li>
             </template>
-        </ul>
-    </div>
+        </ul> #}
+    </author-toolbar>
 
     {% include "author-toolbar/_windowObject" %}
 {% endif %}

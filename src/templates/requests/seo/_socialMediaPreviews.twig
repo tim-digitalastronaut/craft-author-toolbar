@@ -1,0 +1,47 @@
+{# ======================= #}
+{# PROPERTIES              #}
+{# ======================= #}
+{% set twitter = twitter|default([]) %}
+{% set og = og|default([]) %}
+
+{% set tabs = [
+    { label: "Facebook", id: "facebook" },
+    { label: "X/Twitter", id: "twitter" },
+    { label: "Linkedin", id: "linkedin" },
+    { label: "Whatsapp", id: "whatsapp" },
+    { label: "Discord", id: "discord" },
+] %}
+
+{# ======================= #}
+{# TEMPLATE                #}
+{# ======================= #}
+<social-media-previews class="cat-toolbar-seo-menu-previews-results">
+    <div class="cat-toolbar-seo-menu-previews-results-top">
+        <div>
+            <h2 class="cat-typo-body-md cat-semi-bold">{{ "Platforms"|t('author-toolbar') }}</h2>
+
+            <p class="cat-typo-body-sm">
+                {{ "Get a preview of how your page will look for other people when shared on different social platforms"|t('author-toolbar') }}
+            </p>
+        </div>
+
+        <ul class="cat-toolbar-seo-menu-previews-results-option-tabs">
+            {% for tab in tabs %}
+                <li class="cat-toolbar-seo-menu-previews-results-option-tabs-item">
+                    <button data-tab="{{ tab.id }}" class="cat-toolbar-seo-menu-previews-results-option-tabs-item-button cat-typo-body-sm">
+                        {{ tab.label }}
+                    </button>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% for tab in tabs %}
+        <div
+            data-tab-content="{{ tab.id }}"
+            class="cat-toolbar-seo-menu-previews-results-tab-content cat-toolbar-seo-menu-previews-results-{{ tab.id }}"
+        >
+            {% include "author-toolbar/components/socialPreviews/_" ~ tab.id %}
+        </div>
+    {% endfor %}
+</social-media-previews>

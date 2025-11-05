@@ -157,8 +157,8 @@
 		text-overflow: ellipsis;
 		overflow: hidden;
 	}
+}
 
-	.cat-show-on-page {
-		background-color: hsla(221, 83%, 53%, 0.5) !important;
-	}
+.cat-show-on-page {
+	outline: 2px solid hsla(222, 100%, 62%, 1) !important;
 }

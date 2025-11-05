@@ -2,78 +2,53 @@
 {# PROPERTIES              #}
 {# ======================= #}
 {% set tabs = [
-    { label: "Checklist"|t('author-toolbar'), id: "checklist" },
-    { label: "Share previews"|t('author-toolbar'), id: "previews" },
-    { label: "Images"|t('author-toolbar'), id: "images" },
-    { label: "Headings"|t('author-toolbar'), id: "headings" },
+    { label: "Checklist"|t('author-toolbar'), id: "checklist", class: "cat-toolbar-seo-menu-checklist" },
+    { label: "Share previews"|t('author-toolbar'), id: "social-media-previews", class: "cat-toolbar-seo-menu-previews" },
+    { label: "Images"|t('author-toolbar'), id: "images", class: "cat-toolbar-seo-menu-images" },
+    { label: "Headings"|t('author-toolbar'), id: "headings", class: "cat-toolbar-seo-menu-headings" },
 ] %}
 
-{# { label: "Structured data"|t, id: "structuredData" }, #}
+{#{ label: "Structured data"|t('author-toolbar'), id: "structured-data", template: "_structuredDataTab" },#}
 
 {# ======================= #}
 {# TEMPLATE                #}
 {# ======================= #}
-<div class="cat-toolbar-seo-checklist cat-toolbar-chunk" toolbar-data="menu">
-    <div 
-        class="cat-toolbar-seo-menu"
-        toolbar-on:click.outside="seoMenuOpen = false"
-        toolbar-on:keydown.esc.window="seoMenuOpen = false;"
-        toolbar-bind:class="{ 'open': seoMenuOpen }"
-    >
-        <button 
-            toolbar-on:click="seoMenuOpen = !seoMenuOpen" 
-            class="cat-toolbar-seo-menu-toggle"
-        >
+<div id="seo-menu-anchor" class="cat-toolbar-seo-checklist cat-toolbar-chunk">
+    <seo-menu class="cat-toolbar-seo-menu">
+        <button id="seo-menu-toggle" class="cat-toolbar-seo-menu-toggle">
             <p class="cat-typo-body-md">{{ "SEO"|t('author-toolbar') }}</p>
 
-            <div class="cat-typo-body-md cat-semi-bold" toolbar-bind:class="overallSeoStatus">
-                <template toolbar-if="overallSeoStatus === 'passed'">
-                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/circle-check.svg") }}
-                </template>
+            <div id="seo-menu-toggle-status" class="cat-typo-body-md cat-semi-bold">
+                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/passed.svg")|attr({ class: "passed" }) }}
 
-                <template toolbar-if="overallSeoStatus === 'warning'">
-                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/triangle-exclamation.svg") }}
-                </template>
+                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/warning.svg")|attr({ class: "warning" }) }}
 
-                <template toolbar-if="overallSeoStatus === 'failed'">
-                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/circle-exclamation.svg") }}
-                </template>
+                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/failed.svg")|attr({ class: "failed" }) }}
 
-                <p 
-                    class="cat-typo-body-md cat-semi-bold" 
-                    toolbar-text="`${passedSeoChecks}/${seoChecklistResults.length}`">
-                </p>
+                <p class="seo-menu-toggle-status-summary cat-typo-body-md cat-semi-bold"></p>
             </div>
 
             {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/chevron-down.svg") }}
         </button>
 
-        <div class="cat-toolbar-seo-menu-content menu">
+        <div id="seo-menu-content" class="cat-toolbar-seo-menu-content">
             <ul class="cat-toolbar-seo-menu-tabs">
                 {% for tab in tabs %}
                     <li class="cat-toolbar-seo-menu-tab">
-                        <button 
-                            class="cat-toolbar-seo-menu-tab-button cat-typo-body-sm" 
-                            toolbar-bind:class="{ 'active': seoMenuActiveTab === '{{ tab.id }}' }"
-                            toolbar-on:click="seoMenuActiveTab = '{{ tab.id }}'"
-                        >
+                        <button data-tab="{{ tab.id }}" class="cat-toolbar-seo-menu-tab-button cat-typo-body-sm">
                             {{ tab.label }}
                         </button>
                     </li>     
                 {% endfor %}
             </ul>
 
-            <div class="cat-toolbar-seo-menu-tabs-content">
-                {% include "author-toolbar/components/seoMenu/_checklistTab" %}
-
-                {% include "author-toolbar/components/seoMenu/_seoPreviewsTab" %}
-
-                {% include "author-toolbar/components/seoMenu/_imagesTab" %}
-
-                {% include "author-toolbar/components/seoMenu/_headingsTab" %}
-
-                {# {% include "author-toolbar/components/seoMenu/_structuredDataTab" %} #}
+            <div class="cat-toolbar-seo-menu-tab-content">
+                {% for tab in tabs %}
+                    <section data-tab-content="{{ tab.id }}" class="{{ tab.class }}">
+                        {# Content of each tab is injected via JS by the seoMenu web component #}
+                    </section>
+                {% endfor %}
             </div>
         </div>
-    </div>
+    </seo-menu>
 </div>

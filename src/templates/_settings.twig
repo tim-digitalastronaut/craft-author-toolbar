@@ -297,7 +297,8 @@
                 id: 'company',
                 name: 'settings[company]',
                 value: settings.company,
-                placeholder: 'Company name'|t('author-toolbar')
+                placeholder: 'Company name'|t('author-toolbar'),
+                errors: settings.getErrors('company')
             }) }}
         </div>
 
@@ -313,7 +314,8 @@
                 limit: 1,
                 criteria: {
                     kind: 'image'
-                }
+                },
+                errors: settings.getErrors('companyLogo')
             }) }}
         </div>
 
@@ -324,7 +326,8 @@
                 id: 'email',
                 name: 'settings[email]',
                 value: settings.email,
-                placeholder: 'support@example.com'|t('author-toolbar')
+                placeholder: 'support@example.com'|t('author-toolbar'),
+                errors: settings.getErrors('email')
             }) }}
         </div>
 
@@ -335,7 +338,8 @@
                 id: 'phoneNumber',
                 name: 'settings[phoneNumber]',
                 value: settings.phoneNumber,
-                placeholder: '+32 (0)123 45 67 89'
+                placeholder: '+32 (0)123 45 67 89',
+                errors: settings.getErrors('phoneNumber')
             }) }}
         </div>
 
@@ -346,7 +350,8 @@
                 id: 'issueTicketUrl',
                 name: 'settings[issueTicketUrl]',
                 value: settings.issueTicketUrl,
-                placeholder: 'https://report-issues-here.com'
+                placeholder: 'https://report-issues-here.com',
+                errors: settings.getErrors('issueTicketUrl')
             }) }}
         </div>
 
@@ -358,7 +363,8 @@
                 name: 'settings[info]',
                 value: settings.info,
                 placeholder: 'Information'|t('author-toolbar'),
-                rows: 4
+                rows: 4,
+                errors: settings.getErrors('info')
             }) }}
         </div>
     </div>

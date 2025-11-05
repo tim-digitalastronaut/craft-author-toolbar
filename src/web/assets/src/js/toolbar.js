@@ -1,5 +1,5 @@
 import { timeStorage } from "./timeStorage.js";
-import { seoChecklist } from "./seoChecklist.js";
+import { seoChecklist } from "./helpers/seoChecklist.js";
 import { getSeoMeta } from "./seoPreviews.js";
 
 // import Validator from "@adobe/structured-data-validator";
@@ -74,7 +74,7 @@ export function toolbar() {
 					return statusOrder[a.status] - statusOrder[b.status];
 				});
 
-			this.passedSeoChecks = this.seoChecklistResults.filter((check) => check.status == "passed").length;
+			this.passedSeoChecks = this.seoChecklistResults.filter((check) => check.status === "passed").length;
 
 			this.overallSeoStatus = "passed";
 

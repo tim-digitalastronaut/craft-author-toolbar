@@ -1,28 +1,26 @@
 {# ======================= #}
 {# TEMPLATE                #}
 {# ======================= #}
-<div toolbar-show="seoPreview === 'discord'" class="cat-toolbar-seo-menu-previews-results-discord">
-    <div class="cat-toolbar-seo-menu-previews-results-discord-text-bubble">
-        <div class="cat-toolbar-seo-menu-previews-results-discord-main">
-            <p class="cat-typo-body-sm cat-uppercase cat-semi-bold">{{ language }}</p>
+<div class="cat-toolbar-seo-menu-previews-results-discord-text-bubble">
+    <div class="cat-toolbar-seo-menu-previews-results-discord-main">
+        <p class="cat-typo-body-sm cat-uppercase cat-semi-bold">{{ language }}</p>
 
-            <h3 class="cat-typo-body-md cat-semi-bold">{{ og.title }}</h3>
+        <h3 class="cat-typo-body-md cat-semi-bold">{{ og.title }}</h3>
 
-            {% if og.description %}
-                <p class="cat-typo-body-sm">{{ og.description|truncate(160) }}</p>
-            {% endif %}
-        </div>
+        {% if og.description %}
+            <p class="cat-typo-body-sm">{{ og.description|truncate(160) }}</p>
+        {% endif %}
+    </div>
 
-        <div class="cat-toolbar-seo-menu-previews-results-discord-thumbnail">
-            {% if og.image %}
-                <img src="{{ og.image }}" alt="discord social preview image">
-            {% else %}
-                <div class="cat-toolbar-seo-menu-previews-results-placeholder-image">
-                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/image.svg") }}
+    <div class="cat-toolbar-seo-menu-previews-results-discord-thumbnail">
+        {% if og.image %}
+            <img src="{{ og.image }}" alt="discord social preview image">
+        {% else %}
+            <div class="cat-toolbar-seo-menu-previews-results-placeholder-image">
+                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/image.svg") }}
 
-                    <p class="cat-typo-body-md">{{ "No social image provided"|t('author-toolbar') }}</p>
-                </div>
-            {% endif %}
-        </div>
+                <p class="cat-typo-body-md">{{ "No social image provided"|t('author-toolbar') }}</p>
+            </div>
+        {% endif %}
     </div>
 </div>

@@ -1,4 +1,4 @@
-import { translate } from "./utils.js";
+import { translate } from "../utils.js";
 
 export const checkPageTitle = () => {
 	const titleElement = document.querySelector("title");
@@ -234,3 +234,20 @@ export const seoChecklist = [
 	checkLinks,
 	checkSocialImages,
 ];
+
+export const getSeoChecklistResults = () => {
+	let status = "passed";
+	const results = seoChecklist
+		.map((checkFunction) => checkFunction())
+		.sort((a, b) => {
+			const statusOrder = { failed: 0, warning: 1, passed: 2 };
+			return statusOrder[a.status] - statusOrder[b.status];
+		});
+
+	let passedChecks = results.filter((check) => check.status === "passed").length;
+
+	if (results.some((check) => check.status === "warning")) status = "warning";
+	if (results.some((check) => check.status === "failed")) status = "failed";
+
+	return { status, results, passedChecks };
+}
