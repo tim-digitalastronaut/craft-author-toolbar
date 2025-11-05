@@ -32,7 +32,7 @@
                         <p class="cat-typo-body-md">{{ image.path }}</p>
 
                         <p class="cat-typo-body-sm {{ image.alt ? "" : "error" }}">
-                            {{ image.alt ? "" : "Alt tag is missing"|t("author-toolbar") }}
+                            {{ image.alt ? image.alt : "Alt tag is missing"|t("author-toolbar") }}
                         </p>
                     </div>
 

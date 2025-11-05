@@ -1,5 +1,10 @@
 # Release Notes for Author toolbar
 
+## v1.2.5-beta - 2025.11.06
+
+- Fixed alt tag not showing for image overview in seo tab
+- Fixed toolbar crash when no entry is found (temporary)
+
 ## v1.2.4-beta - 2025.11.06
 
 - Fixed wrong query param type for toolbar load script
