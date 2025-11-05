@@ -1,5 +1,15 @@
 # Release Notes for Author toolbar
 
+## v1.2.1-beta - 2025.11.06
+
+- Fixed a typo
+
+## v1.2.0-beta - 2025.11.06
+
+- Toolbar is now compatible with statically cached sites (native craft caching, blitz, etc...)
+- Complete rewrite from alpineJS to web components to follow Craft 6 and fix many multiple instance issues with alpine.
+- Improved keyboard shortcuts and edge cases where menus could stay open when the toolbar is collapsed.
+
 ## v1.1.11-beta - 2025.10.24
 
 -   Fixed a failed release
