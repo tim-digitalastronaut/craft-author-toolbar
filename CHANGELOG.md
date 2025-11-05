@@ -1,5 +1,9 @@
 # Release Notes for Author toolbar
 
+## v1.2.3-beta - 2025.11.06
+
+- Improved validation rules for the plugin settings
+
 ## v1.2.2-beta - 2025.11.06
 
 - Fixed a hard coded query param
