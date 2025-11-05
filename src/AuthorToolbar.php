@@ -128,7 +128,7 @@ class AuthorToolbar extends Plugin {
             View::class,
             View::EVENT_BEFORE_RENDER_PAGE_TEMPLATE,
             function (TemplateEvent $event) {
-                $entry = $event->variables['entry'] ?? $event->variables['product'] ?? null;
+                $entryId = $event->variables['entry'] ?? $event->variables['product'] ?? null;
 
                 $settings = $this->getSettings();
 
@@ -143,7 +143,7 @@ class AuthorToolbar extends Plugin {
                 $script = <<<JS
                     document.addEventListener("DOMContentLoaded", async () => {
                         try {
-                            const toolbarElement = await fetch("/actions/author-toolbar/toolbar/get-html?entryId=2");
+                            const toolbarElement = await fetch("/actions/author-toolbar/toolbar/get-html?entryId={$entryId}");
                             const toolbarElementHtmlString = await toolbarElement.text();
                             
                             document.body.insertAdjacentHTML('afterbegin', toolbarElementHtmlString);

@@ -1,5 +1,9 @@
 # Release Notes for Author toolbar
 
+## v1.2.2-beta - 2025.11.06
+
+- Fixed a hard coded query param
+
 ## v1.2.1-beta - 2025.11.06
 
 - Fixed a typo
