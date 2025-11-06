@@ -1,5 +1,9 @@
 # Release Notes for Author toolbar
 
+## v1.2.8-beta - 2025.11.06
+
+- Provided support for region based translations for JS translated strings
+
 ## v1.2.7-beta - 2025.11.06
 
 - Fixed possible empty JS translations array for site languages that aren't en or nl. Will fall back to en

@@ -14,11 +14,29 @@ class AuthorToolbarTwigExtension extends AbstractExtension {
         ];
     }
 
-    public function getStaticTranslations($language = 'en') {
-        $file = Craft::getAlias("@digitalastronaut/craftauthortoolbar/translations/{$language}/author-toolbar.php");
+    public function getStaticTranslations() {
+        $language = Craft::$app->language;
 
-        if (!file_exists($file)) $file = Craft::getAlias("@digitalastronaut/craftauthortoolbar/translations/en/author-toolbar.php");
+        $fallbacks = [];
 
-        return file_exists($file) ? require $file : [];
+        if ($language) {
+            $fallbacks[] = $language;
+
+            if (str_contains($language, '-')) {
+                $langOnly = explode('-', $language)[0];
+
+                if (!in_array($langOnly, $fallbacks, true)) $fallbacks[] = $langOnly;
+            }
+        }
+
+        $fallbacks[] = 'en';
+
+        foreach ($fallbacks as $lang) {
+            $file = Craft::getAlias("@digitalastronaut/craftauthortoolbar/translations/{$lang}/author-toolbar.php");
+
+            if (file_exists($file)) return require $file;
+        }
+
+        return [];
     }
 }
