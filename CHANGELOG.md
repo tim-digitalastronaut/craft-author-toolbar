@@ -1,5 +1,9 @@
 # Release Notes for Author toolbar
 
+## v1.2.9-beta - 2025.11.06
+
+- Release issue
+
 ## v1.2.8-beta - 2025.11.06
 
 - Provided support for region based translations for JS translated strings
