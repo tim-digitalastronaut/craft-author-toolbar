@@ -9,6 +9,8 @@ use yii\web\MethodNotAllowedHttpException;
 use yii\web\Response;
 
 class SeoController extends Controller {
+    protected array|int|bool $allowAnonymous = true;
+
     /**
      * @throws InvalidConfigException
      * @throws MethodNotAllowedHttpException

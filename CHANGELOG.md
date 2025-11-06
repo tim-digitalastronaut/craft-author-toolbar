@@ -1,5 +1,10 @@
 # Release Notes for Author toolbar
 
+## v1.2.6-beta - 2025.11.06
+
+- Fixed issue for undefined key message in sequence/mapping with key status [#10](https://github.com/tim-digitalastronaut/craft-author-toolbar/issues/10)
+- Fixed 403 when toolbar is not loaded
+
 ## v1.2.5-beta - 2025.11.06
 
 - Fixed alt tag not showing for image overview in seo tab

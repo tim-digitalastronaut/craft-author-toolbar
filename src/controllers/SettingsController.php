@@ -9,6 +9,8 @@ use yii\web\Response;
 use digitalastronaut\craftauthortoolbar\AuthorToolbar;
 
 class SettingsController extends Controller {
+    protected array|int|bool $allowAnonymous = true;
+
     public function actionIndex(): Response {
         $this->requirePermission('authorToolbar-editSettings');
 

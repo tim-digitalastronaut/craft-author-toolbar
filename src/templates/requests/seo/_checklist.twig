@@ -17,6 +17,9 @@
 {% if checklist|length %}
     <ul class="cat-toolbar-seo-menu-checklist-results">
         {% for check in checklist %}
+            {% set status = check.status|default("") %}
+            {% set message = check.message|default("") %}
+
             <li class="cat-toolbar-seo-menu-checklist-results-item">
                 <div class="cat-toolbar-seo-menu-checklist-results-item-icon {{ check.status }}">
                     {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/" ~ check.status ~ ".svg") }}

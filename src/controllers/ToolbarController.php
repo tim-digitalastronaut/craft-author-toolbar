@@ -10,7 +10,9 @@ use yii\web\Response;
 use digitalastronaut\craftauthortoolbar\AuthorToolbar;
 
 class ToolbarController extends Controller {
-     public function actionGetHtml($entryId): Response {
+    protected array|int|bool $allowAnonymous = true;
+
+    public function actionGetHtml($entryId): Response {
          $entry = Entry::find()->id($entryId)->one();
          $settings = AuthorToolbar::getInstance()->getSettings();
 
