@@ -1,5 +1,10 @@
 # Release Notes for Author toolbar
 
+## v1.2.7-beta - 2025.11.06
+
+- Fixed possible empty JS translations array for site languages that aren't en or nl. Will fall back to en
+- Fixed styling issue with the toolbar toggle button
+
 ## v1.2.6-beta - 2025.11.06
 
 - Fixed issue for undefined key message in sequence/mapping with key status [#10](https://github.com/tim-digitalastronaut/craft-author-toolbar/issues/10)
