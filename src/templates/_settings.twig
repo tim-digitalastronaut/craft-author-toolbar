@@ -48,6 +48,18 @@
             }) }}
         </div>
 
+        <div class="field width-50">
+            {{ forms.lightswitchField({
+                label: 'Toolbar default state'|t('author-toolbar'),
+                instructions: 'Choose the default state on page load'|t('author-toolbar'),
+                id: 'toolbarCollapsedByDefault',
+                offLabel: 'Open'|t('author-toolbar'),
+                onLabel: 'Collapsed'|t('author-toolbar'),
+                name: 'settings[toolbarCollapsedByDefault]',
+                on: settings.toolbarCollapsedByDefault,
+            }) }}
+        </div>
+
         <h2>{{ "Chunks"|t('author-toolbar') }}</h2>
 
         <h3>{{ "Default chunks"|t('author-toolbar') }}</h3>
@@ -365,6 +377,20 @@
                 placeholder: 'Information'|t('author-toolbar'),
                 rows: 4,
                 errors: settings.getErrors('info')
+            }) }}
+        </div>
+
+        <hr>
+
+        <div class="field width-50">
+            {{ forms.lightswitchField({
+                label: 'Environment message'|t('author-toolbar'),
+                id: 'environmentMessageEnabled',
+                instructions: 'Shows a message to the author notifying them of what environment they are editing content in. It can be hidden on a per user basis'|t('author-toolbar'),
+                offLabel: 'Hide'|t('author-toolbar'),
+                onLabel: 'Show'|t('author-toolbar'),
+                name: 'settings[environmentMessageEnabled]',
+                on: settings.environmentMessageEnabled,
             }) }}
         </div>
     </div>

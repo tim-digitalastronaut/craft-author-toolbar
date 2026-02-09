@@ -58,7 +58,7 @@
                         {% if isProduct %}
                             <a class="cat-typo-body-md" href="{{ cpUrl('commerce/products/' ~ entryType) }}">{{ "View all"|t('author-toolbar') }}</a>
                         {% elseif sectionType != "single" %}
-                            <a class="cat-typo-body-md" href="{{ cpUrl('entries/' ~ entryType) }}">{{ "View all"|t('author-toolbar') }}</a>
+                            <a class="cat-typo-body-md" href="{{ cpUrl('entries/' ~ sectionType) }}">{{ "View all"|t('author-toolbar') }}</a>
                         {% endif %}
                     </div>
 
