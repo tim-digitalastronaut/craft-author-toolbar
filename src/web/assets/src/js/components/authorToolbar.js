@@ -43,8 +43,11 @@ class AuthorToolbar extends HTMLElement {
 
 	toggleToolbar() {
 		this.toolbarElement.classList.toggle("hidden");
+		this.hidden = this.toolbarElement.classList.contains("hidden");
 
 		const toggleButtonTextElement = this.toolbarElement.querySelector("span");
+
+		console.log(this.hidden);
 
 		document.body.style.marginBottom = this.hidden ? 0 : `${this.toolbarElement.offsetHeight}px`;
 		toggleButtonTextElement.innerText = this.hidden ? translate["Show toolbar"] : translate["Hide toolbar"];
