@@ -2,6 +2,10 @@
 
 ## v1.2.11-beta - 2026.04.21
 
+- Fixed bug in margin bottom calculation
+
+## v1.2.11-beta - 2026.04.21
+
 - Fixed margin bottom calculation for hidden toolbar state
 - Fixed translations script being injected twice
 

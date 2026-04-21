@@ -20,8 +20,9 @@ class AuthorToolbar extends HTMLElement {
 		this.toggleButtonElement = document.querySelector("#author-toolbar-toggle-button");
 		this.hideEnvironmentMessageButtonElement = document.querySelector("#cat-hide-environment-message-button");
 		this.environmentMessageElement = document.querySelector("#cat-environment-message");
+		this.hidden = this.toolbarElement.classList.contains("hidden");
 
-		document.body.style.marginBottom = `${this.toolbarElement.offsetHeight}px`;
+		document.body.style.marginBottom = this.hidden ? 0 : `${this.toolbarElement.offsetHeight}px`;
 
 		const resizeObserver = new ResizeObserver((entries) => {
 			if (!this.hidden) document.body.style.marginBottom = `${entries[0].target.offsetHeight}px`;
@@ -44,10 +45,9 @@ class AuthorToolbar extends HTMLElement {
 		this.toolbarElement.classList.toggle("hidden");
 
 		const toggleButtonTextElement = this.toolbarElement.querySelector("span");
-		const hidden = this.toolbarElement.classList.contains("hidden");
 
-		document.body.style.marginBottom = hidden ? 0 : `${this.toolbarElement.offsetHeight}px`;
-		toggleButtonTextElement.innerText = hidden ? translate["Show toolbar"] : translate["Hide toolbar"];
+		document.body.style.marginBottom = this.hidden ? 0 : `${this.toolbarElement.offsetHeight}px`;
+		toggleButtonTextElement.innerText = this.hidden ? translate["Show toolbar"] : translate["Hide toolbar"];
 	}
 
 	registerEventListeners() {
