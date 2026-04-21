@@ -1,6 +1,6 @@
 # Release Notes for Author toolbar
 
-## v1.2.11-beta - 2026.04.21
+## v1.2.12-beta - 2026.04.21
 
 - Fixed bug in margin bottom calculation
 
