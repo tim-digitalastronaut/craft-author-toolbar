@@ -1,4 +1,4 @@
-import hotkeys from 'hotkeys-js';
+import hotkeys from "hotkeys-js";
 import { translate } from "../utils.js";
 import { closeMenusEvent } from "../helpers/events.js";
 import { timeStorage } from "../helpers/timeStorage.js";
@@ -9,7 +9,7 @@ class AuthorToolbar extends HTMLElement {
 
 		this.hidden = false;
 		this.toolbarElement = null;
-		this.copyPageUrlButtonElement = null
+		this.copyPageUrlButtonElement = null;
 		this.hideEnvironmentMessageButtonElement = null;
 		this.environmentMessageElement = null;
 	}
@@ -17,7 +17,7 @@ class AuthorToolbar extends HTMLElement {
 	connectedCallback() {
 		this.toolbarElement = this;
 		this.copyPageUrlButtonElement = document.querySelector("#author-toolbar-copy-page-url-button");
-		this.toggleButtonElement = document.querySelector("#author-toolbar-toggle-button")
+		this.toggleButtonElement = document.querySelector("#author-toolbar-toggle-button");
 		this.hideEnvironmentMessageButtonElement = document.querySelector("#cat-hide-environment-message-button");
 		this.environmentMessageElement = document.querySelector("#cat-environment-message");
 
@@ -46,35 +46,35 @@ class AuthorToolbar extends HTMLElement {
 		const toggleButtonTextElement = this.toolbarElement.querySelector("span");
 		const hidden = this.toolbarElement.classList.contains("hidden");
 
-		toggleButtonTextElement.innerText = hidden ?
-			translate['Show toolbar'] : translate['Hide toolbar'];
+		document.body.style.marginBottom = hidden ? 0 : `${this.toolbarElement.offsetHeight}px`;
+		toggleButtonTextElement.innerText = hidden ? translate["Show toolbar"] : translate["Hide toolbar"];
 	}
 
 	registerEventListeners() {
 		this.copyPageUrlButtonElement.addEventListener("click", async () => {
 			await this.copyPageURLToClipboard();
-		})
+		});
 
 		this.hideEnvironmentMessageButtonElement.addEventListener("click", () => {
 			timeStorage.setItem("author-toolbar:environment-message", "hidden", 24 * 60 * 60 * 1000);
 			this.environmentMessageElement.classList.add("hidden");
-		})
+		});
 
 		this.toggleButtonElement.addEventListener("click", () => {
 			this.toggleToolbar();
-		})
+		});
 
 		document.addEventListener("show-toolbar", () => {
 			if (this.toolbarElement.classList.contains("hidden")) this.toggleToolbar();
-		})
+		});
 
-		hotkeys('command+v', () => {
+		hotkeys("command+v", () => {
 			this.toggleToolbar();
 			document.dispatchEvent(closeMenusEvent);
 			return false;
 		});
 
-		hotkeys('command+d', () => {
+		hotkeys("command+d", () => {
 			window.location = window.craftAuthorToolbar.dashboardUrl;
 			return false;
 		});

@@ -6,7 +6,7 @@
 	"scripts": {
 		"plugin:dev": "mix watch",
 		"plugin:build": "mix --production",
-		"docs:dev": "vitepress dev docs",
+		"docs:dev": "vitepress dev docs --port=3000",
 		"docs:build": "vitepress build docs",
 		"docs:preview": "vitepress preview docs"
 	},

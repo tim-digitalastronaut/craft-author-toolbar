@@ -29,8 +29,6 @@
 {# TEMPLATE                #}
 {# ======================= #}
 {% if currentUser and entry %}
-    {% include "author-toolbar/_windowObject" %}
-
     <author-toolbar id="cat-toolbar" class="cat-toolbar {{ settings.toolbarCollapsedByDefault ? "hidden" : "" }}">
          <div class="cat-toolbar-toggle">
             <button id="author-toolbar-toggle-button" class="cat-toolbar-toggle-button cat-typo-body-sm">

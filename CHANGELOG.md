@@ -1,5 +1,10 @@
 # Release Notes for Author toolbar
 
+## v1.2.11-beta - 2026.04.21
+
+- Fixed margin bottom calculation for hidden toolbar state
+- Fixed translations script being injected twice
+
 ## v1.2.10-beta - 2026.01.09
 
 - Added a config option for setting the default collapse state of the toolbar [#12](https://github.com/tim-digitalastronaut/craft-author-toolbar/issues/12)

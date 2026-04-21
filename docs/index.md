@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-    name: "Author toolbar"
+    name: "Author toolbar plugin"
     text: "Documentation"
     tagline: Push your Craft CMS websites authoring experience to the next level
     actions:

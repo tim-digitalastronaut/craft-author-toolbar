@@ -19,12 +19,8 @@ use craft\events\RegisterUserPermissionsEvent;
 use craft\services\UserPermissions;
 
 use digitalastronaut\craftauthortoolbar\models\Settings;
-use digitalastronaut\craftauthortoolbar\services\ToolbarService;
 use digitalastronaut\craftauthortoolbar\web\assets\AuthorToolbarAssets;
 use digitalastronaut\craftauthortoolbar\web\twig\AuthorToolbarTwigExtension;
-
-use putyourlightson\blitz\Blitz;
-use putyourlightson\blitz\variables\BlitzVariable;
 
 /**
  * Author toolbar plugin
@@ -140,7 +136,6 @@ class AuthorToolbar extends Plugin {
                 if (Craft::$app->request->isAjax) return;
                 if (Craft::$app->request->isConsoleRequest) return;
 
-                Craft::$app->view->registerHtml(Craft::$app->view->renderTemplate('author-toolbar/_windowObject.twig'), View::POS_BEGIN);
 
                 $script = <<<JS
                     document.addEventListener("DOMContentLoaded", async () => {
@@ -148,14 +143,15 @@ class AuthorToolbar extends Plugin {
                             const toolbarElement = await fetch("/actions/author-toolbar/toolbar/get-html?entryId={$entryId}");
                             const toolbarElementHtmlString = await toolbarElement.text();
                             
-                            document.body.insertAdjacentHTML('afterbegin', toolbarElementHtmlString);
+                            document.body.insertAdjacentHTML('beforeend', toolbarElementHtmlString);
                         } catch (error) {
                             console.error('Failed to load author toolbar:', error);
                         }
                     });
                 JS;
 
-                Craft::$app->getView()->registerJs($script, View::POS_END);
+                Craft::$app->view->registerHtml(Craft::$app->view->renderTemplate('author-toolbar/_windowObject.twig'), View::POS_HEAD);
+                Craft::$app->getView()->registerJs($script, View::POS_HEAD);
             }
         );
     }
