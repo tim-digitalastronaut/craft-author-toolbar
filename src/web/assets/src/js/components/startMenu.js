@@ -1,10 +1,6 @@
 import { BaseMenu } from "./baseMenu.js";
 
 class StartMenu extends BaseMenu {
-	constructor() {
-		super();
-	}
-
 	connectedCallback() {
 		this.menuElement = this;
 		this.toggleElement = document.querySelector("#start-menu-toggle");

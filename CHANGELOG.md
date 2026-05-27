@@ -1,5 +1,20 @@
 # Release Notes for Author toolbar
 
+## v1.3.0-beta - 2026.05.27
+
+#### Codebase
+
+- Moved plugin event handling to a dedicated `PluginTrait` class
+- Added PHP Docs throughout the whole plugin
+- Refactored and formatted JS files using BiomeJS
+
+#### Plugin
+
+- Fixed eventListeners showing errors when certain components of the toolbar are disabled [#13](https://github.com/tim-digitalastronaut/craft-author-toolbar/issues/13)
+- Fixed collapsed toolbar state showing a 1px line at the bottom of the screen
+- Introduced a more extensive set of permissions that give control over what cunks certain users can use/see
+- Improved controller security
+
 ## v1.2.13-beta - 2026.04.21
 
 - More bugfixes

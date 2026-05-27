@@ -4,7 +4,7 @@ export const timeStorage = {
 		if (!stored) return null;
 
 		try {
-			const {value, expiry} = JSON.parse(stored);
+			const { value, expiry } = JSON.parse(stored);
 
 			if (Date.now() > expiry) {
 				localStorage.removeItem(key);
@@ -35,6 +35,6 @@ export const timeStorage = {
 
 		if (!expiry) expiry = Date.now() + duration;
 
-		localStorage.setItem(key, JSON.stringify({value, expiry}));
+		localStorage.setItem(key, JSON.stringify({ value, expiry }));
 	},
 };

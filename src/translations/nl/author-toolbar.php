@@ -1,4 +1,14 @@
 <?php
+/**
+ * Author toolbar plugin for Craft CMS
+ *
+ * A frontend toolbar that enhances the authoring experience by giving content
+ * editors quick access to editing tools, entry actions, and contextual
+ * controls directly from the site frontend.
+ *
+ * @link      https://digitalastronaut.be
+ * @copyright Copyright (c) 2026 Digitalastronaut
+ */
 
 return [
     'Author toolbar' => 'Auteur werkbalk',

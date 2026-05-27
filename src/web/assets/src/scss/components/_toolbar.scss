@@ -16,6 +16,7 @@
 	right: 0;
 	bottom: 0;
 	transition: all ease-out 0.3s;
+	min-height: 61px;
 
 	&.hidden {
 		display: flex;

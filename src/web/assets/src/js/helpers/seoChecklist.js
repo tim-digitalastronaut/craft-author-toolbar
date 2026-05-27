@@ -3,7 +3,7 @@ import { translate } from "../utils.js";
 export const checkPageTitle = () => {
 	const titleElement = document.querySelector("title");
 
-	if (!titleElement || !titleElement.innerText) {
+	if (!titleElement?.innerText) {
 		return {
 			status: "failed",
 			message: translate["The page is missing a title"],
@@ -194,8 +194,8 @@ export const checkSocialImages = () => {
 	const ogImageMetaElement = document.querySelector("meta[property='og:image']");
 	const twitterImageMetaElement = document.querySelector("meta[name='twitter:image']");
 
-	const hasOgImage = ogImageMetaElement && ogImageMetaElement.getAttribute("content");
-	const hasTwitterImage = twitterImageMetaElement && twitterImageMetaElement.getAttribute("content");
+	const hasOgImage = ogImageMetaElement?.getAttribute("content");
+	const hasTwitterImage = twitterImageMetaElement?.getAttribute("content");
 
 	if (!hasOgImage && !hasTwitterImage) {
 		return {
@@ -244,10 +244,10 @@ export const getSeoChecklistResults = () => {
 			return statusOrder[a.status] - statusOrder[b.status];
 		});
 
-	let passedChecks = results.filter((check) => check.status === "passed").length;
+	const passedChecks = results.filter((check) => check.status === "passed").length;
 
 	if (results.some((check) => check.status === "warning")) status = "warning";
 	if (results.some((check) => check.status === "failed")) status = "failed";
 
 	return { status, results, passedChecks };
-}
+};

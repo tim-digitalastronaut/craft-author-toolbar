@@ -28,7 +28,7 @@
 {# ======================= #}
 {# TEMPLATE                #}
 {# ======================= #}
-{% if currentUser and entry %}
+{% if currentUser and entry and currentUser.can("author-toolbar:access-toolbar") %}
     <author-toolbar id="cat-toolbar" class="cat-toolbar {{ settings.toolbarCollapsedByDefault ? "hidden" : "" }}">
          <div class="cat-toolbar-toggle">
             <button id="author-toolbar-toggle-button" class="cat-toolbar-toggle-button cat-typo-body-sm">
@@ -39,32 +39,49 @@
         </div>
         
         <div class="cat-toolbar-main">
-            {% if settings.startMenuEnabled %}
+            {% if 
+                settings.startMenuEnabled and
+                currentUser.can("author-toolbar:access-start-menu")  
+            %}
                 {% include "author-toolbar/components/chunks/_startMenu" %}
             {% endif %}
 
-             {% if settings.actionButtonsEnabled %}
+             {% if 
+                settings.actionButtonsEnabled and
+                currentUser.can("author-toolbar:access-action-buttons")  
+            %}
                 {% include "author-toolbar/components/chunks/_actionButtons" %}
             {% endif %}
             
-            {% if settings.globalSearchEnabled %}
+            {% if 
+                settings.globalSearchEnabled and
+                currentUser.can("author-toolbar:access-global-search")  
+            %}
                 {% include "author-toolbar/components/chunks/_globalSearch" %}
             {% endif %}
 
-            {% if settings.seoMenuEnabled %}
+            {% if 
+                settings.seoMenuEnabled and
+                currentUser.can("author-toolbar:access-seo-menu")  
+            %}
                 {% include "author-toolbar/components/chunks/_seoMenu" %}
             {% endif %}
 
-            {% if settings.helpMenuEnabled %}
+            {% if 
+                settings.helpMenuEnabled and
+                currentUser.can("author-toolbar:access-help-menu")  
+            %}
                 {% include "author-toolbar/components/chunks/_helpMenu" %}
             {% endif %}
 
-            {% for widget in settings.customChunks %}
-                {% include widget["path"] %}
-            {% endfor %}
+            {% if currentUser.can("author-toolbar:access-custom-chunks") %}
+                {% for widget in settings.customChunks %}
+                    {% include widget["path"] %}
+                {% endfor %}
+            {% endif %}
         </div>
 
-         {% if settings.contextBarEnabled %}
+         {% if settings.contextBarEnabled and currentUser.can("author-toolbar:access-context-bar") %}
             <div class="cat-toolbar-bottom">
                 <div class="cat-toolbar-location-info">
                     {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/globe.svg") }}

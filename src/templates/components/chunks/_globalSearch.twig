@@ -1,26 +1,28 @@
 {# ======================= #}
 {# TEMPLATE                #}
 {# ======================= #}
-<div id="search-menu-anchor" class="cat-toolbar-search cat-toolbar-chunk">
-    <search-menu class="cat-toolbar-search-menu">
-        <div class="cat-toolbar-search-bar anchor">
-            {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/search.svg") }}
+{% if currentUser.can("author-toolbar:access-global-search") %}
+    <div id="search-menu-anchor" class="cat-toolbar-search cat-toolbar-chunk">
+        <search-menu class="cat-toolbar-search-menu">
+            <div class="cat-toolbar-search-bar anchor">
+                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/search.svg") }}
 
-            <input 
-                id="search-menu-input"
-                type="text" 
-                placeholder="{{ "Search entries"|t('author-toolbar') }}"
-                toolbar-model="searchQuery",
-                toolbar-on:input="renderSearchResults"
-            >
+                <input 
+                    id="search-menu-input"
+                    type="text" 
+                    placeholder="{{ "Search entries"|t('author-toolbar') }}"
+                    toolbar-model="searchQuery",
+                    toolbar-on:input="renderSearchResults"
+                >
 
-            <div class="cat-toolbar-search-bar-hotkey">
-                {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/command.svg") }}
+                <div class="cat-toolbar-search-bar-hotkey">
+                    {{ svg("@digitalastronaut/craftauthortoolbar/web/icons/command.svg") }}
 
-                <div class="cat-typo-body-sm uppercase">K</div>
+                    <div class="cat-typo-body-sm uppercase">K</div>
+                </div>
             </div>
-        </div>
 
-        <div id="search-menu-content" class="cat-toolbar-search-results"></div>
-    </search-menu>
-</div>
+            <div id="search-menu-content" class="cat-toolbar-search-results"></div>
+        </search-menu>
+    </div>
+{% endif %}
