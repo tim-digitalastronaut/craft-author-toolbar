@@ -76,7 +76,6 @@ trait PluginTrait {
     */
     protected function registerSiteEvents(): void {
         $this->registerTemplateRoots();
-        $this->registerAssetBundles();
         $this->registerTwigExtensions();
         $this->registerSiteRoutes();
         $this->registerToolbarHtml();
@@ -225,6 +224,8 @@ trait PluginTrait {
                     });
                 JS;
 
+                $this->registerAssetBundles();
+                
                 Craft::$app->view->registerHtml(Craft::$app->view->renderTemplate('author-toolbar/_windowObject.twig'), View::POS_HEAD);
                 Craft::$app->getView()->registerJs($script, View::POS_HEAD);
             }
